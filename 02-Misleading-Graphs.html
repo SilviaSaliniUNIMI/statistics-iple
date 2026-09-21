@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Misleading Graphs? | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{
+  --blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#1f2937;--muted:#667085;
+  --orange:#c4681a;--orangebg:#fff4e8;--green:#2e7d32;--red:#b42318;--purple:#6d5bd0;
+  --line:#dbe4ef;--soft:#f4f7fb;--card:#fff;--gold:#d49a00;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);font-size:16px}
+.wrap{max-width:1040px;margin:28px auto;padding:0 16px 60px}
+.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;padding:54px 28px 44px;border-radius:12px 12px 0 0;text-align:center;box-shadow:0 8px 24px rgba(23,107,77,.16)}
+.kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:800;opacity:.8;margin-bottom:12px}
+.header h1{font-size:30px;line-height:1.2;margin:0 0 12px}.header p{font-size:18px;line-height:1.55;margin:0;opacity:.95}
+.quote{margin:22px auto 0;max-width:820px;padding:16px 20px;border:1px solid rgba(255,255,255,.38);border-radius:10px;background:rgba(255,255,255,.10);font-size:17px;font-weight:700;line-height:1.55}
+.meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:#fff;padding:13px 18px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.pill{border:1px solid #cbd8e8;background:#f4fbf7;color:var(--blue);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:800}
+.tabbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-top:none;border-bottom:2px solid var(--blue);scrollbar-width:none}.tabbar::-webkit-scrollbar{display:none}
+.tab{min-width:135px;flex:1;border:none;border-right:1px solid var(--line);background:#fff;color:#697386;padding:12px 9px;font:700 13px Arial;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}.tab:last-child{border-right:none}.tab:hover{background:#f4fbf7;color:var(--blue)}.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}
+.content{background:#fff;border:1px solid var(--line);border-top:none;padding:30px;border-radius:0 0 12px 12px;min-height:560px;box-shadow:0 14px 32px rgba(23,39,64,.08)}
+.section{display:none}.section.active{display:block}
+.hero-card{background:var(--blue);color:#fff;padding:21px;border-radius:11px;margin-bottom:22px}.hero-card h2{margin:0 0 9px;font-size:21px}.hero-card p{margin:0;line-height:1.75}
+.intro{background:var(--light);border:1px solid var(--blue);border-radius:11px;padding:19px;margin-bottom:22px}.intro h2,.intro h3{color:var(--blue);margin:0 0 9px}.intro p{margin:0;line-height:1.72}
+.card{border:1px solid #e4e9f0;border-radius:12px;overflow:hidden;margin-bottom:20px;background:#fff}.card-head{padding:14px 18px;font-weight:800;font-size:17px;background:var(--light);color:var(--blue)}.card-head.dark{background:var(--blue);color:#fff}.card-head.orange{background:var(--orangebg);color:#7a4300}.card-body{padding:20px;line-height:1.72}.card-body p:first-child{margin-top:0}.card-body p:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:780px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.content{padding:22px 17px}.header{padding:42px 18px 34px}.header h1{font-size:25px}}
+.mini{border:1px solid #d7e3f1;background:#f4fbf7;border-radius:10px;padding:15px;line-height:1.62}.mini strong{color:var(--blue)}
+.note{border-left:5px solid var(--blue);background:#f2faf6;padding:14px 16px;border-radius:0 10px 10px 0;margin:15px 0;line-height:1.7}.warn{border-left:5px solid var(--orange);background:var(--orangebg);padding:14px 16px;border-radius:0 10px 10px 0;margin:15px 0;line-height:1.7;color:#664000}.danger{border-left:5px solid var(--red);background:#fff2f0;padding:14px 16px;border-radius:0 10px 10px 0;margin:15px 0;line-height:1.7;color:#7a271a}.success{border-left:5px solid var(--green);background:#edf8ef;padding:14px 16px;border-radius:0 10px 10px 0;margin:15px 0;line-height:1.7;color:#245c2a}
+.btn-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}.btn{border:none;border-radius:9px;padding:11px 19px;font:800 14px Arial;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#e4ebf4;color:var(--blue)}.btn.orange{background:var(--orange);color:#fff}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}.btn:hover{transform:translateY(-1px)}
+.quiz-option{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border:2px solid #e3e8ef;border-radius:10px;background:#fff;cursor:pointer;font:15px/1.48 Arial;transition:.15s}.quiz-option:hover{background:#f7fbff;border-color:#b5d0ed}.quiz-option.correct{border-color:var(--green);background:#eaf6ec}.quiz-option.wrong{border-color:var(--red);background:#fff0ef}.feedback{display:none;margin-top:10px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.6}.feedback.ok{display:block;background:#eaf6ec;border:1px solid var(--green);color:#1f5d25}.feedback.err{display:block;background:#fff0ef;border:1px solid var(--red);color:#7a271a}.feedback.info{display:block;background:#eef8f3;border:1px solid #b8dac9;color:#123c69}
+.table-wrap{overflow-x:auto}.data{width:100%;border-collapse:collapse;font-size:14px}.data th,.data td{padding:9px 11px;border:1px solid #e1e7ef;text-align:center}.data th{background:var(--light);color:var(--blue)}.data td.left,.data th.left{text-align:left}.data tr.highlight{background:#fff9f0}
+.chart-card{border:1px solid #dfe6ee;border-radius:12px;background:#fafcff;padding:16px;margin:16px 0}.chart-card h4{margin:0 0 10px;color:var(--blue)}canvas{width:100%;height:auto;background:#fff;border:1px solid #dfe6ee;border-radius:9px;display:block;min-height:240px}.grid2>div{min-width:0}.download-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.analyst-output{display:none;margin-top:18px}.analyst-output.show{display:block}.comment-box{min-height:130px;resize:vertical;line-height:1.55}.chart-caption{font-size:13px;color:#667085;line-height:1.55;margin-top:8px}.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:12px;padding:16px;margin:14px 0}.control{margin-bottom:14px}.control:last-child{margin-bottom:0}.control label{display:block;font-weight:800;margin-bottom:7px}.control .value{color:#8d5100;font-weight:900}input[type=range]{width:100%;accent-color:var(--orange)}select,input[type=number],input[type=text]{width:100%;padding:10px 11px;border:1.5px solid #cbd5e1;border-radius:8px;font:15px Arial;background:#fff}
+.badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:900;margin-right:7px}.tag{display:inline-block;border-radius:999px;background:#eef8f3;color:var(--blue);font-size:12px;font-weight:800;padding:5px 9px;margin:3px}.small{font-size:13px;color:var(--muted);line-height:1.55}
+.rule-map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.rule{border:1px solid #dbe5ef;border-radius:11px;padding:15px;background:#fff;cursor:pointer}.rule:hover,.rule.active{background:#f1f7ff;border-color:#84aed6}.rule h4{margin:0 0 8px;color:var(--blue)}@media(max-width:800px){.rule-map{grid-template-columns:1fr 1fr}}@media(max-width:520px){.rule-map{grid-template-columns:1fr}}
+.case-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}.case-tab{border:1px solid #cfdbe8;background:#fff;color:var(--blue);padding:9px 12px;border-radius:999px;font-weight:800;cursor:pointer}.case-tab.active{background:var(--blue);color:#fff}.case-panel{display:none}.case-panel.active{display:block}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}.kpi{background:#f4fbf7;border:1px solid #d8e5f3;border-radius:10px;padding:14px;text-align:center}.kpi .n{font-size:23px;font-weight:900;color:var(--blue)}.kpi .l{font-size:12px;color:var(--muted);margin-top:4px}@media(max-width:650px){.kpi-row{grid-template-columns:1fr}}
+.checklist label{display:block;padding:9px 0;border-bottom:1px solid #edf2f7}.checklist label:last-child{border-bottom:none}.scorebox{border:2px solid var(--blue);background:var(--light);border-radius:12px;padding:20px;text-align:center;margin-top:20px}.scorebox .big{font-size:34px;font-weight:900;color:var(--blue)}
+.external{border:1px solid #c8d8e8;background:linear-gradient(135deg,#f4fbf7,#fff);border-radius:12px;padding:18px;margin:18px 0}.external h3{margin:0 0 10px;color:var(--blue)}.external a{color:var(--blue);font-weight:800;text-decoration:none}.external a:hover{text-decoration:underline}.app-links{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.app-link{display:inline-block;padding:11px 15px;background:var(--blue);color:#fff!important;border-radius:9px;text-decoration:none!important}.book{border-left:4px solid var(--gold);padding:10px 13px;background:#fffaf0;border-radius:0 9px 9px 0;margin-top:12px}
+.pie-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.pie-status{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}.status-ok,.status-bad,.status-info{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800}.status-ok{background:#eaf6ec;color:#1f5d25}.status-bad{background:#fff0ef;color:#7a271a}.status-info{background:#eef5ff;color:#176b4d}@media(max-width:780px){.pie-grid{grid-template-columns:1fr}}
+.hidden{display:none!important}
+
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header">
+<div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div>
+<h1>Misleading Graphs?</h1>
+<p>How to recognise, correct, and prevent misleading statistical displays</p>
+<div class="quote">“A good graph is not the most spectacular one, but the one that reveals the structure of the data without distorting it.”</div>
+</header>
+<div class="meta">
+<span class="pill">Applied examples</span>
+<span class="pill">Interactive charts</span>
+<span class="pill">Final quiz</span>
+</div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Reading graphs</button><button class="iple-group-tab" data-iple-group="1" type="button">Choosing a graph</button><button class="iple-group-tab" data-iple-group="2" type="button">Misleading choices</button><button class="iple-group-tab" data-iple-group="3" type="button">Applied analysis</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><nav class="tabbar iple-original-tabs" id="tabbar">
+<button class="tab active" data-tab="1">1 · What the graph says</button>
+<button class="tab" data-tab="2">2 · Variable type</button>
+<button class="tab" data-tab="3">3 · Choose the graph</button>
+<button class="tab" data-tab="4">4 · Spot the deception</button>
+<button class="tab" data-tab="5">5 · Histograms</button>
+<button class="tab" data-tab="6">6 · You are the data analyst</button>
+<button class="tab" data-tab="8">7 · Final quiz</button>
+<button class="tab" data-tab="exam-prep">Preparing for the exam</button></nav>
+<main class="content">
+<section class="section active" data-iple-group="0" id="tab1">
+<div class="hero-card"><h2>A graph is not decoration</h2><p>A table and its corresponding graph should contain the same information. However, ordering, scale, bar shape, class width, and the choice between absolute values and ratios can radically change what the reader perceives.</p></div>
+<div class="grid2">
+<div class="card"><div class="card-head">Same data, two stories</div><div class="card-body"><p>Annual public expenditure rises from 9.8 to 10.5 million euros. With an axis from 0 to 11 million, the growth appears moderate; with an axis from 9.7 to 10.6 million, it appears spectacular.</p><div class="controls"><div class="control"><label>Minimum of the vertical axis: <span class="value" id="axisMinValue">0</span></label><input id="axisMin" max="9.7" min="0" step="0.1" type="range" value="0"/></div></div><canvas height="390" id="axisChart" width="720"></canvas></div></div>
+<div class="card"><div class="card-head orange">Critical question</div><div class="card-body"><p>Is truncating the axis always wrong?</p><button class="quiz-option" data-correct="false" data-q="intro">Yes, every axis must always start at zero.</button><button class="quiz-option" data-correct="true" data-q="intro">No, but it must be clearly shown and justified; in bar charts it can strongly distort the perception of length.</button><button class="quiz-option" data-correct="false" data-q="intro">No, because scale does not affect interpretation.</button><div class="feedback" data-err="Remember that bar length is read as quantity: changing the origin can alter the visual impression." data-ok="Correct. A truncated axis may help reveal small differences, but it must be clearly disclosed and must not misleadingly amplify the variation." id="fb-intro"></div><div class="note"><strong>Practical rule.</strong> In bar charts, a zero baseline is normally necessary. In line charts, a restricted axis may be acceptable if it is clearly indicated and consistent with the analytical purpose.</div></div></div>
+</div>
+<div class="btn-row iple-old-section-nav"><span></span><button class="btn primary" data-to="2">Recognise the variables →</button></div>
+</section>
+<section class="section" data-iple-group="0" id="tab2">
+<div class="intro"><h2>The variable comes before the graph</h2><p>The correct graph depends on the nature of the phenomenon. The following matrix, inspired by S. M. Iacus’s lesson, contains four different types of variables.</p></div>
+<div class="table-wrap"><table class="data"><thead><tr><th>Unit</th><th>Marital status</th><th>Educational attainment</th><th>Number of children</th><th>Income (thousand €)</th></tr></thead><tbody>
+<tr><td>1</td><td>Single</td><td>University degree</td><td>0</td><td>72,50</td></tr><tr><td>2</td><td>Separated</td><td>Compulsory schooling</td><td>1</td><td>54,28</td></tr><tr><td>3</td><td>Widowed</td><td>No qualification</td><td>3</td><td>50,02</td></tr><tr><td>4</td><td>Married</td><td>Upper-secondary diploma</td><td>2</td><td>78,40</td></tr><tr><td>5</td><td>Married</td><td>University degree</td><td>1</td><td>62,30</td></tr></tbody></table></div>
+<div class="card"><div class="card-head dark">Classify the variables</div><div class="card-body"><div class="grid2">
+<div><label><strong>Marital status</strong></label><select class="var-select" data-answer="nominal"><option value="">— choose —</option><option value="nominal">Nominal qualitative</option><option value="ordinal">Ordinal qualitative</option><option value="discrete">Discrete quantitative</option><option value="continuous">Continuous quantitative</option></select></div>
+<div><label><strong>Educational attainment</strong></label><select class="var-select" data-answer="ordinal"><option value="">— choose —</option><option value="nominal">Nominal qualitative</option><option value="ordinal">Ordinal qualitative</option><option value="discrete">Discrete quantitative</option><option value="continuous">Continuous quantitative</option></select></div>
+<div><label><strong>Number of children</strong></label><select class="var-select" data-answer="discrete"><option value="">— choose —</option><option value="nominal">Nominal qualitative</option><option value="ordinal">Ordinal qualitative</option><option value="discrete">Discrete quantitative</option><option value="continuous">Continuous quantitative</option></select></div>
+<div><label><strong>Income</strong></label><select class="var-select" data-answer="continuous"><option value="">— choose —</option><option value="nominal">Nominal qualitative</option><option value="ordinal">Ordinal qualitative</option><option value="discrete">Discrete quantitative</option><option value="continuous">Continuous quantitative</option></select></div>
+</div><div class="btn-row"><button class="btn primary" id="checkVars">Check</button></div><div class="feedback" id="fb-vars"></div></div></div>
+<div class="external"><h3>To explore different data types with R Shiny</h3><p>The interactive applications <em>Exploring Categorical Data</em> and <em>Exploring Quantitative Data</em> are web apps created with <strong>R Shiny</strong>. The first helps you experiment with categories, ordering, frequencies, and percentages; the second allows you to compare histograms, boxplots, and other displays for numerical data, also changing the number, width, and origin of bins.</p><div class="app-links"><a class="app-link" href="https://istats.shinyapps.io/EDA_categorical/" rel="noopener" target="_blank">EDA Categorical ↗</a><a class="app-link" href="https://istats.shinyapps.io/EDA_quantitative/" rel="noopener" target="_blank">EDA Quantitative ↗</a></div><div class="book"><strong>Reference text:</strong> Alan Agresti, Christine A. Franklin, and Bernhard Klingenberg, <em>Statistics: The Art and Science of Learning from Data</em>, 5th edition, Pearson. The book is also available in an Italian Pearson translation, and the accompanying resources include interactive tools that can also be used on smartphones.</div><p class="small">The apps do not replace methodological choice: they help you observe how the nature of the variable and display options change what the graph makes visible.</p></div>
+<div class="note"><strong>Guiding principle.</strong> A graph is not chosen according to what “looks attractive”, but according to the variable type, the question, and the message to be communicated.</div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="1">← Back</button><button class="btn primary" data-to="3">Map of graphs →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="tab3">
+<div class="intro"><h2>Which graph for which variable?</h2><p>Select a type to view the essential rules and the most common errors.</p></div>
+<div class="rule-map" id="ruleMap">
+<div class="rule active" data-rule="nominal"><h4>Nominal qualitative</h4><p class="small">Categories without a natural order.</p></div>
+<div class="rule" data-rule="ordinal"><h4>Ordinal qualitative</h4><p class="small">Categories with a natural order.</p></div>
+<div class="rule" data-rule="discrete"><h4>Discrete quantitative</h4><p class="small">Counts or isolated values.</p></div>
+<div class="rule" data-rule="continuous"><h4>Continuous quantitative</h4><p class="small">Measurements on a continuous scale.</p></div>
+</div>
+<div class="card"><div class="card-head" id="ruleTitle">Nominal qualitative</div><div class="card-body" id="ruleBody"></div></div>
+<div class="card" id="numericCategoryCard"><div class="card-head orange">Numbers that look like categories</div><div class="card-body"><p>Questionnaire software may treat the values <strong>1, 5, 10, 50, 250</strong> as equally spaced labels, even when the numerical distances are very different. This is acceptable only if the numbers are codes or class labels. If they represent quantities, the axis must preserve the distances.</p><div class="grid2"><div class="chart-card"><h4>Treated as categories</h4><canvas height="330" id="numericCategoriesBad" width="620"></canvas><p class="chart-caption">The five labels occupy equal spaces: the graph hides the fact that 250 is much farther from 50 than 5 is from 1.</p></div><div class="chart-card"><h4>Displayed on a numerical scale</h4><canvas height="330" id="numericCategoriesGood" width="620"></canvas><p class="chart-caption">The sticks are positioned at the actual numerical values. Distances on the horizontal axis preserve their quantitative meaning.</p></div></div><div class="warn"><strong>Example.</strong> “Population size” may be a quantity (1, 5, 10, 50, 250) or an ordered class (“1–9”, “10–49”, “50–249”, “250+”). The display depends on the meaning, not the appearance of the data.</div></div></div>
+<div class="card" id="stickChartCard"><div class="card-head">Stick chart for a discrete quantitative variable</div><div class="card-body"><p>For a count, such as the number of monthly court filings, each value must occupy its own position on the numerical axis. The vertical segments remain separate: they are not adjacent rectangles as in a histogram.</p><canvas height="370" id="stickChart" width="760"></canvas><div class="note"><strong>Do not confuse the two.</strong> If 0, 1, 2, 5, and 10 are quantities, the distances must be respected. If instead they are category codes, the axis may be categorical, but this must be clearly stated.</div></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="2">← Back</button><button class="btn primary" data-to="4">Error laboratory →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="tab4">
+<div class="intro"><h2>Error laboratory</h2><p>Each case begins with a graph that may lead to an incorrect conclusion. Identify the problem and compare it with the corrected version.</p></div>
+<div class="case-tabs">
+<button class="case-tab active" data-case="ordinal">Ordering of categories</button>
+<button class="case-tab" data-case="unique">All bars have height 1</button>
+<button class="case-tab" data-case="rates">Counts or rates</button>
+<button class="case-tab" data-case="pie">Inappropriate pie chart</button>
+</div>
+<div class="case-panel active" id="case-ordinal"><div class="card"><div class="card-head">Politics case · Trust in institutions</div><div class="card-body"><p>Levels of trust in institutions were arranged in the order returned by the software rather than in their natural order.</p><div class="grid2"><div><h4>Incorrect chart</h4><canvas height="350" id="ordinalBad" width="620"></canvas></div><div><h4>Correct chart</h4><canvas height="350" id="ordinalGood" width="620"></canvas></div></div><div class="success"><strong>Why does the interpretation change?</strong> With the correct order, the overall profile emerges immediately, from the worst to the best rating. For an ordinal variable, order is part of the information.</div></div></div></div>
+<div class="case-panel" id="case-unique"><div class="card"><div class="card-head">Law case · Duration of court proceedings</div><div class="card-body"><p>Almost every case has a different duration. Treating each value as a category produces many bars, all with a height of 1, and conceals the shape of the distribution.</p><div class="grid2"><div><h4>One bar for each value</h4><canvas height="350" id="uniqueBars" width="620"></canvas></div><div><h4>Data grouped into intervals</h4><canvas height="350" id="uniqueHist" width="620"></canvas></div></div><div class="note"><strong>Alternative.</strong> For small samples, a dotplot may be used. To describe the shape of the distribution, a histogram is often more useful or, for a summary, a boxplot.</div></div></div></div>
+<div class="case-panel" id="case-rates"><div class="card"><div class="card-head">Public-policy case · Complaints across municipalities</div><div class="card-body"><div class="table-wrap"><table class="data"><thead><tr><th>Municipality</th><th>Complaints</th><th>Residents</th><th>Complaints per 1,000 residents</th></tr></thead><tbody><tr><td>Milano</td><td>120</td><td>30.000</td><td>4,0</td></tr><tr><td>Bergamo</td><td>45</td><td>4.000</td><td>11,25</td></tr></tbody></table></div><div class="grid2"><div><h4>Absolute values</h4><canvas height="340" id="ratesAbs" width="620"></canvas></div><div><h4>Rate per 1,000 residents</h4><canvas height="340" id="ratesRate" width="620"></canvas></div></div><div class="warn"><strong>One does not always replace the other.</strong> Absolute values describe the total volume; rates describe the incidence relative to the size of the group. Many policy and institutional decisions require both.</div></div></div></div>
+<div class="case-panel" id="case-pie"><div class="card"><div class="card-head">Public-communication case · When a pie chart is appropriate and when it misleads</div><div class="card-body">
+<p>A pie chart represents <strong>parts of a single whole</strong>. Before using it, three conditions must be checked: the categories must be mutually exclusive, the shares must refer to the same denominator, and they must sum to 100%. Even when these conditions are met, too many slices make comparison difficult.</p>
+<div class="pie-grid">
+<div class="chart-card"><h4>1. Appropriate use</h4><div class="pie-status"><span class="status-ok">Mutually exclusive categories</span><span class="status-ok">Total = 100%</span></div><canvas height="390" id="pieGood" width="680"></canvas><p class="chart-caption"><strong>Main information channel.</strong> Each citizen indicates only one channel: the four shares are non-overlapping parts of the same group.</p></div>
+<div class="chart-card"><h4>2. Incorrect use: multiple responses</h4><div class="pie-status"><span class="status-bad">Overlapping categories</span><span class="status-bad">Original sum = 165%</span></div><canvas height="390" id="pieOverlap" width="680"></canvas><p class="chart-caption"><strong>Channels used.</strong> Each citizen may select more than one channel. The software normalises 165% to 100% and creates a whole that does not exist in the data.</p></div>
+<div class="chart-card"><h4>3. Visually correct, but difficult to read</h4><div class="pie-status"><span class="status-ok">Total = 100%</span><span class="status-info">9 similar categories</span></div><canvas height="390" id="pieMany" width="680"></canvas><p class="chart-caption">The categories are correct, but differences between similar slices are difficult to compare. An ordered bar chart communicates more clearly.</p></div>
+<div class="chart-card"><h4>4. Correct representation for multiple responses</h4><div class="pie-status"><span class="status-ok">Percentage by channel</span><span class="status-info">The total may exceed 100%</span></div><canvas height="390" id="pieCorrection" width="680"></canvas><p class="chart-caption">The bars retain the correct denominator: the percentage of residents who use each channel. They do not pretend that the categories form a single whole.</p></div>
+</div>
+<div class="note"><strong>Diagnostic rule.</strong> Ask yourself: “Does each unit belong to only one slice?” and “Do the slices truly reconstruct a single whole?”. If either answer is no, do not use a pie chart. If there are many or very similar categories, prefer ordered bars.</div>
+<button class="quiz-option" data-correct="false" data-q="pie">Any set of percentages can be turned into a pie chart, provided the software normalises it.</button><button class="quiz-option" data-correct="true" data-q="pie">A pie chart requires exclusive categories referring to the same total; for multiple responses or many categories, a bar chart is preferable.</button><button class="quiz-option" data-correct="false" data-q="pie">If percentages sum to more than 100%, simply reduce them proportionally.</button><div class="feedback" data-err="Check whether the categories are mutually exclusive, whether they share the same denominator, and whether the percentages form a coherent total." data-ok="Correct. Data structure and the denominator must be considered before choosing the graphical form." id="fb-pie"></div>
+</div></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="3">← Back</button><button class="btn primary" data-to="5">Histogram laboratory →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="tab5">
+<div class="intro"><h2>The same data, different histograms</h2><p>The number and width of the bins affect the perceived shape. With unequal intervals, the correct height is density, because the area of each bar must represent frequency.</p></div>
+<div class="card"><div class="card-head">A. Choose the number of bins</div><div class="card-body"><div class="grid2"><div class="controls"><div class="control"><label>Number of bins: <span class="value" id="binValue">8</span></label><input id="binSlider" max="24" min="3" type="range" value="8"/></div><div class="readout small" id="binComment"></div></div><canvas height="390" id="binChart" width="720"></canvas></div><div class="note"><strong>There is no single “true” number of bins.</strong> Too few bins may erase structure; too many may make noise look like a pattern. Rules such as Sturges, Scott, or Freedman–Diaconis are starting points, not substitutes for judgement.</div></div></div>
+<div class="card"><div class="card-head">B. Unequal interval widths</div><div class="card-body"><div class="table-wrap"><table class="data"><thead><tr><th>Case-processing time</th><th>Frequency</th><th>Width</th><th>Density</th></tr></thead><tbody><tr><td>0–12 hours</td><td>12</td><td>12</td><td>1,00</td></tr><tr><td>12–24 hours</td><td>28</td><td>12</td><td>2,33</td></tr><tr><td>24–48 hours</td><td>30</td><td>24</td><td>1,25</td></tr><tr><td>48–96 hours</td><td>10</td><td>48</td><td>0,21</td></tr></tbody></table></div><div class="controls"><div class="control"><label>Bar height</label><select id="histMode"><option value="frequency">Frequency (incorrect with unequal intervals)</option><option value="density">Density (correct)</option></select></div></div><canvas height="410" id="unequalHist" width="760"></canvas><div class="danger" id="histExplain"><strong>Incorrect histogram.</strong> The areas of the bars increase merely because some intervals are wider. Area is no longer proportional to the number of observations.</div><div class="success hidden" id="densityExplain"><strong>Correct histogram.</strong> Height = frequency / width. Therefore, area = width × density = frequency.</div></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="4">← Back</button><button class="btn primary" data-to="6">Final case →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="tab6">
+<div class="intro"><h2>You are the data analyst</h2><p>Work through four exam-style representation tasks. Choose the appropriate graph, generate it, and practise a brief interpretation.</p></div>
+<div class="card"><div class="card-head dark">Integrated Applied case</div><div class="card-body"><p>A local authority has data on public-service satisfaction, case-processing times, complaints, population, and public expenditure.</p><div class="grid2">
+<div><label><strong>1. Compare satisfaction</strong></label><select class="analyst" data-answer="bar-order"><option value="">— choose —</option><option value="pie">Unordered pie chart</option><option value="bar-order">Bars ordered according to the scale</option><option value="hist">Histogram</option></select></div>
+<div><label><strong>2. Describe waiting times</strong></label><select class="analyst" data-answer="hist"><option value="">— choose —</option><option value="bars-unique">One bar for each value</option><option value="hist">Histogram with carefully chosen bins</option><option value="pie">Pie chart</option></select></div>
+<div><label><strong>3. Compare complaints across municipalities of different sizes</strong></label><select class="analyst" data-answer="rates"><option value="">— choose —</option><option value="absolute">Absolute values only</option><option value="rates">Rates and, where useful, absolute values too</option><option value="pie">Pie chart</option></select></div>
+<div><label><strong>4. Show the trend in public expenditure over time</strong></label><select class="analyst" data-answer="line"><option value="">— choose —</option><option value="line">Line chart with a clearly stated scale</option><option value="pie">Pie chart</option><option value="unordered">Bars in random order</option></select></div>
+</div><div class="btn-row"><button class="btn primary" id="checkAnalyst">Check and generate the charts</button></div><div class="feedback" id="fb-analyst"></div></div></div>
+<div class="analyst-output" id="analystOutput">
+<div class="card"><div class="card-head">1. Public-service satisfaction: ordered bars</div><div class="card-body"><canvas height="390" id="analystSatisfaction" width="760"></canvas><p class="chart-caption">Ordinal qualitative variable: the order from the worst to the best rating is part of the information.</p><div class="download-row"><button class="btn ghost save-chart" data-canvas="analystSatisfaction" data-name="public_service_satisfaction.png">Save PNG</button></div></div></div>
+<div class="card"><div class="card-head">2. Case-processing times: histogram</div><div class="card-body"><canvas height="390" id="analystDelivery" width="760"></canvas><p class="chart-caption">Continuous quantitative variable: the data are grouped into intervals to make the shape of the distribution readable.</p><div class="download-row"><button class="btn ghost save-chart" data-canvas="analystDelivery" data-name="case_processing_histogram.png">Save PNG</button></div></div></div>
+<div class="card"><div class="card-head">3. Complaints: comparable rates</div><div class="card-body"><canvas height="390" id="analystComplaints" width="760"></canvas><p class="chart-caption">The denominator is the number of residents: the rate per 1,000 residents allows municipalities of different sizes to be compared.</p><div class="download-row"><button class="btn ghost save-chart" data-canvas="analystComplaints" data-name="complaints_per_1000_residents.png">Save PNG</button></div></div></div>
+<div class="card"><div class="card-head">4. Public expenditure: time trend</div><div class="card-body"><canvas height="390" id="analystRevenue" width="760"></canvas><p class="chart-caption">The line chart preserves temporal order. The scale is stated explicitly and the variation is not concealed.</p><div class="download-row"><button class="btn ghost save-chart" data-canvas="analystRevenue" data-name="public_expenditure_trend.png">Save PNG</button></div></div></div>
+<div class="card"><div class="card-head orange">Short written interpretation</div><div class="card-body"><p>Write a concise practice answer. For each chart, state what it shows, which comparison it enables, and one interpretative caution.</p><textarea class="comment-box" id="analystComment" placeholder="Write your comment here..."></textarea><div class="download-row"><button class="btn primary" id="copyComment">Copy my practice answer</button><button class="btn secondary" id="downloadComment">Save my practice answer (.txt)</button></div><div class="feedback" id="commentFeedback"></div></div></div>
+</div>
+<div class="card"><div class="card-head">Honest-chart checklist</div><div class="card-body checklist">
+<label><input type="checkbox"/> I identified the type of variable.</label><label><input type="checkbox"/> I respected the natural order of ordinal categories.</label><label><input type="checkbox"/> The numerical axis respects distances and units of measurement.</label><label><input type="checkbox"/> I chose among absolute values, percentages, and rates according to the question.</label><label><input type="checkbox"/> With unequal intervals, height represents density.</label><label><input type="checkbox"/> Title, axes, units, period, and source are explicit.</label><label><input type="checkbox"/> The scale does not artificially amplify or minimise differences.</label>
+</div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="5">← Back</button><button class="btn primary" data-to="8">Go to the final quiz →</button></div>
+</section>
+<section class="section" data-iple-group="4" id="tab8">
+<div class="intro"><h2>Final quiz</h2><p>Eight questions to check whether you can recognise the correct chart and diagnose the most common errors.</p></div>
+<div id="finalQuiz"></div>
+<div class="btn-row"><button class="btn primary" id="scoreQuiz">Calculate the score</button><button class="btn secondary" id="resetQuiz">Start again</button></div>
+<div class="scorebox hidden" id="scoreBox"><div class="big" id="scoreValue">0/8</div><p id="scoreText"></p></div>
+<div class="note"><strong>Final message.</strong> A correct chart begins with three questions: what type of data am I representing? Which comparison do I want to make possible? What perception does my graphical choice create?</div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="6">← Back</button><button class="btn ghost" data-to="1">Back to the beginning</button></div>
+</section>
+<section class="section" data-iple-group="5" id="tabexam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>A truncated vertical axis</h3><p><strong>Question.</strong> Support for a policy rises from 48% to 51%, but a bar chart starts at 47%. What is misleading?</p><div class="exam-answer"><strong>Solution.</strong> The truncated axis visually magnifies a three-percentage-point increase. The values are correct, but the scale exaggerates the substantive change. The answer should report both the numerical difference and the graphical distortion.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Choosing the correct graph</h3><p><strong>Question.</strong> You must compare voter turnout across six regions. Which display is preferable: a pie chart or a bar chart?</p><div class="exam-answer"><strong>Solution.</strong> A bar chart is preferable because the task is to compare category values. A common baseline makes small regional differences easier to read than angles or sectors in a pie chart.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">Reading a graph critically</div><div class="card-body"><div class="exam-prep-question">A chart compares unemployment in two countries using bars that begin at 7% rather than 0%. Country A is at 8% and Country B at 9%. Explain why the graph may mislead and propose a better display.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>The one-percentage-point difference is real, but the truncated baseline visually exaggerates it. A bar chart should normally begin at zero; alternatively, a clearly labelled dot plot can show the values and their difference without encoding them as full bar lengths.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> Identifies the truncated baseline <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Separates numerical truth from visual exaggeration <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Proposes an appropriate alternative display <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Uses percentages and percentage points correctly <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></main>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+function showTab(n){tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===String(n)));document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='tab'+n));window.scrollTo({top:0,behavior:'smooth'});if(n===1)drawAxis();if(n===3)drawNumericExamples();if(n===4)drawCases();if(n===5){drawBins();drawUnequal();}if(n===6&&document.getElementById('analystOutput').classList.contains('show')){drawAnalystCharts();}}
+tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));document.querySelectorAll('[data-to]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.to)));
+function prepCanvas(id){const c=document.getElementById(id);const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);ctx.font='14px Arial';ctx.fillStyle='#1f2937';return {c,ctx};}
+function axes(ctx,x0,y0,x1,y1){ctx.strokeStyle='#344054';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x0,y1);ctx.lineTo(x1,y1);ctx.stroke();}
+function barChart(id,labels,values,opt={}){const {c,ctx}=prepCanvas(id);const m={l:70,r:22,t:35,b:78};const W=c.width-m.l-m.r,H=c.height-m.t-m.b;const min=opt.min??0,max=opt.max??Math.max(...values)*1.12;axes(ctx,m.l,m.t,m.l,m.t+H);const bw=W/labels.length*.62,gap=W/labels.length;ctx.strokeStyle='#d8e0e8';ctx.fillStyle='#667085';for(let i=0;i<=5;i++){const v=min+(max-min)*i/5;const y=m.t+H-H*i/5;ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(m.l+W,y);ctx.stroke();ctx.fillText(v.toFixed(opt.decimals??0),8,y+4);}values.forEach((v,i)=>{const h=(v-min)/(max-min)*H;const x=m.l+i*gap+(gap-bw)/2,y=m.t+H-h;ctx.fillStyle=opt.fill||'#2e76b5';ctx.fillRect(x,y,bw,h);ctx.fillStyle='#344054';ctx.textAlign='center';ctx.save();ctx.translate(x+bw/2,m.t+H+17);if(opt.rotate){ctx.rotate(-Math.PI/4);ctx.textAlign='right';}ctx.fillText(labels[i],0,0);ctx.restore();ctx.fillText(v,x+bw/2,y-6);});ctx.textAlign='start';if(opt.title){ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText(opt.title,m.l,m.t-12);}}
+function drawAxis(){const min=+document.getElementById('axisMin').value;document.getElementById('axisMinValue').textContent=min.toFixed(1);barChart('axisChart',['T1','T2','T3','T4'],[9.8,10.1,10.3,10.5],{min,max:11,decimals:1,title:'Quarterly public expenditure (€ millions)'});}
+document.getElementById('axisMin').addEventListener('input',drawAxis);
+function bindQuizOptions(scope=document){scope.querySelectorAll('.quiz-option').forEach(btn=>btn.addEventListener('click',()=>{const q=btn.dataset.q;scope.querySelectorAll(`.quiz-option[data-q="${q}"]`).forEach(b=>{b.disabled=true;b.classList.remove('correct','wrong')});const ok=btn.dataset.correct==='true';btn.classList.add(ok?'correct':'wrong');const fb=document.getElementById('fb-'+q);if(fb){fb.className='feedback '+(ok?'ok':'err');fb.textContent=ok?fb.dataset.ok:fb.dataset.err;}}));}
+bindQuizOptions();
+document.getElementById('checkVars').addEventListener('click',()=>{const sels=[...document.querySelectorAll('.var-select')];const done=sels.every(s=>s.value);const ok=done&&sels.every(s=>s.value===s.dataset.answer);const fb=document.getElementById('fb-vars');fb.className='feedback '+(ok?'ok':'err');fb.textContent=!done?'Complete all classifications.':ok?'Correct: nominal, ordinal, discrete, and continuous variables require different representations.':'At least one classification is incorrect. Remember: marital status has no order; education level does; children are counts; income is a continuous measure.';});
+const rules={
+nominal:`<p><span class="badge">1</span><strong>Suitable charts:</strong> bars; a pie chart only with a small number of mutually exclusive categories that are parts of the same total.</p><p><strong>Order:</strong> no natural order; it may be alphabetical, substantive, or by frequency.</p><div class="warn">Typical error: using a pie chart with many categories or multiple responses.</div>`,
+ordinal:`<p><span class="badge">2</span><strong>Recommended chart:</strong> bars ordered according to the meaning of the scale.</p><p><strong>Order:</strong> required, for example from “very dissatisfied” to “very satisfied”.</p><div class="warn">Typical error: retaining alphabetical order or the order returned by the software.</div>`,
+discrete:`<p><span class="badge">3</span><strong>Chart:</strong> spikes or points at their true numerical positions.</p><p><strong>Axis:</strong> must respect the distances between values. If the numbers are category codes, they may be equally spaced; if they are quantities, they may not.</p><div class="warn">Typical error: treating 1, 5, 10, 50, and 250 as equally spaced categories.</div>`,
+continuous:`<p><span class="badge">4</span><strong>Charts:</strong> histogram for shape; boxplot for a summary; dotplot for small samples.</p><p><strong>Intervals:</strong> if their widths differ, height must represent density.</p><div class="warn">Typical error: one bar for each distinct value, often all with a height of 1.</div>`};
+function showRule(k){document.querySelectorAll('.rule').forEach(r=>r.classList.toggle('active',r.dataset.rule===k));document.getElementById('ruleTitle').textContent=document.querySelector(`.rule[data-rule="${k}"] h4`).textContent;document.getElementById('ruleBody').innerHTML=rules[k];const showDiscrete=k==='discrete';document.getElementById('numericCategoryCard').classList.toggle('hidden',!showDiscrete);document.getElementById('stickChartCard').classList.toggle('hidden',!showDiscrete);if(showDiscrete){requestAnimationFrame(drawNumericExamples);}}
+document.querySelectorAll('.rule').forEach(r=>r.addEventListener('click',()=>showRule(r.dataset.rule)));showRule('nominal');
+function drawNumericExamples(){
+  const bad=document.getElementById('numericCategoriesBad'), good=document.getElementById('numericCategoriesGood');
+  if(!bad||!good)return;
+  barChart('numericCategoriesBad',['1','5','10','50','250'],[9,14,11,7,4],{title:'Equally spaced values used as labels'});
+  const {c,ctx}=prepCanvas('numericCategoriesGood');const m={l:66,r:28,t:42,b:62},W=c.width-m.l-m.r,H=c.height-m.t-m.b;
+  axes(ctx,m.l,m.t,m.l,m.t+H);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(m.l,m.t+H);ctx.lineTo(m.l+W,m.t+H);ctx.stroke();
+  const xs=[1,5,10,50,250],ys=[9,14,11,7,4],maxY=16;
+  for(let j=0;j<=4;j++){const y=m.t+H-j/4*H;ctx.strokeStyle='#e1e7ef';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(m.l+W,y);ctx.stroke();ctx.fillStyle='#667085';ctx.textAlign='right';ctx.fillText(String(j*4),m.l-8,y+4);}
+  ys.forEach((v,i)=>{const x=m.l+(xs[i]/250)*W,y=m.t+H-(v/maxY)*H;ctx.strokeStyle='#2e8b57';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x,m.t+H);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='#2e8b57';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#344054';ctx.textAlign='center';ctx.fillText(xs[i],x,m.t+H+22);ctx.fillText(v,x,y-10);});
+  ctx.textAlign='start';ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText('Sticks at the actual numerical positions',m.l,m.t-16);
+  drawStickChart();
+}
+function drawStickChart(){const {c,ctx}=prepCanvas('stickChart');const m={l:68,r:28,t:44,b:62},W=c.width-m.l-m.r,H=c.height-m.t-m.b;const xs=[0,1,2,5,10],ys=[12,19,15,8,3],maxY=20;axes(ctx,m.l,m.t,m.l,m.t+H);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(m.l,m.t+H);ctx.lineTo(m.l+W,m.t+H);ctx.stroke();for(let j=0;j<=4;j++){const y=m.t+H-j/4*H;ctx.strokeStyle='#e1e7ef';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(m.l+W,y);ctx.stroke();ctx.fillStyle='#667085';ctx.textAlign='right';ctx.fillText(String(j*5),m.l-8,y+4);}xs.forEach((v,i)=>{const x=m.l+(v/10)*W,y=m.t+H-(ys[i]/maxY)*H;ctx.strokeStyle='#176b4d';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x,m.t+H);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle='#176b4d';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#344054';ctx.textAlign='center';ctx.fillText(v,x,m.t+H+22);ctx.fillText(ys[i],x,y-10);});ctx.textAlign='start';ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText('Number of monthly purchases: spike plot',m.l,m.t-16);}
+document.querySelectorAll('.case-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.case-tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.case-panel').forEach(p=>p.classList.toggle('active',p.id==='case-'+b.dataset.case));drawCases();}));
+function pieChart(id,labels,values,title,opts={}){const {c,ctx}=prepCanvas(id);const total=values.reduce((a,b)=>a+b,0),cx=c.width*.35,cy=c.height*.55,r=Math.min(c.width*.48,c.height*.70)*.42;const cols=['#176b4d','#2e76b5','#d49a00','#c4681a','#6d5bd0','#2e7d32','#b42318','#7b8794','#55a6d9','#a5b8cc'];let a=-Math.PI/2;values.forEach((v,i)=>{const da=v/total*Math.PI*2,mid=a+da/2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,a,a+da);ctx.closePath();ctx.fillStyle=cols[i%cols.length];ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();const shown=opts.displayValues?opts.displayValues[i]:Math.round(v/total*100);if(da>.34){ctx.fillStyle='#fff';ctx.font='bold 13px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(`${shown}%`,cx+Math.cos(mid)*r*.63,cy+Math.sin(mid)*r*.63);}a+=da;});ctx.textAlign='start';ctx.textBaseline='alphabetic';ctx.font='bold 15px Arial';ctx.fillStyle='#176b4d';ctx.fillText(title,18,24);ctx.font='13px Arial';const lx=c.width*.67, startY=62, step=Math.min(27,(c.height-80)/labels.length);labels.forEach((lab,i)=>{const y=startY+i*step;ctx.fillStyle=cols[i%cols.length];ctx.fillRect(lx,y-12,14,14);ctx.fillStyle='#344054';const shown=opts.displayValues?opts.displayValues[i]:values[i];ctx.fillText(`${lab}: ${shown}%`,lx+21,y);});if(opts.footer){ctx.fillStyle=opts.footerColor||'#667085';ctx.font='bold 12px Arial';ctx.fillText(opts.footer,18,c.height-16);}}
+function drawPieCases(){if(!document.getElementById('pieGood'))return;pieChart('pieGood',['Email','Telephone','Chat','Service desk'],[38,27,23,12],'Main channel',{footer:'Sum of shares: 100%'});pieChart('pieOverlap',['Email','Telephone','Chat','Social media'],[68,41,37,19],'Pie chart generated by the software',{displayValues:[68,41,37,19],footer:'Original percentages: 68 + 41 + 37 + 19 = 165%',footerColor:'#b42318'});pieChart('pieMany',['North-West','North-East','Centre','South','Islands','Abroad','Online','Partner','Other'],[14,13,12,12,11,11,10,9,8],'Shares by channel',{footer:'Formally 100%, but difficult to compare'});barChart('pieCorrection',['Email','Telephone','Chat','Social media'],[68,41,37,19],{title:'Citizens using each channel (%)'});}
+function drawCases(){barChart('ordinalBad',['Satisfied','Very dissatisfied','Neutral','Very satisfied','Dissatisfied'],[36,8,25,14,17],{rotate:true,title:'Order returned by the software'});barChart('ordinalGood',['Very dissatisfied','Dissatisfied','Neutral','Satisfied','Very satisfied'],[8,17,25,36,14],{rotate:true,title:'Natural order of the scale'});const vals=[18.2,18.7,19.1,19.4,20.3,20.8,21.1,21.7,22.2,22.8,23.4,24.1,24.7,25.5,26.1,27.4,28.0,29.2,31.5,34.2];barChart('uniqueBars',vals.map(v=>String(v)),vals.map(()=>1),{rotate:true,max:2,title:'Each value treated as a category'});drawHistogram('uniqueHist',vals,6,'Times grouped into 6 intervals');barChart('ratesAbs',['Milano','Bergamo'],[120,45],{title:'Number of complaints'});barChart('ratesRate',['Milano','Bergamo'],[4,11.25],{decimals:2,title:'Complaints per 1,000 residents'});drawPieCases();}
+function drawHistogram(id,data,bins,title){const {c,ctx}=prepCanvas(id);const m={l:62,r:24,t:38,b:55},W=c.width-m.l-m.r,H=c.height-m.t-m.b;const min=Math.min(...data),max=Math.max(...data),bw=(max-min)/bins,counts=Array(bins).fill(0);data.forEach(v=>{let i=Math.floor((v-min)/bw);if(i===bins)i--;counts[i]++;});const ymax=Math.max(...counts)*1.15;axes(ctx,m.l,m.t,m.l,m.t+H);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(m.l,m.t+H);ctx.lineTo(m.l+W,m.t+H);ctx.stroke();counts.forEach((v,i)=>{const x=m.l+i*W/bins,y=m.t+H-v/ymax*H;ctx.fillStyle='#2e76b5';ctx.fillRect(x,y,W/bins,v/ymax*H);ctx.strokeStyle='#fff';ctx.strokeRect(x,y,W/bins,v/ymax*H);});ctx.fillStyle='#344054';ctx.textAlign='center';for(let i=0;i<=bins;i++){const x=m.l+i*W/bins;ctx.fillText((min+i*bw).toFixed(0),x,m.t+H+20);}ctx.textAlign='start';ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText(title,m.l,m.t-13);}
+const deliveryData=[9,11,12,13,14,15,16,17,18,18,19,19,20,20,21,22,22,23,24,24,25,26,27,28,29,30,31,32,34,36,39,41,44,48,52,58,66,72,84,91,12,14,15,17,19,20,22,23,24,25,28,30,33,35,38,42,47,54,62,70,80,88,16,18,21,24,27,29,31,36,40,45,49,57,64,76,86,95,20,25];
+function drawBins(){const n=+document.getElementById('binSlider').value;document.getElementById('binValue').textContent=n;drawHistogram('binChart',deliveryData,n,'Case-processing times: effect of the number of bins');const msg=n<=5?'Few bins: the distribution is greatly simplified and may conceal detail.':n>=18?'Many bins: irregularities emerge that may be only sampling noise.':'Intermediate number: the general shape is readable without excessively fragmenting the data.';document.getElementById('binComment').textContent=msg;}
+document.getElementById('binSlider').addEventListener('input',drawBins);
+function drawUnequal(){const mode=document.getElementById('histMode').value;const {c,ctx}=prepCanvas('unequalHist');const edges=[0,12,24,48,96],freq=[12,28,30,10],dens=freq.map((f,i)=>f/(edges[i+1]-edges[i]));const vals=mode==='frequency'?freq:dens;const m={l:68,r:22,t:40,b:60},W=c.width-m.l-m.r,H=c.height-m.t-m.b,max=Math.max(...vals)*1.12;axes(ctx,m.l,m.t,m.l,m.t+H);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(m.l,m.t+H);ctx.lineTo(m.l+W,m.t+H);ctx.stroke();for(let i=0;i<4;i++){const x=m.l+edges[i]/96*W,w=(edges[i+1]-edges[i])/96*W,h=vals[i]/max*H,y=m.t+H-h;ctx.fillStyle=mode==='frequency'?'#c8860a':'#2e76b5';ctx.fillRect(x,y,w,h);ctx.strokeStyle='#fff';ctx.strokeRect(x,y,w,h);ctx.fillStyle='#344054';ctx.textAlign='center';ctx.fillText(vals[i].toFixed(mode==='frequency'?0:2),x+w/2,y-7);}ctx.fillStyle='#344054';for(let i=0;i<edges.length;i++){const x=m.l+edges[i]/96*W;ctx.fillText(edges[i],x,m.t+H+21);}ctx.textAlign='start';ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText(mode==='frequency'?'Height = frequency (incorrect)':'Height = density (correct)',m.l,m.t-14);document.getElementById('histExplain').classList.toggle('hidden',mode!=='frequency');document.getElementById('densityExplain').classList.toggle('hidden',mode!=='density');}
+document.getElementById('histMode').addEventListener('change',drawUnequal);
+document.getElementById('checkAnalyst').addEventListener('click',()=>{const sels=[...document.querySelectorAll('.analyst')],done=sels.every(s=>s.value),ok=done&&sels.every(s=>s.value===s.dataset.answer),fb=document.getElementById('fb-analyst');fb.className='feedback '+(ok?'ok':'err');fb.textContent=!done?'Complete all choices.':ok?'Excellent. The correct charts have been generated: save them and prepare the required comment.':'At least one choice is incorrect. Review the nature of the variable, the denominator, and temporal order.';if(ok){document.getElementById('analystOutput').classList.add('show');requestAnimationFrame(drawAnalystCharts);}});
+function drawLineChart(id,labels,values,title){const {c,ctx}=prepCanvas(id);const m={l:72,r:28,t:45,b:62},W=c.width-m.l-m.r,H=c.height-m.t-m.b,min=0,max=Math.max(...values)*1.12;axes(ctx,m.l,m.t,m.l,m.t+H);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(m.l,m.t+H);ctx.lineTo(m.l+W,m.t+H);ctx.stroke();for(let j=0;j<=5;j++){const y=m.t+H-j/5*H;ctx.strokeStyle='#e1e7ef';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(m.l+W,y);ctx.stroke();ctx.fillStyle='#667085';ctx.textAlign='right';ctx.fillText((max*j/5).toFixed(1),m.l-8,y+4);}ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();values.forEach((v,i)=>{const x=m.l+i*W/(values.length-1),y=m.t+H-(v-min)/(max-min)*H;i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();values.forEach((v,i)=>{const x=m.l+i*W/(values.length-1),y=m.t+H-(v-min)/(max-min)*H;ctx.fillStyle='#2e8b57';ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#344054';ctx.textAlign='center';ctx.fillText(labels[i],x,m.t+H+22);ctx.fillText(v.toFixed(1),x,y-10);});ctx.textAlign='start';ctx.font='bold 16px Arial';ctx.fillStyle='#176b4d';ctx.fillText(title,m.l,m.t-17);}
+function drawAnalystCharts(){barChart('analystSatisfaction',['Very dissatisfied','Dissatisfied','Neutral','Satisfied','Very satisfied'],[8,17,25,36,14],{rotate:true,title:'Customer satisfaction (%)'});drawHistogram('analystDelivery',deliveryData,8,'Distribution of case-processing times (hours)');barChart('analystComplaints',['Milano','Bergamo','Brescia','Pavia'],[4.0,11.25,6.8,8.1],{decimals:2,title:'Complaints per 1,000 residents'});drawLineChart('analystRevenue',['T1','T2','T3','T4'],[9.8,10.1,10.3,10.5],'Quarterly public expenditure (€ millions)');}
+document.querySelectorAll('.save-chart').forEach(btn=>btn.addEventListener('click',()=>{const c=document.getElementById(btn.dataset.canvas);const a=document.createElement('a');a.download=btn.dataset.name;a.href=c.toDataURL('image/png');a.click();}));
+document.getElementById('copyComment').addEventListener('click',async()=>{const t=document.getElementById('analystComment').value.trim(),fb=document.getElementById('commentFeedback');if(!t){fb.className='feedback err';fb.textContent='Write the comment first.';return;}try{await navigator.clipboard.writeText(t);fb.className='feedback ok';fb.textContent='Comment copied to the clipboard.';}catch(e){fb.className='feedback info';fb.textContent='Select and copy the text manually.';}});
+document.getElementById('downloadComment').addEventListener('click',()=>{const t=document.getElementById('analystComment').value.trim(),fb=document.getElementById('commentFeedback');if(!t){fb.className='feedback err';fb.textContent='Write the comment first.';return;}const blob=new Blob([t],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='iple_chart_comment.txt';a.click();URL.revokeObjectURL(a.href);fb.className='feedback ok';fb.textContent='Comment downloaded.';});
+const quiz=[
+['An ordinal variable must be represented...',['in alphabetical order','in the natural order of its categories','always with a pie chart'],1],
+['With numerical values 1, 5, 10, 50, 250, the axis may be equally spaced...',['always','only if the numbers are labels or classes, not quantities','never'],1],
+['Many bars all with a height of 1 often indicate that...',['the distribution is uniform','each continuous value has been treated as a category','the sample is too large'],1],
+['To compare complaints across municipalities of different sizes, it is advisable to use...',['only absolute numbers of complaints','a rate relative to the number of residents, possibly together with absolute values','a pie chart'],1],
+['In a histogram with unequal intervals, the correct height is...',['frequency','frequency density','cumulative frequency'],1],
+['If we greatly increase the number of bins...',['the true distribution always becomes clearer','we may emphasise sampling noise','nothing changes'],1],
+['A truncated vertical axis in a bar chart...',['may artificially amplify small differences','is always preferable','does not affect perception'],0],
+['A pie chart is appropriate when...',['the categories may overlap','the categories are exclusive parts of a single total and are few in number','there are many similar categories'],1]
+];
+function renderQuiz(){const root=document.getElementById('finalQuiz');root.innerHTML='';quiz.forEach((q,i)=>{const card=document.createElement('div');card.className='card';card.innerHTML=`<div class="card-head">Question ${i+1}</div><div class="card-body"><p><strong>${q[0]}</strong></p>${q[1].map((x,j)=>`<label class="quiz-option"><input type="radio" name="fq${i}" value="${j}"> ${x}</label>`).join('')}</div>`;root.appendChild(card);});}
+renderQuiz();
+document.getElementById('scoreQuiz').addEventListener('click',()=>{let score=0;quiz.forEach((q,i)=>{const chosen=document.querySelector(`input[name="fq${i}"]:checked`);if(chosen&&+chosen.value===q[2])score++;});const box=document.getElementById('scoreBox');box.classList.remove('hidden');document.getElementById('scoreValue').textContent=score+'/8';document.getElementById('scoreText').textContent=score<=4?'Review especially variable types, scales, and density.':score<=6?'Good understanding: check the remaining errors.':'Excellent ability to read charts critically.';});
+document.getElementById('resetQuiz').addEventListener('click',()=>{document.querySelectorAll('#finalQuiz input').forEach(i=>i.checked=false);document.getElementById('scoreBox').classList.add('hidden');});
+window.addEventListener('load',()=>{drawAxis();requestAnimationFrame(()=>{drawNumericExamples();drawCases();drawBins();drawUnequal();});});
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "An ordinal variable must be represented...", "options": ["in alphabetical order", "in the natural order of its categories", "always with a pie chart"], "correct": 1, "explanation": "Ordinal categories have a meaningful order, so the bars should follow that order rather than an alphabetical one."}, {"question": "With numerical values 1, 5, 10, 50, 250, the axis may be equally spaced...", "options": ["always", "only if the numbers are labels or classes, not quantities", "never"], "correct": 1, "explanation": "Equal spacing is appropriate only when the numbers are category labels. If they are quantities, their numerical distances must be respected."}, {"question": "Many bars all with a height of 1 often indicate that...", "options": ["the distribution is uniform", "each continuous value has been treated as a category", "the sample is too large"], "correct": 1, "explanation": "A separate bar for every distinct continuous value often produces many bars of height 1 and hides the distributional shape."}, {"question": "To compare complaints across municipalities of different sizes, it is advisable to use...", "options": ["only absolute numbers of complaints", "a rate relative to the number of residents, possibly together with absolute values", "a pie chart"], "correct": 1, "explanation": "A rate accounts for different population sizes; absolute counts may still be reported as complementary information."}, {"question": "In a histogram with unequal intervals, the correct height is...", "options": ["frequency", "frequency density", "cumulative frequency"], "correct": 1, "explanation": "With unequal class widths, area must represent frequency, so bar height must be frequency density."}, {"question": "If we greatly increase the number of bins...", "options": ["the true distribution always becomes clearer", "we may emphasise sampling noise", "nothing changes"], "correct": 1, "explanation": "Too many bins can make random sample fluctuations look like meaningful structure."}, {"question": "A truncated vertical axis in a bar chart...", "options": ["may artificially amplify small differences", "is always preferable", "does not affect perception"], "correct": 0, "explanation": "Because bar length is judged from the baseline, truncating the axis can make a small difference look much larger."}, {"question": "A pie chart is appropriate when...", "options": ["the categories may overlap", "the categories are exclusive parts of a single total and are few in number", "there are many similar categories"], "correct": 1, "explanation": "A pie chart is suitable only for a small number of mutually exclusive categories that form one complete total."}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("tab8");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body>
+</html>

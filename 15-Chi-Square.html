@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Contingency Tables and the Chi-Square Test | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{
+  --blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#20242c;--muted:#667085;
+  --orange:#c4681a;--orange2:#fff4e8;--green:#2e7d32;--red:#b42318;
+  --purple:#6d5bd0;--teal:#147d8d;--line:#dce5ef;--soft:#f4f7fb
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink)}
+.wrap{max-width:1180px;margin:28px auto;padding:0 16px 55px}
+.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;text-align:center;padding:38px 24px 28px;border-radius:12px 12px 0 0}
+.header small{letter-spacing:2px;font-weight:800;opacity:.82}
+.header h1{font-size:32px;margin:9px 0 7px}.header p{font-size:18px;margin:0}
+.meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-top:0;padding:11px}
+.pill{border:1px solid #cbd9e9;border-radius:999px;padding:7px 11px;color:var(--blue);font-size:14px;font-weight:800}
+.tabs{display:flex;overflow:auto;background:#fff;border:1px solid var(--line);border-top:0;border-bottom:2px solid var(--blue)}
+.tab{flex:1;min-width:132px;border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;padding:12px 9px;color:#697386;font-weight:800;cursor:pointer}
+.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}
+.main{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:27px 30px;box-shadow:0 12px 28px rgba(23,39,64,.08)}
+.section{display:none}.section.active{display:block}
+.intro{background:var(--blue);color:#fff;border-radius:11px;padding:19px 22px;margin-bottom:20px}
+.intro h2{margin:0 0 7px;font-size:22px}.intro p{margin:0;line-height:1.6}
+.card{border:1px solid #e3e8ef;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.card-head{padding:14px 19px;font-size:18px;font-weight:800;background:var(--light);color:var(--blue)}
+.card-head.orange{background:var(--orange2);color:#8b4707}
+.card-body{padding:19px 21px;line-height:1.65}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mini{border:1px solid #e3e8ef;border-radius:12px;padding:16px;line-height:1.55}.mini strong{color:var(--blue)}
+.formula{background:#eef8f3;border:1px solid #b8dac9;border-radius:10px;padding:14px;text-align:center;color:var(--blue);font-size:18px;font-weight:800;line-height:1.7;margin:13px 0}
+.tip,.warn,.ok{padding:13px 15px;border-radius:0 9px 9px 0;margin:13px 0;line-height:1.6}
+.tip{background:#f2faf6;border-left:5px solid var(--blue)}
+.warn{background:#fff4e5;border-left:5px solid var(--orange)}
+.ok{background:#eef8ef;border-left:5px solid var(--green)}
+.question{background:var(--orange2);border:2px solid var(--orange);border-radius:12px;padding:18px;margin:18px 0}
+.question h3{margin:0 0 8px;color:#8e4c00}
+.choice{display:block;width:100%;text-align:left;border:1px solid #d6dee8;background:#fff;border-radius:9px;padding:11px 13px;margin:9px 0;font-weight:700;cursor:pointer}
+.choice.good{background:#eaf7ec;border-color:#6ab375;color:#1f6a29}.choice.bad{background:#fff0ef;border-color:#df8078;color:#92231c}
+.feedback{display:none;padding:12px 14px;border-radius:8px;margin-top:12px}.feedback.show{display:block}
+.feedback.good{background:#eef8ef;color:#1f6a29}.feedback.bad{background:#fff0ef;color:#8e2018}
+.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:12px;padding:17px}
+.control{margin:12px 0}.control label{display:flex;justify-content:space-between;font-weight:800;margin-bottom:7px}
+.control input[type=range]{width:100%;accent-color:var(--orange)}
+select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:14px 0}
+.kpi{background:#f4fbf7;border:1px solid #dce9f7;border-radius:10px;padding:12px;text-align:center}
+.kpi span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase}
+.kpi b{display:block;color:var(--blue);font-size:20px;margin-top:5px}
+.canvas-wrap{background:#fff;border:1px solid #dfe6ee;border-radius:12px;padding:10px;overflow:hidden}
+.canvas-wrap canvas{width:100%;height:auto;display:block}
+.legend{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;color:#475467;font-size:13px;margin-top:8px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:center}
+th{background:#f3f7fb;color:var(--blue)}td.clickable{cursor:pointer;font-weight:800}td.selected{outline:3px solid var(--orange);outline-offset:-3px}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.modes button{border:1.5px solid #c7d2df;background:#fff;color:var(--blue);padding:9px 13px;border-radius:999px;font-weight:800;cursor:pointer}
+.modes button.active{background:var(--blue);color:#fff}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:17px;border-top:1px solid var(--line)}
+.btn{border:0;border-radius:8px;padding:10px 17px;font-weight:800;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#eaf2fb;color:var(--blue)}
+.progress{height:9px;background:#e5eaf0;border-radius:99px;overflow:hidden;margin:10px 0 18px}.progress div{height:100%;background:var(--blue);width:0}
+.positive{background:#e2f3e5;color:#195c24}.negative{background:#fff0ef;color:#8e2018}.neutral{background:#f4f6f8;color:#475467}
+.calc-line{font-family:Georgia,serif;background:#fbfdff;border:1px dashed #9ebfe4;border-radius:9px;padding:13px;margin:10px 0;line-height:1.75;color:#193d68}
+@media(max-width:850px){
+  .grid2,.grid3{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}
+  .main{padding:20px 16px}.header h1{font-size:27px}.tab{min-width:150px}
+}
+
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header">
+<small>Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</small>
+<h1>Contingency Tables and the Chi-Square Test</h1>
+<p>Independence, contingencies, and strength of association</p>
+</header>
+<div class="meta">
+<span class="pill">3 × 3 example</span>
+<span class="pill">Observed and expected frequencies</span>
+<span class="pill">Cramér's V</span>
+</div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Contingency tables</button><button class="iple-group-tab" data-iple-group="1" type="button">Expected frequencies</button><button class="iple-group-tab" data-iple-group="2" type="button">Chi-square calculation</button><button class="iple-group-tab" data-iple-group="3" type="button">Interpreting association</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><nav class="tabs iple-original-tabs">
+<button class="tab active" data-id="s1">1. The table</button>
+<button class="tab" data-id="s2">2. Independence</button>
+<button class="tab" data-id="s3">3. Expected counts</button>
+<button class="tab" data-id="s4">4. Calculating χ²</button>
+<button class="tab" data-id="s5">5. Distribution</button>
+<button class="tab" data-id="s6">6. Which cells?</button>
+<button class="tab" data-id="s7">7. Strength</button>
+<button class="tab" data-id="s8">8. Check</button>
+<button class="tab" data-id="exam-prep">Preparing for the exam</button></nav>
+<main class="main">
+<section class="section active" data-iple-group="0" id="s1">
+<div class="intro">
+<h2>Before the test: reading a 3 × 3 table</h2>
+<p>A research team records political-information channel and civic response. Both variables have three categories.</p>
+</div>
+<div class="card">
+<div class="card-head">Guided example: information channel and civic response</div>
+<div class="card-body">
+<p>For 600 citizens, we distinguish among high participation, standard participation, and no participation.</p>
+<div class="grid2">
+<div>
+<div class="table-wrap"><table id="introTable"></table></div>
+<div class="modes">
+<button class="introMode active" data-mode="count">Counts</button>
+<button class="introMode" data-mode="row">Row percentages</button>
+<button class="introMode" data-mode="col">Column percentages</button>
+</div>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="500" id="introCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>High participation</span>
+<span><i class="dot" style="background:#6d5bd0"></i>Standard participation</span>
+<span><i class="dot" style="background:#dce5ef"></i>No response</span>
+</div>
+</div>
+</div>
+<div class="tip"><strong>To compare the information channels</strong> we focus mainly on row percentages: each row describes the distribution of outcomes within a information channel.</div>
+</div>
+</div>
+<div class="question">
+<h3>Which interpretation is correct?</h3>
+<button class="choice qIntro" data-ok="1">Among citizens informed through social media, 57.7% show high participation.</button>
+<button class="choice qIntro" data-ok="0">57.7% of all highly participating citizens necessarily received information through social media.</button>
+<button class="choice qIntro" data-ok="0">Row and column percentages always have the same meaning.</button>
+<div class="feedback" id="introFeedback"></div>
+</div>
+<div class="nav iple-old-section-nav"><span></span><button class="btn primary next" data-next="s2">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="0" id="s2">
+<div class="intro">
+<h2>Independence and the product rule</h2>
+<p>Under independence, the joint probability is the product of the marginal probabilities.</p>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head">From probability to expected frequency</div>
+<div class="card-body">
+<div class="formula">P(Aᵢ ∩ Bⱼ)=P(Aᵢ)P(Bⱼ)</div>
+<p>The groups do not have the same size: 260 citizens received the social-media information channel, 210 received the email information channel, and 130 received no information channel. Outcome totals also differ.</p>
+<div class="calc-line">
+        P(Social)=260/600=0,433<br/>
+        P(High participation)=260/600=0,433<br/>
+        P(Social ∩ High participation)=0,433×0,433=0,188<br/>
+        E=600×0.188=112.67
+      </div>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">Test hypotheses</div>
+<div class="card-body">
+<div class="formula">H₀: information channel and outcome are independent</div>
+<div class="formula">H₁: information channel and outcome are not independent</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head">Compare two structures with the same margins</div>
+<div class="card-body">
+<div class="modes">
+<button class="structureBtn active" data-mode="ind">Independence</button>
+<button class="structureBtn" data-mode="max">Maximum association</button>
+</div>
+<div class="grid2">
+<div>
+<div class="table-wrap"><table id="structureTable"></table></div>
+<div class="kpis">
+<div class="kpi"><span>High participation social</span><b id="structureA">33,3%</b></div>
+<div class="kpi"><span>Email × Standard participation</span><b id="structureB">33,3%</b></div>
+<div class="kpi"><span>No response</span><b id="structureC">33,3%</b></div>
+<div class="kpi"><span>Cramér's V</span><b id="structureV">0.000</b></div>
+</div>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="500" id="structureCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>High participation</span>
+<span><i class="dot" style="background:#6d5bd0"></i>Standard participation</span>
+<span><i class="dot" style="background:#dce5ef"></i>No response</span>
+</div>
+</div>
+</div>
+<div class="tip" id="structureNote"><strong>Independence:</strong> each information channel has the same distribution: 33.3%, 33.3%, 33.3%.</div>
+</div>
+</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s1">← Back</button><button class="btn primary next" data-next="s3">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="s3">
+<div class="intro">
+<h2>Observed frequencies, expected frequencies, and contingencies</h2>
+<p>We call the difference between the observed frequency and the expected frequency under independence a contingency.</p>
+</div>
+<div class="formula">Eᵢⱼ=(row total i × column total j)/n</div>
+<div class="formula">Contingency cᵢⱼ=Oᵢⱼ−Eᵢⱼ</div>
+<div class="card">
+<div class="card-head">Explore the nine cells</div>
+<div class="card-body">
+<div class="modes">
+<button class="matrixMode active" data-mode="obs">Observed</button>
+<button class="matrixMode" data-mode="exp">Expected counts</button>
+<button class="matrixMode" data-mode="diff">Contingencies O−E</button>
+<button class="matrixMode" data-mode="contrib">Contributions to χ²</button>
+</div>
+<div class="grid2">
+<div class="table-wrap"><table id="matrixTable"></table></div>
+<div class="question">
+<h3 id="cellTitle">Social media × High participation</h3>
+<div class="formula" id="expectedFormula">E=(260×260)/600=112.67</div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>Observed O</span><b id="cellO">150</b></div>
+<div class="kpi"><span>Expected E</span><b id="cellE">112,67</b></div>
+<div class="kpi"><span>Contingency</span><b id="cellD">37,33</b></div>
+<div class="kpi"><span>Contribution to χ²</span><b id="cellQ">12,37</b></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="warn"><strong>The contingencies balance out.</strong> Within every row and column, the O−E differences sum to zero; to construct an overall measure, we cannot simply add them.</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s2">← Back</button><button class="btn primary next" data-next="s4">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s4">
+<div class="intro">
+<h2>Actually calculating chi-square</h2>
+<p>Each contingency is squared and divided by the cell's expected frequency. Chi-square is the sum of the nine contributions.</p>
+</div>
+<div class="formula">χ²=ΣᵢΣⱼ (Oᵢⱼ−Eᵢⱼ)²/Eᵢⱼ</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head">One contribution, step by step</div>
+<div class="card-body">
+<p>For the Social media × High participation cell:</p>
+<div class="calc-line">
+        O=90<br/>
+        E=(260×260)/600=112.67<br/>
+        O−E=23.33<br/>
+        (O−E)²/E=(23.33²)/66.67=8.17
+      </div>
+<p>Squaring makes both positive and negative deviations contribute positively.</p>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">The sum of the nine contributions</div>
+<div class="card-body">
+<div class="calc-line" id="chiSum"></div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>observed χ²</span><b id="chiValue">47,89</b></div>
+<div class="kpi"><span>Degrees of freedom</span><b>4</b></div>
+<div class="kpi"><span>p-value</span><b id="chiP">&lt;0,001</b></div>
+<div class="kpi"><span>Decision</span><b>Reject H₀</b></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head">Cell contributions</div>
+<div class="card-body"><div class="canvas-wrap"><canvas height="500" id="contributionCanvas" width="900"></canvas></div></div>
+</div>
+<div class="formula">df=(r−1)(c−1)=(3−1)(3−1)=4</div>
+<div class="tip"><strong>Why four?</strong> Once the margins are fixed, we can choose four cells freely; the other five are determined by the row and column totals.</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s3">← Back</button><button class="btn primary next" data-next="s5">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s5">
+<div class="intro">
+<h2>From the observed statistic to the p-value</h2>
+<p>Under H₀, the statistic approximately follows a chi-square distribution with four degrees of freedom.</p>
+</div>
+<div class="grid2">
+<div>
+<div class="canvas-wrap"><canvas height="500" id="distributionCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>χ² distribution</span>
+<span><i class="dot" style="background:#c4681a"></i>Critical value</span>
+<span><i class="dot" style="background:#b42318"></i>observed χ²</span>
+</div>
+</div>
+<div class="controls">
+<div class="control">
+<label>Significance level</label>
+<select id="alpha">
+<option value="0.10">α=0,10</option>
+<option selected="" value="0.05">α=0,05</option>
+<option value="0.01">α=0,01</option>
+</select>
+</div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>observed χ²</span><b id="distObs">47,89</b></div>
+<div class="kpi"><span>critical χ²</span><b id="distCrit">9,49</b></div>
+<div class="kpi"><span>p-value</span><b id="distP">&lt;0,001</b></div>
+<div class="kpi"><span>df</span><b>4</b></div>
+</div>
+<div class="tip"><strong>The distribution is right-skewed</strong> and takes only non-negative values.</div>
+<div class="warn"><strong>The p-value</strong> is the area to the right of the observed value.</div>
+</div>
+</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s4">← Back</button><button class="btn primary next" data-next="s6">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="s6">
+<div class="intro">
+<h2>Which cells explain the association?</h2>
+<p>After the global test, we examine Pearson residuals: contingencies expressed on the scale of the expected frequency.</p>
+</div>
+<div class="formula">Pearson residual=(Oᵢⱼ−Eᵢⱼ)/√Eᵢⱼ</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head">Residuals cell by cell</div>
+<div class="card-body"><div class="table-wrap"><table id="residualTable"></table></div></div>
+</div>
+<div class="card">
+<div class="card-head orange">How to interpret them</div>
+<div class="card-body">
+<div class="ok"><strong>Positive:</strong> more cases than expected under independence.</div>
+<div class="warn"><strong>Negative:</strong> fewer cases than expected.</div>
+<div class="tip"><strong>Close to zero:</strong> a cell that is broadly compatible with independence.</div>
+</div>
+</div>
+</div>
+<div class="grid3">
+<div class="mini"><strong>Social × High participation</strong><p>More highly participating citizens than expected.</p></div>
+<div class="mini"><strong>Email × Standard participation</strong><p>More standard participants than expected.</p></div>
+<div class="mini"><strong>None × No response</strong><p>Many more non-participants than expected.</p></div>
+</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s5">← Back</button><button class="btn primary next" data-next="s7">Continue →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="s7">
+<div class="intro">
+<h2>Significance and strength of association</h2>
+<p>The p-value also depends on sample size; Cramér's V instead describes the relative strength of association.</p>
+</div>
+<div class="formula">V=√[χ²/(n×min(r−1,c−1))]</div>
+<div class="grid2">
+<div class="controls">
+<div class="control">
+<label>Multiply the sample size <span id="multLabel">1×</span></label>
+<input id="multiplier" max="10" min="1" type="range" value="1"/>
+</div>
+<p>The percentages remain identical: only the counts change.</p>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>Total n</span><b id="strengthN">600</b></div>
+<div class="kpi"><span>χ²</span><b id="strengthChi">47,89</b></div>
+<div class="kpi"><span>p-value</span><b id="strengthP">&lt;0,001</b></div>
+<div class="kpi"><span>Cramér's V</span><b id="strengthV">0.200</b></div>
+</div>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="500" id="strengthCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>χ² increases with n</span>
+<span><i class="dot" style="background:#c4681a"></i>V remains constant</span>
+</div>
+</div>
+</div>
+<div class="ok"><strong>Conclusion:</strong> an unchanged association becomes more easily significant in a large sample. Therefore, the p-value and the strength of association answer different questions.</div>
+<div class="grid2">
+<div class="mini"><strong>Conditions for application</strong><p>Independent observations, mutually exclusive categories, and expected frequencies that are not too small.</p></div>
+<div class="mini"><strong>2 × 2 tables with small counts</strong><p>Fisher's exact test may be preferable.</p></div>
+</div>
+<div class="warn"><strong>Connection with Simpson:</strong> the test describes the table being analysed. A third variable may still modify or reverse the marginal relationship.</div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s6">← Back</button><button class="btn primary next" data-next="s8">Assessment →</button></div>
+</section>
+<section class="section" data-iple-group="4" id="s8">
+<div class="intro"><h2>Final quiz</h2><p>Ten questions on independence, expected frequencies, contingencies, χ², and Cramér's V.</p></div>
+<div class="progress"><div id="quizProgress"></div></div>
+<div id="quizBox"></div>
+<div class="nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s7">← Back</button><button class="btn primary" id="restartQuiz">Start again</button></div>
+</section>
+<section class="section" data-iple-group="5" id="exam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>Expected frequencies</h3><p><strong>Question.</strong> In a 2×2 table, each row total is 100 and the column totals are 90 and 110. What are the expected frequencies under independence?</p><div class="exam-answer"><strong>Solution.</strong> For each row, E₁=100×90/200=45 and E₂=100×110/200=55. The expected table is therefore (45,55) in both rows.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Chi-square contribution</h3><p><strong>Question.</strong> Observed rows are (60,40) and (30,70), with expected rows (45,55). Calculate χ².</p><div class="exam-answer"><strong>Solution.</strong> χ²=Σ(O−E)²/E = 225/45 + 225/55 + 225/45 + 225/55 ≈18.18. With df=(2−1)(2−1)=1, this is strong evidence against independence.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">A chi-square test of independence</div><div class="card-body"><div class="exam-prep-question">In a 2×3 table of education level by voting status, explain how to calculate an expected frequency and how to interpret a large positive Pearson residual.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>Under independence, E_ij=(row total×column total)/n. A large positive Pearson residual (O−E)/√E means that the observed cell count is substantially higher than expected under independence and that the cell contributes positively and strongly to the chi-square statistic.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> States the expected-frequency formula <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Uses marginal totals and n <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Defines or describes the Pearson residual <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Interprets a large positive residual correctly <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=(x,d=2)=>Number(x).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+const rowNames=['Social media','Email','No information channel'];
+const colNames=['High participation','Standard participation','No response'];
+const colors=['#2e8b57','#6d5bd0','#dce5ef'];
+const observedBase=[[150,70,40],[70,95,45],[40,45,45]];
+let introMode='count',structureMode='ind',matrixMode='obs',selectedCell=[0,0];
+
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='s5')drawDistribution();
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showSection(b.dataset.id));
+document.querySelectorAll('.next').forEach(b=>b.onclick=()=>showSection(b.dataset.next));
+document.querySelectorAll('.prev').forEach(b=>b.onclick=()=>showSection(b.dataset.prev));
+
+function bindQuestion(selector,feedbackId,good,bad){
+  document.querySelectorAll(selector).forEach(b=>b.onclick=()=>{
+    document.querySelectorAll(selector).forEach(x=>x.classList.remove('good','bad'));
+    const ok=b.dataset.ok==='1';b.classList.add(ok?'good':'bad');
+    const f=$(feedbackId);f.className='feedback show '+(ok?'good':'bad');f.textContent=ok?good:bad;
+  });
+}
+bindQuestion('.qIntro','introFeedback','Exactly: 57.7% is a row percentage.','Check which total is used as the denominator.');
+
+function margins(o){
+  const rows=o.map(r=>r.reduce((a,b)=>a+b,0));
+  const cols=[0,1,2].map(j=>o.reduce((s,r)=>s+r[j],0));
+  const n=rows.reduce((a,b)=>a+b,0);
+  return {rows,cols,n};
+}
+function stats(o){
+  const m=margins(o);
+  const expected=o.map((r,i)=>r.map((_,j)=>m.rows[i]*m.cols[j]/m.n));
+  let chi=0;
+  const contributions=o.map((r,i)=>r.map((v,j)=>{
+    const q=(v-expected[i][j])**2/expected[i][j];chi+=q;return q;
+  }));
+  const residuals=o.map((r,i)=>r.map((v,j)=>(v-expected[i][j])/Math.sqrt(expected[i][j])));
+  const df=(o.length-1)*(o[0].length-1);
+  const p=chiSurvival(chi,df);
+  const v=Math.sqrt(chi/(m.n*Math.min(o.length-1,o[0].length-1)));
+  return {m,expected,contributions,residuals,chi,df,p,v};
+}
+function scaledObserved(mult){
+  return observedBase.map(r=>r.map(v=>v*mult));
+}
+function structureData(){
+  const rowTotals=[260,210,130], colTotals=[260,210,130], n=600;
+  if(structureMode==='ind'){
+    return rowTotals.map(r=>colTotals.map(c=>r*c/n));
+  }
+  return [[260,0,0],[0,210,0],[0,0,130]];
+}
+
+function drawStacked(canvas,o){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=170,R=35,T=30,B=55;
+  const m=margins(o),barH=70,gap=43;
+  ctx.clearRect(0,0,w,h);
+  for(let k=0;k<=5;k++){
+    const x=L+k*(w-L-R)/5;
+    ctx.strokeStyle='#e1e7ee';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,h-B);ctx.stroke();
+    ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText((k*20)+'%',x-10,h-B+22);
+  }
+  o.forEach((r,i)=>{
+    const y=T+i*(barH+gap)+25;let start=L;
+    ctx.fillStyle='#344054';ctx.font='bold 14px Arial';ctx.fillText(rowNames[i],10,y+40);
+    r.forEach((v,j)=>{
+      const p=v/m.rows[i],seg=p*(w-L-R);
+      ctx.fillStyle=colors[j];ctx.fillRect(start,y,seg,barH);
+      if(seg>62){
+        ctx.fillStyle=j===2?'#475467':'#fff';ctx.font='bold 13px Arial';
+        ctx.fillText(fmt(p*100,0)+'%',start+seg/2-16,y+40);
+      }
+      start+=seg;
+    });
+  });
+}
+
+function renderIntro(){
+  const o=observedBase,m=margins(o);
+  let h='<thead><tr><th>Information channel</th>'+colNames.map(c=>'<th>'+c+'</th>').join('')+'<th>Total</th></tr></thead><tbody>';
+  o.forEach((r,i)=>{
+    h+='<tr><th>'+rowNames[i]+'</th>';
+    r.forEach((v,j)=>{
+      let value;
+      if(introMode==='count')value=fmt(v,0);
+      if(introMode==='row')value=fmt(100*v/m.rows[i],1)+'%';
+      if(introMode==='col')value=fmt(100*v/m.cols[j],1)+'%';
+      h+='<td>'+value+'</td>';
+    });
+    h+='<th>'+(introMode==='count'?fmt(m.rows[i],0):introMode==='row'?'100,0%':fmt(100*m.rows[i]/m.n,1)+'%')+'</th></tr>';
+  });
+  h+='<tr><th>Total</th>';
+  m.cols.forEach(v=>h+='<th>'+(introMode==='count'?fmt(v,0):introMode==='col'?'100,0%':fmt(100*v/m.n,1)+'%')+'</th>');
+  h+='<th>'+(introMode==='count'?fmt(m.n,0):'100,0%')+'</th></tr></tbody>';
+  $('introTable').innerHTML=h;
+  drawStacked($('introCanvas'),o);
+}
+document.querySelectorAll('.introMode').forEach(b=>b.onclick=()=>{
+  introMode=b.dataset.mode;document.querySelectorAll('.introMode').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderIntro();
+});
+
+function renderStructure(){
+  const o=structureData(),s=stats(o),m=margins(o);
+  let h='<thead><tr><th>Information channel</th>'+colNames.map(c=>'<th>'+c+'</th>').join('')+'<th>Total</th></tr></thead><tbody>';
+  o.forEach((r,i)=>{
+    h+='<tr><th>'+rowNames[i]+'</th>'+r.map(v=>'<td>'+fmt(v,1)+'</td>').join('')+'<th>'+fmt(m.rows[i],0)+'</th></tr>';
+  });
+  h+='<tr><th>Total</th>'+m.cols.map(v=>'<th>'+fmt(v,0)+'</th>').join('')+'<th>'+fmt(m.n,0)+'</th></tr></tbody>';
+  $('structureTable').innerHTML=h;drawStacked($('structureCanvas'),o);
+  $('structureA').textContent=fmt(100*o[0][0]/m.rows[0],1)+'%';
+  $('structureB').textContent=fmt(100*o[1][1]/m.rows[1],1)+'%';
+  $('structureC').textContent=fmt(100*o[2][2]/m.rows[2],1)+'%';
+  $('structureV').textContent=fmt(s.v,3);
+  $('structureNote').innerHTML=structureMode==='ind'
+   ? '<strong>Independence:</strong> every information channel has the same marginal distribution of outcomes: 43.3% High participation, 35.0% Standard participation, and 21.7% No participation.'
+   : '<strong>Maximum association:</strong> each information channel is associated with a single outcome. The table is perfectly diagonal and Cramér\'s V equals 1, despite groups of different sizes.';
+}
+document.querySelectorAll('.structureBtn').forEach(b=>b.onclick=()=>{
+  structureMode=b.dataset.mode;document.querySelectorAll('.structureBtn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderStructure();
+});
+
+function renderMatrix(){
+  const o=observedBase,s=stats(o),m=s.m;
+  const diff=o.map((r,i)=>r.map((v,j)=>v-s.expected[i][j]));
+  const source={obs:o,exp:s.expected,diff:diff,contrib:s.contributions}[matrixMode];
+  let h='<thead><tr><th>Information channel</th>'+colNames.map(c=>'<th>'+c+'</th>').join('')+'<th>Total</th></tr></thead><tbody>';
+  source.forEach((r,i)=>{
+    h+='<tr><th>'+rowNames[i]+'</th>';
+    r.forEach((v,j)=>{
+      const cls=selectedCell[0]===i&&selectedCell[1]===j?'clickable selected':'clickable';
+      h+='<td class="'+cls+'" data-r="'+i+'" data-c="'+j+'">'+fmt(v,matrixMode==='obs'?0:2)+'</td>';
+    });
+    h+='<td>'+(matrixMode==='obs'?fmt(m.rows[i],0):'—')+'</td></tr>';
+  });
+  h+='<tr><th>Total</th>'+m.cols.map(v=>'<th>'+(matrixMode==='obs'?fmt(v,0):'—')+'</th>').join('')+'<th>'+(matrixMode==='obs'?fmt(m.n,0):'—')+'</th></tr></tbody>';
+  $('matrixTable').innerHTML=h;
+  document.querySelectorAll('#matrixTable td.clickable').forEach(td=>td.onclick=()=>{
+    selectedCell=[+td.dataset.r,+td.dataset.c];renderMatrix();
+  });
+  updateSelectedCell();
+}
+function updateSelectedCell(){
+  const o=observedBase,s=stats(o),i=selectedCell[0],j=selectedCell[1];
+  const E=s.expected[i][j],O=o[i][j],D=O-E,Q=s.contributions[i][j];
+  $('cellTitle').textContent=rowNames[i]+' × '+colNames[j];
+  $('expectedFormula').textContent='E=('+fmt(s.m.rows[i],0)+'×'+fmt(s.m.cols[j],0)+')/'+fmt(s.m.n,0)+'='+fmt(E,2);
+  $('cellO').textContent=fmt(O,0);$('cellE').textContent=fmt(E,2);$('cellD').textContent=fmt(D,2);$('cellQ').textContent=fmt(Q,2);
+}
+document.querySelectorAll('.matrixMode').forEach(b=>b.onclick=()=>{
+  matrixMode=b.dataset.mode;document.querySelectorAll('.matrixMode').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderMatrix();
+});
+
+function drawContributions(){
+  const s=stats(observedBase),vals=s.contributions.flat(),labels=[];
+  rowNames.forEach((r,i)=>colNames.forEach((c,j)=>labels.push((i+1)+','+(j+1))));
+  const canvas=$('contributionCanvas'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=62,R=25,T=25,B=70;
+  const max=Math.max(...vals)*1.12,bw=(w-L-R)/vals.length*.62;
+  ctx.clearRect(0,0,w,h);
+  for(let k=0;k<=4;k++){
+    const y=T+k*(h-T-B)/4,v=max*(1-k/4);
+    ctx.strokeStyle='#e1e7ee';ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
+    ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(v,1),12,y+4);
+  }
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+  vals.forEach((v,i)=>{
+    const x=L+(i+.5)*(w-L-R)/vals.length-bw/2,bar=v/max*(h-T-B);
+    ctx.fillStyle=colors[i%3];ctx.fillRect(x,h-B-bar,bw,bar);
+    ctx.fillStyle='#344054';ctx.font='12px Arial';ctx.fillText(labels[i],x+bw/2-9,h-B+20);
+    ctx.fillText(fmt(v,1),x+bw/2-11,h-B-bar-7);
+  });
+}
+function renderChiCalculation(){
+  const s=stats(observedBase),terms=s.contributions.flat().map(v=>fmt(v,2));
+  $('chiSum').innerHTML='χ² = '+terms.join(' + ')+'<br><strong>= '+fmt(s.chi,2)+'</strong>';
+  $('chiValue').textContent=fmt(s.chi,2);$('chiP').textContent=s.p<.001?'<0,001':fmt(s.p,3);
+  drawContributions();
+}
+
+function renderResiduals(){
+  const s=stats(observedBase);
+  let h='<thead><tr><th>Information channel</th>'+colNames.map(c=>'<th>'+c+'</th>').join('')+'</tr></thead><tbody>';
+  s.residuals.forEach((r,i)=>{
+    h+='<tr><th>'+rowNames[i]+'</th>';
+    r.forEach(v=>{
+      const cls=v>.5?'positive':v<-.5?'negative':'neutral';
+      h+='<td class="'+cls+'">'+fmt(v,2)+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';$('residualTable').innerHTML=h;
+}
+
+/* Chi-square distribution functions */
+function logGamma(z){
+  const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.984369578019571e-6,1.5056327351493116e-7];
+  if(z<.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-logGamma(1-z);
+  z-=1;let x=.9999999999998099;
+  for(let i=0;i<c.length;i++)x+=c[i]/(z+i+1);
+  const t=z+c.length-.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(t)-t+Math.log(x);
+}
+function gammaP(a,x){
+  if(x<=0)return 0;
+  if(x<a+1){
+    let sum=1/a,del=sum,ap=a;
+    for(let n=1;n<200;n++){ap++;del*=x/ap;sum+=del;if(Math.abs(del)<Math.abs(sum)*1e-14)break}
+    return sum*Math.exp(-x+a*Math.log(x)-logGamma(a));
+  }
+  let b=x+1-a,c=1/1e-30,d=1/b,h=d;
+  for(let i=1;i<200;i++){
+    const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-30)d=1e-30;c=b+an/c;if(Math.abs(c)<1e-30)c=1e-30;d=1/d;
+    const del=d*c;h*=del;if(Math.abs(del-1)<1e-14)break;
+  }
+  return 1-Math.exp(-x+a*Math.log(x)-logGamma(a))*h;
+}
+function chiSurvival(x,df){return Math.max(0,1-gammaP(df/2,x/2))}
+function chiDensity(x,df){
+  if(x<=0)return 0;
+  return Math.exp((df/2-1)*Math.log(x)-x/2-(df/2)*Math.log(2)-logGamma(df/2));
+}
+function chiCritical(alpha,df){
+  let lo=0,hi=1;while(chiSurvival(hi,df)>alpha&&hi<1e6)hi*=2;
+  for(let i=0;i<80;i++){const mid=(lo+hi)/2;if(chiSurvival(mid,df)>alpha)lo=mid;else hi=mid}
+  return (lo+hi)/2;
+}
+function drawDistribution(){
+  const s=stats(observedBase),alpha=+$('alpha').value,crit=chiCritical(alpha,s.df);
+  const canvas=$('distributionCanvas'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=65,R=25,T=25,B=55;
+  const xmax=Math.max(42,crit*1.7,s.chi*1.08),ymax=.19;
+  const X=x=>L+x/xmax*(w-L-R),Y=y=>T+(ymax-y)/ymax*(h-T-B);
+  ctx.clearRect(0,0,w,h);
+  for(let k=0;k<=6;k++){const x=L+k*(w-L-R)/6;ctx.strokeStyle='#e1e7ee';ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,h-B);ctx.stroke();ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(k*xmax/6,0),x-8,h-B+22)}
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+  ctx.fillStyle='rgba(180,35,24,.18)';ctx.beginPath();ctx.moveTo(X(s.chi),h-B);
+  for(let i=0;i<=300;i++){const x=s.chi+(xmax-s.chi)*i/300;ctx.lineTo(X(x),Y(chiDensity(x,s.df)))}
+  ctx.lineTo(w-R,h-B);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();
+  for(let i=1;i<=600;i++){const x=i*xmax/600,y=chiDensity(x,s.df);if(i===1)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y))}
+  ctx.stroke();
+  ctx.strokeStyle='#c4681a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(crit),T);ctx.lineTo(X(crit),h-B);ctx.stroke();
+  ctx.strokeStyle='#b42318';ctx.beginPath();ctx.moveTo(X(s.chi),T);ctx.lineTo(X(s.chi),h-B);ctx.stroke();
+  ctx.fillStyle='#c4681a';ctx.font='bold 13px Arial';ctx.fillText('critical',X(crit)+5,T+16);
+  ctx.fillStyle='#b42318';ctx.fillText('observed',X(s.chi)-72,T+36);
+  $('distObs').textContent=fmt(s.chi,2);$('distCrit').textContent=fmt(crit,2);$('distP').textContent=s.p<.001?'<0,001':fmt(s.p,3);
+}
+$('alpha').oninput=drawDistribution;
+
+function drawStrength(current){
+  const canvas=$('strengthCanvas'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=72,R=72,T=30,B=62;
+  const data=[];
+  for(let m=1;m<=10;m++){const s=stats(scaledObserved(m));data.push({m,n:s.m.n,chi:s.chi,v:s.v})}
+  const maxChi=Math.max(...data.map(d=>d.chi))*1.08,maxV=.24;
+  const X=m=>L+(m-1)/9*(w-L-R),Yc=v=>T+(maxChi-v)/maxChi*(h-T-B),Yv=v=>T+(maxV-v)/maxV*(h-T-B);
+  ctx.clearRect(0,0,w,h);
+  for(let k=0;k<=5;k++){
+    const y=T+k*(h-T-B)/5;
+    ctx.strokeStyle='#e1e7ee';ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(w-R,y);ctx.stroke();
+    ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(maxChi*(1-k/5),0),18,y+4);ctx.fillText(fmt(maxV*(1-k/5),2),w-R+10,y+4);
+  }
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.lineTo(w-R,T);ctx.stroke();
+  data.forEach((d,i)=>{if(i===0||i===2||i===4||i===6||i===8||i===9){ctx.fillStyle='#667085';ctx.fillText(String(d.n),X(d.m)-14,h-B+22)}});
+  ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();data.forEach((d,i)=>i?ctx.lineTo(X(d.m),Yc(d.chi)):ctx.moveTo(X(d.m),Yc(d.chi)));ctx.stroke();
+  ctx.strokeStyle='#c4681a';ctx.beginPath();data.forEach((d,i)=>i?ctx.lineTo(X(d.m),Yv(d.v)):ctx.moveTo(X(d.m),Yv(d.v)));ctx.stroke();
+  const d=data[current-1],x=X(current);
+  ctx.strokeStyle='rgba(52,64,84,.4)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,T);ctx.lineTo(x,h-B);ctx.stroke();
+  ctx.fillStyle='#2e8b57';ctx.beginPath();ctx.arc(x,Yc(d.chi),7,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#c4681a';ctx.beginPath();ctx.arc(x,Yv(d.v),7,0,Math.PI*2);ctx.fill();
+}
+function updateStrength(){
+  const m=+$('multiplier').value,s=stats(scaledObserved(m));
+  $('multLabel').textContent=m+'×';$('strengthN').textContent=s.m.n;$('strengthChi').textContent=fmt(s.chi,2);
+  $('strengthP').textContent=s.p<.001?'<0,001':fmt(s.p,3);$('strengthV').textContent=fmt(s.v,3);drawStrength(m);
+}
+$('multiplier').oninput=updateStrength;
+
+/* Quiz */
+const quiz=[
+ ['In a 3 × 3 table, how many internal cells are there?',['9','6','3'],0],
+ ['Under independence, P(A∩B) is...',['P(A)P(B)','P(A)+P(B)','always zero'],0],
+ ['How is Eᵢⱼ calculated?',['Row total × column total / n','Oᵢⱼ/n','Sum of the margins'],0],
+ ['What is a contingency?',['O−E','O/E','E−n'],0],
+ ['What is the cell\'s contribution to χ²?',['(O−E)²/E','O−E','E²/O'],0],
+ ['How many degrees of freedom does a 3 × 3 table have?',['4','6','9'],0],
+ ['The p-value is...',['the area to the right of the observed value','the maximum of the curve',"Cramér's V"],0],
+ ['A positive residual indicates...',['more cases than expected','fewer cases than expected','no margins'],0],
+ ['Holding percentages constant, as n increases...',['χ² increases and V remains unchanged','V always increases','χ² remains unchanged'],0],
+ ['Under maximum association in a diagonal 3 × 3 table, V equals...',['1','0','3'],0]
+];
+let qi=0,score=0;
+function renderQuiz(){
+  $('quizProgress').style.width=(100*qi/quiz.length)+'%';
+  if(qi===quiz.length){
+    $('quizBox').innerHTML='<div class="card"><div class="card-head">Result</div><div class="card-body"><p style="font-size:34px;font-weight:900;color:#176b4d">'+score+'/10</p></div></div>';
+    $('quizProgress').style.width='100%';return;
+  }
+  const q=quiz[qi];
+  $('quizBox').innerHTML='<div class="card"><div class="card-head">Question '+(qi+1)+' of 10</div><div class="card-body"><h3>'+q[0]+'</h3>'+q[1].map((a,i)=>'<button class="choice quizChoice" data-i="'+i+'">'+a+'</button>').join('')+'<div id="quizFeedback" class="feedback"></div></div></div>';
+  document.querySelectorAll('.quizChoice').forEach(b=>b.onclick=()=>{
+    const ok=+b.dataset.i===q[2];document.querySelectorAll('.quizChoice').forEach(x=>x.disabled=true);b.classList.add(ok?'good':'bad');
+    if(!ok)document.querySelectorAll('.quizChoice')[q[2]].classList.add('good');if(ok)score++;
+    $('quizFeedback').className='feedback show '+(ok?'good':'bad');
+    $('quizFeedback').innerHTML=(ok?'Correct answer.':'Review the concept.')+' <button class="btn primary" id="nextQuiz">Continue</button>';
+    $('nextQuiz').onclick=()=>{qi++;renderQuiz()};
+  });
+}
+$('restartQuiz').onclick=()=>{qi=0;score=0;renderQuiz()};
+
+renderIntro();
+renderStructure();
+renderMatrix();
+renderChiCalculation();
+renderResiduals();
+drawDistribution();
+updateStrength();
+renderQuiz();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "In a 3 × 3 table, how many internal cells are there?", "options": ["9", "6", "3"], "correct": 0, "explanation": ""}, {"question": "Under independence, P(A∩B) is...", "options": ["P(A)P(B)", "P(A)+P(B)", "always zero"], "correct": 0, "explanation": ""}, {"question": "How is Eᵢⱼ calculated?", "options": ["Row total × column total / n", "Oᵢⱼ/n", "Sum of the margins"], "correct": 0, "explanation": ""}, {"question": "What is a contingency?", "options": ["O−E", "O/E", "E−n"], "correct": 0, "explanation": ""}, {"question": "What is the cell's contribution to χ²?", "options": ["(O−E)²/E", "O−E", "E²/O"], "correct": 0, "explanation": ""}, {"question": "How many degrees of freedom does a 3 × 3 table have?", "options": ["4", "6", "9"], "correct": 0, "explanation": ""}, {"question": "The p-value is...", "options": ["the area to the right of the observed value", "the maximum of the curve", "Cramér's V"], "correct": 0, "explanation": ""}, {"question": "A positive residual indicates...", "options": ["more cases than expected", "fewer cases than expected", "no margins"], "correct": 0, "explanation": ""}, {"question": "Holding percentages constant, as n increases...", "options": ["χ² increases and V remains unchanged", "V always increases", "χ² remains unchanged"], "correct": 0, "explanation": ""}, {"question": "Under maximum association in a diagonal 3 × 3 table, V equals...", "options": ["1", "0", "3"], "correct": 0, "explanation": ""}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("s8");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body>
+</html>

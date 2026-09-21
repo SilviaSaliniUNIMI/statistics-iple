@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Analysis of Variance (ANOVA) | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{
+  --blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#20242c;--muted:#667085;
+  --orange:#c4681a;--orange2:#fff4e8;--green:#2e7d32;--red:#b42318;
+  --purple:#6d5bd0;--teal:#147d8d;--line:#dce5ef;--soft:#f4f7fb;--card:#fff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);font-size:16px}
+.wrap{max-width:1180px;margin:28px auto;padding:0 16px 55px}
+.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:12px 12px 0 0;padding:38px 24px 28px;text-align:center;box-shadow:0 7px 20px rgba(23,107,77,.16)}
+.header .kicker{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800;opacity:.82;margin-bottom:9px}
+.header h1{font-size:32px;line-height:1.2;margin:0 0 7px}
+.header p{margin:0;font-size:18px;opacity:.95}
+.meta{background:#fff;border:1px solid var(--line);border-top:0;padding:11px 16px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.pill{border:1px solid #cbd9e9;background:#f4fbf7;color:var(--blue);padding:7px 11px;border-radius:999px;font-size:14px;font-weight:800}
+.tabbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-top:0;border-bottom:2px solid var(--blue);scrollbar-width:none}
+.tabbar::-webkit-scrollbar{display:none}
+.tab{border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;color:#697386;padding:12px 10px;min-width:125px;flex:1;font:700 12.5px Arial;cursor:pointer;white-space:nowrap}
+.tab:hover{background:#f4fbf7;color:var(--blue)}
+.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}
+.content{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:27px 30px;box-shadow:0 12px 28px rgba(23,39,64,.08)}
+.section{display:none}
+.section.active{display:block}
+.intro{background:var(--blue);color:#fff;border-radius:11px;padding:19px 22px;margin-bottom:20px}
+.intro h2{margin:0 0 7px;font-size:22px}
+.intro p{margin:0;line-height:1.65}
+.card{background:#fff;border:1px solid #e3e8ef;border-radius:12px;margin-bottom:20px;overflow:hidden}
+.card-head{padding:14px 19px;font-size:18px;font-weight:800}
+.card-head.light{background:var(--light);color:var(--blue)}
+.card-head.dark{background:var(--blue);color:#fff}
+.card-head.orange{background:var(--orange2);color:#8b4707}
+.card-body{padding:19px 21px;line-height:1.68}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}
+.mini{background:#fff;border:1px solid #e3e8ef;border-radius:12px;padding:16px;line-height:1.58}
+.mini strong{color:var(--blue)}
+.question{background:var(--orange2);border:2px solid var(--orange);border-radius:12px;padding:18px;margin-bottom:20px}
+.question h3{color:#8e4c00;margin:0 0 8px}
+.formula{background:#eef8f3;border:1px solid #b8dac9;border-radius:10px;padding:14px 16px;text-align:center;color:var(--blue);font-weight:800;font-size:18px;line-height:1.8;margin:13px 0}
+.tip,.warn,.okbox{padding:13px 15px;border-radius:0 9px 9px 0;margin:13px 0;line-height:1.62}
+.tip{background:#f2faf6;border-left:5px solid var(--blue)}
+.warn{background:#fff4e5;border-left:5px solid var(--orange)}
+.okbox{background:#eef8ef;border-left:5px solid var(--green)}
+.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
+.btn{border:0;border-radius:8px;padding:10px 17px;font:800 14px Arial;cursor:pointer;transition:.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.secondary{background:#eaf2fb;color:var(--blue)}
+.btn.orange{background:var(--orange);color:#fff}
+.choice{display:block;width:100%;text-align:left;border:1px solid #d6dee8;background:#fff;border-radius:9px;padding:11px 13px;margin:9px 0;cursor:pointer;font:700 15px Arial;color:#344054}
+.choice:hover{background:#f6faff;border-color:#9ebfe4}
+.choice.correct{background:#eaf7ec;border-color:#6ab375;color:#1f6a29}
+.choice.wrong{background:#fff0ef;border-color:#df8078;color:#92231c}
+.feedback{display:none;padding:12px 14px;border-radius:8px;margin-top:12px}
+.feedback.show{display:block}
+.feedback.ok{background:#eef8ef;border:1px solid #b9dfbf;color:#1f6a29}
+.feedback.err{background:#fff0ef;border:1px solid #f3c3bf;color:#8e2018}
+.section-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:17px;border-top:1px solid var(--line)}
+.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:12px;padding:17px}
+.control{margin:12px 0}
+.control label{display:flex;justify-content:space-between;font-weight:800;color:#344054;margin-bottom:7px}
+.control input[type=range]{width:100%;accent-color:var(--orange)}
+select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-weight:700;color:#344054}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:14px 0}
+.kpi{background:#f4fbf7;border:1px solid #dce9f7;border-radius:10px;padding:12px;text-align:center}
+.kpi span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.kpi b{display:block;color:var(--blue);font-size:20px;margin-top:5px}
+.canvas-wrap{background:#fff;border:1px solid #dfe6ee;border-radius:12px;padding:10px;overflow:hidden}
+.canvas-wrap canvas{width:100%;height:auto;display:block}
+.legend{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;font-size:13px;color:#475467;margin-top:8px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:center}
+th{background:#f3f7fb;color:var(--blue)}
+.small{font-size:13px;color:var(--muted)}
+.progress{height:9px;background:#e5eaf0;border-radius:99px;overflow:hidden;margin:10px 0 18px}
+.progress>div{height:100%;width:0;background:var(--blue);transition:.25s}
+.checklist label{display:block;padding:10px 0;border-bottom:1px solid #e7edf4}
+.checklist input{margin-right:9px}
+.pairplot{position:relative;height:310px;border:1px solid #dfe6ee;border-radius:12px;background:#fbfdff;overflow:hidden}
+.pairplot .zero{position:absolute;left:50%;top:28px;bottom:44px;width:2px;background:#344054}
+.pairplot .ci{position:absolute;height:10px;border-radius:8px;background:var(--teal)}
+.pairplot .pt{position:absolute;width:15px;height:15px;border-radius:50%;background:var(--teal);transform:translate(-50%,-3px)}
+.pairplot .lab{position:absolute;left:12px;font-weight:700;color:#344054}
+.pairplot .axislabel{position:absolute;bottom:10px;color:#667085;font-size:12px;transform:translateX(-50%)}
+@media(max-width:850px){
+  .grid2,.grid3,.hero-grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}
+  .content{padding:20px 16px}.header h1{font-size:27px}.tab{min-width:145px}
+}
+
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header">
+<div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div>
+<h1>Analysis of Variance (ANOVA)</h1>
+<p>Two-sample t-test and one-way ANOVA</p>
+</header>
+<div class="meta">
+<span class="pill">One categorical variable</span>
+<span class="pill">One quantitative response</span>
+<span class="pill">Tukey comparisons</span>
+</div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">From variance to ANOVA</button><button class="iple-group-tab" data-iple-group="1" type="button">The F test</button><button class="iple-group-tab" data-iple-group="2" type="button">Assumptions and follow-up</button><button class="iple-group-tab" data-iple-group="3" type="button">Extensions</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><nav class="tabbar iple-original-tabs">
+<button class="tab active" data-target="s1">1. Decomposition</button>
+<button class="tab" data-target="s2">2. Two groups</button>
+<button class="tab" data-target="s3">3. F-test</button>
+<button class="tab" data-target="s4">4. Relevance</button>
+<button class="tab" data-target="s5">5. Assumptions</button>
+<button class="tab" data-target="s6">6. Post hoc</button>
+<button class="tab" data-target="s7">7. Multiple factors</button>
+<button class="tab" data-target="s8">8. Check</button>
+<button class="tab" data-target="exam-prep">Preparing for the exam</button></nav>
+<main class="content">
+<section class="section active" data-iple-group="0" id="s1">
+<div class="intro">
+<h2>Starting from variance decomposition</h2>
+<p>We have already seen that total variability can be separated into a between-group component and a within-group component. In ANOVA, this idea becomes the basis of an inferential test.</p>
+</div>
+<div class="card">
+<div class="card-head light">Guided example: three jurisdictions</div>
+<div class="card-body">
+<p>A study compares case-resolution time, in days, across three jurisdictions. Lower values indicate faster resolution.</p>
+<div class="grid2">
+<div class="table-wrap">
+<table>
+<thead><tr><th>Case</th><th>Jurisdiction A<br/>tradizionale</th><th>Jurisdiction B<br/>zone picking</th><th>Jurisdiction C<br/>batch picking</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>18</td><td>16</td><td>14</td></tr>
+<tr><td>2</td><td>20</td><td>17</td><td>15</td></tr>
+<tr><td>3</td><td>19</td><td>15</td><td>13</td></tr>
+<tr><td>4</td><td>21</td><td>18</td><td>16</td></tr>
+<tr><th>Mean</th><th>19,5</th><th>16,5</th><th>14,5</th></tr>
+</tbody>
+</table>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="500" id="guidedCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>Observations</span>
+<span><i class="dot" style="background:#d81b60"></i>Selected observation</span>
+<span><i class="dot" style="background:#c4681a"></i>Group means</span>
+<span><i class="dot" style="background:#b42318"></i>Grand mean</span>
+</div>
+</div>
+</div>
+<div class="question" style="margin-top:18px">
+<h3>Decompose the deviation of the selected case</h3>
+<p>Select a cell in the graphical table by clicking a point.</p>
+<div class="formula" id="decompFormula">21 − 16,83 = (19,50 − 16,83) + (21 − 19,50)</div>
+<div class="kpis">
+<div class="kpi"><span>Total deviation</span><b id="totDev">4,17</b></div>
+<div class="kpi"><span>Between groups</span><b id="betweenDev">2,67</b></div>
+<div class="kpi"><span>Within the group</span><b id="withinDev">1,50</b></div>
+<div class="kpi"><span>Grand mean</span><b>16,83</b></div>
+</div>
+</div>
+<div class="formula">yᵢⱼ − ȳ = (ȳᵢ − ȳ) + (yᵢⱼ − ȳᵢ)</div>
+<div class="okbox"><strong>Key idea:</strong> each deviation from the grand mean contains one component due to the distance between the group mean and the grand mean, and another due to the observation's position within its own group.</div>
+</div>
+</div>
+<details>
+<summary style="cursor:pointer;font-weight:800;color:var(--blue)">Learn more: from deviations to sums of squares</summary>
+<div class="card-body">
+<p>To prevent positive and negative deviations from cancelling each other out, we square them:</p>
+<div class="formula">Total sum of squares = ΣᵢΣⱼ (yᵢⱼ − ȳ)²</div>
+<div class="formula">Between-group sum of squares = Σᵢ nᵢ(ȳᵢ − ȳ)²</div>
+<div class="formula">Within-group sum of squares = ΣᵢΣⱼ (yᵢⱼ − ȳᵢ)²</div>
+<div class="formula">Total SS = between SS + within SS</div>
+</div>
+</details>
+<div class="section-nav iple-old-section-nav"><span></span><button class="btn primary next" data-next="s2">Continue: from the t-test to ANOVA →</button></div>
+</section>
+<section class="section" data-iple-group="0" id="s2">
+<div class="intro">
+<h2>Before ANOVA: comparing two groups</h2>
+<p>When there are only two groups, an independent-samples t-test is normally used. ANOVA leads to the same conclusion because, with two groups, the F-statistic is the square of the t-statistic.</p>
+</div>
+<div class="card">
+<div class="card-head light">Guided example: two jurisdictions</div>
+<div class="card-body">
+<p>Let us compare the mean case-resolution time in two jurisdictions. The curves provide an intuitive representation of the time distributions in the two groups: the shaded region shows their overlap.</p>
+<div class="grid2">
+<div class="controls">
+<div class="control">
+<label>Difference between the means <span id="twoGapVal">3,0 hours</span></label>
+<input id="twoGap" max="7" min="0" step="0.5" type="range" value="3"/>
+</div>
+<div class="control">
+<label>Common standard deviation <span id="twoSdVal">2,5 hours</span></label>
+<input id="twoSd" max="5" min="1" step="0.5" type="range" value="2.5"/>
+</div>
+<div class="control">
+<label>Observations per group <span id="twoNVal">12</span></label>
+<input id="twoN" max="40" min="5" step="1" type="range" value="12"/>
+</div>
+<div class="tip"><strong>Observe:</strong> increasing the distance between the means or the sample size increases |t|. Increasing within-group dispersion decreases |t|.</div>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="470" id="twoNormalCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>Jurisdiction A</span>
+<span><i class="dot" style="background:#6d5bd0"></i>Jurisdiction B</span>
+<span><i class="dot" style="background:#c4681a"></i>Overlap</span>
+</div>
+</div>
+</div>
+<div class="kpis">
+<div class="kpi"><span>observed t</span><b id="twoT">—</b></div>
+<div class="kpi"><span>Degrees of freedom</span><b id="twoDf">—</b></div>
+<div class="kpi"><span>critical t, α=0,05</span><b id="twoTCrit">—</b></div>
+<div class="kpi"><span>Two-sided p-value</span><b id="twoP">—</b></div>
+</div>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head orange">The independent-samples t-test</div>
+<div class="card-body">
+<div class="formula">H₀: μ₁ = μ₂     H₁: μ₁ ≠ μ₂</div>
+<div class="formula">t = (x̄₁ − x̄₂) / [s<sub>p</sub> √(1/n₁ + 1/n₂)]</div>
+<div class="formula">s<sub>p</sub>² = [(n₁−1)s₁² + (n₂−1)s₂²] / (n₁+n₂−2)</div>
+<p>This is the equal-variance version, consistent with classical ANOVA.</p>
+</div>
+</div>
+<div class="card">
+<div class="card-head light">The critical value and degrees of freedom</div>
+<div class="card-body">
+<div class="formula">df = (n₁ − 1) + (n₂ − 1) = n₁ + n₂ − 2 = n − 2</div>
+<p>Degrees of freedom depend on the number of parameters estimated, not on an arbitrary rule. In the first group, we estimate one mean and retain <strong>n₁−1</strong> independent deviations; in the second, we estimate a second mean and retain <strong>n₂−1</strong>.</p>
+<div class="tip"><strong>Why do we subtract 2?</strong> With two independent samples, we estimate two means, one for each group. Therefore, from the total sample size <em>n=n₁+n₂</em>, we subtract two degrees of freedom.</div>
+<p>In a one-sample t-test, by contrast, only one mean is estimated, so we use:</p>
+<div class="formula">df = n − 1</div>
+<p>In a two-tailed test at the 5% level, H₀ is rejected when:</p>
+<div class="formula">|observed t| &gt; t<sub>0,975; df</sub></div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head light">The t-distribution and the two critical regions</div>
+<div class="card-body">
+<div class="canvas-wrap"><canvas height="430" id="tDistCanvas" width="1000"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>t-distribution under H₀</span>
+<span><i class="dot" style="background:#b42318"></i>Rejection regions</span>
+<span><i class="dot" style="background:#c4681a"></i>observed t</span>
+</div>
+<div class="tip"><strong>Two-tailed test:</strong> both very negative and very positive values are incompatible with H₀. Therefore, the α level is divided between the two tails.</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">The same comparison viewed as ANOVA</div>
+<div class="card-body">
+<div class="formula">F = t²</div>
+<div class="kpis">
+<div class="kpi"><span>t²</span><b id="twoTSq">—</b></div>
+<div class="kpi"><span>observed F</span><b id="twoF">—</b></div>
+<div class="kpi"><span>F degrees of freedom</span><b id="twoFDf">1; —</b></div>
+<div class="kpi"><span>Conclusion</span><b>Identical</b></div>
+</div>
+<div class="tip"><strong>Equivalenza:</strong> with two groups, the p-value of the F-test is identical to that of the two-tailed t-test. F does not retain the sign of the difference because t is squared.</div>
+</div>
+</div>
+<div class="warn"><strong>There is also a paired-samples t-test.</strong> It is used when observations in the two groups are naturally linked, for example before-and-after policy measurements in the same jurisdictions or two assessments of the same courts. In that case, differences within pairs are analysed rather than two independent samples.</div>
+<details>
+<summary style="cursor:pointer;font-weight:800;color:var(--blue)">Learn more: when variances are unequal</summary>
+<div class="card-body"><p>Welch's t-test does not use the pooled variance and calculates approximate degrees of freedom. It is often preferable when the dispersions of the two groups are very different.</p></div>
+</details>
+<div class="question" style="margin-top:18px">
+<h3>When is ANOVA appropriate?</h3>
+<button class="choice qTwo" data-ok="0">Only when all sample means are different.</button>
+<button class="choice qTwo" data-ok="1">When there are more than two groups; with two groups, the t-test is more direct, although ANOVA is equivalent.</button>
+<button class="choice qTwo" data-ok="0">Only when the response variable is qualitative.</button>
+<div class="feedback" id="twoFb"></div>
+</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s1">← Back</button><button class="btn primary next" data-next="s3">Continue: the F-test with multiple groups →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="s3">
+<div class="intro">
+<h2>Comparing two sources of variability</h2>
+<p>With three or more groups, the F-statistic compares mean between-group variability with mean within-group variability. To decide, we compare the observed value with an F-distribution.</p>
+</div>
+<div class="grid2">
+<div class="controls">
+<div class="control">
+<label>Distance between the means <span id="meanGapVal">3,0 hours</span></label>
+<input id="meanGap" max="6" min="0" step="0.5" type="range" value="3"/>
+</div>
+<div class="control">
+<label>Within-group variability <span id="withinSdVal">2,0 hours</span></label>
+<input id="withinSd" max="5" min="0.5" step="0.5" type="range" value="2"/>
+</div>
+<div class="control">
+<label>Cases per jurisdiction <span id="groupNVal">12</span></label>
+<input id="groupN" max="40" min="5" step="1" type="range" value="12"/>
+</div>
+<div class="control">
+<label>Significance level</label>
+<select id="alphaF">
+<option value="0.10">α = 0,10</option>
+<option selected="" value="0.05">α = 0,05</option>
+<option value="0.01">α = 0,01</option>
+</select>
+</div>
+<div class="tip"><strong>Try this:</strong> increase the distance between the means, then increase within-group variability. Observe how F, the p-value, and the comparison with the critical value change.</div>
+</div>
+<div>
+<div class="canvas-wrap"><canvas height="500" id="fCanvas" width="900"></canvas></div>
+<div class="kpis">
+<div class="kpi"><span>F</span><b id="fValue">—</b></div>
+<div class="kpi"><span>p-value</span><b id="pValue">—</b></div>
+<div class="kpi"><span>Eta-squared</span><b id="etaValue">—</b></div>
+<div class="kpi"><span>Decision at α=0.05</span><b id="fDecision">—</b></div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head light">ANOVA table</div>
+<div class="card-body">
+<div class="table-wrap">
+<table>
+<thead><tr><th>Source</th><th>Sum of squares</th><th>Degrees of freedom</th><th>Mean square</th><th>F</th><th>p-value</th></tr></thead>
+<tbody>
+<tr><td>Between groups</td><td id="ssBetween">—</td><td id="dfBetween">—</td><td id="msBetween">—</td><td id="fTable">—</td><td id="pTable">—</td></tr>
+<tr><td>Within groups</td><td id="ssWithin">—</td><td id="dfWithin">—</td><td id="msWithin">—</td><td></td><td></td></tr>
+<tr><td>Total</td><td id="ssTotal">—</td><td id="dfTotal">—</td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">The F-distribution</div>
+<div class="card-body">
+<div class="grid2">
+<div>
+<div class="canvas-wrap"><canvas height="470" id="fDistCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i class="dot" style="background:#2e8b57"></i>F-distribution under H₀</span>
+<span><i class="dot" style="background:#b42318"></i>observed F</span>
+<span><i class="dot" style="background:#c4681a"></i>Critical value</span>
+</div>
+</div>
+<div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>observed F</span><b id="fObsDist">—</b></div>
+<div class="kpi"><span>critical F</span><b id="fCritDist">—</b></div>
+<div class="kpi"><span>numerator df</span><b id="df1Dist">—</b></div>
+<div class="kpi"><span>denominator df</span><b id="df2Dist">—</b></div>
+</div>
+<div class="tip"><strong>Why is it called the Fisher–Snedecor F-distribution?</strong>
+        The letter <em>F</em> refers to Ronald A. Fisher, who developed analysis of variance and the comparison of variance estimates in the 1920s. George W. Snedecor helped systematise and disseminate this ratio, using the letter F in Fisher's honour. For this reason, the distribution is often called the <strong>Fisher–Snedecor F-distribution</strong>.</div>
+<div class="tip"><strong>Why is it skewed?</strong> F is a ratio of two non-negative quantities. It can therefore take only values greater than or equal to zero and has a right-hand tail.</div>
+<div class="warn"><strong>p-value:</strong> is the probability, under H₀, that the random variable F takes a value at least as large as the observed F-statistic; graphically, it is the area to the right of the observed value. If F exceeds the critical value, the result falls in the rejection region.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="formula">F = between-group mean square / within-group mean square</div>
+<div class="grid2">
+<div class="mini"><strong>F approximately equal to 1</strong><p>The differences between the means are not large relative to within-group dispersion.</p></div>
+<div class="mini"><strong>F much greater than 1</strong><p>The means are far apart relative to the variability observed within groups.</p></div>
+</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s2">← Back</button><button class="btn primary next" data-next="s4">Continue: significance and relevance →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="s4">
+<div class="intro">
+<h2>Statistical significance and relevance</h2>
+<p>The p-value measures the evidence against H₀. <strong>Eta-squared</strong>, written using the Greek letter eta as η², instead measures the proportion of total variability associated with group membership. It is not H squared.</p>
+</div>
+<div class="formula">Eta-squared: η<sup>2</sup> = between-group sum of squares / total sum of squares</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head light">Scenario A: little data, meaningful difference</div>
+<div class="card-body">
+<p>Three small groups show fairly different means, but uncertainty remains high.</p>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>p-value</span><b>0,081</b></div>
+<div class="kpi"><span>Eta-squared</span><b>0,24</b></div>
+</div>
+<p class="small">A potentially meaningful difference, but the sample evidence is not yet sufficient at the 5% level.</p>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">Scenario B: a great deal of data, minimal difference</div>
+<div class="card-body">
+<p>With thousands of observations, even very small differences can be statistically significant.</p>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>p-value</span><b>&lt;0,001</b></div>
+<div class="kpi"><span>Eta-squared</span><b>0,01</b></div>
+</div>
+<p class="small">Strong statistical evidence, but a very small proportion of variability associated with the groups.</p>
+</div>
+</div>
+</div>
+<div class="question">
+<h3>How would you interpret an eta-squared value of 0.18?</h3>
+<button class="choice qEta" data-ok="1">18% of the observed variability in the response is associated with the groups.</button>
+<button class="choice qEta" data-ok="0">The factor causes 18% of the observed values.</button>
+<button class="choice qEta" data-ok="0">The test has an 18% probability of being correct.</button>
+<div class="feedback" id="etaFb"></div>
+</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s3">← Back</button><button class="btn primary next" data-next="s5">Continue: preliminary checks →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s5">
+<div class="intro">
+<h2>Before applying ANOVA</h2>
+<p>Classical ANOVA relies on several conditions. In this e-tivity, we do not formalise them as model assumptions; instead, we use them as preliminary checks to understand when the result requires caution.</p>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head light">1. Independent observations</div>
+<div class="card-body">
+<p>Each observation must provide new information. The same case, person, or court must not be counted multiple times as though they were independent units.</p>
+<div class="warn"><strong>This is a data-design issue:</strong> it cannot be resolved by looking at a graph. We need to know how the observations were collected.</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head light">2. Groups without severe anomalies</div>
+<div class="card-body">
+<p>Especially when groups are small, highly skewed distributions or extreme values can make means and variances unstable.</p>
+<p>For this reason, always inspect the data in each group using dot plots, histograms, or boxplots before interpreting the p-value.</p>
+<div class="tip"><strong>There is no need to introduce residuals yet:</strong> at this stage, it is enough to check how values are distributed within each group.</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">3. Dispersions that are not too different</div>
+<div class="card-body">
+<p>Classical ANOVA works best when the groups have similar variability.</p>
+<div class="canvas-wrap"><canvas height="330" id="varCanvas" width="760"></canvas></div>
+<div class="tip"><strong>If the dispersions are very different:</strong> the result should be interpreted cautiously; Welch's ANOVA may be preferable.</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">4. Extreme values</div>
+<div class="card-body">
+<p>A single very distant value can change the group mean, increase its variance, and influence the F-statistic.</p>
+<div class="canvas-wrap"><canvas height="330" id="outCanvas" width="760"></canvas></div>
+<div class="warn"><strong>Do not remove it automatically:</strong> we need to determine whether it is an error, a genuine rare case, or a signal that the groups are not homogeneous.</div>
+</div>
+</div>
+</div>
+<div class="okbox"><strong>Caveat:</strong> these checks do not replace a formal diagnostic analysis. Later, when ANOVA is presented as a statistical model, the conditions can be formulated more precisely.</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s4">← Back</button><button class="btn primary next" data-next="s6">Continue: which groups differ? →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s6">
+<div class="intro">
+<h2>After the global test: post hoc comparisons</h2>
+<p>A significant F-test tells us that not all means are equal, but it does not identify which pairs differ.</p>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head light">Why not perform many t-tests?</div>
+<div class="card-body">
+<p>With k groups, the number of pairwise comparisons is:</p>
+<div class="formula">k(k − 1) / 2</div>
+<table>
+<thead><tr><th>Groups</th><th>Confronti</th></tr></thead>
+<tbody><tr><td>3</td><td>3</td></tr><tr><td>5</td><td>10</td></tr><tr><td>8</td><td>28</td></tr></tbody>
+</table>
+<p>The more independent comparisons we perform, the greater the risk of at least one false positive.</p>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">Tukey comparisons</div>
+<div class="card-body">
+<p>Tukey's method compares all pairs of means while controlling the overall Type I error rate.</p>
+<div class="tip"><strong>Graphical rule:</strong> if the simultaneous interval for a difference includes zero, the pair is not significantly different.</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head light">Post hoc output for the three jurisdictions</div>
+<div class="card-body">
+<div class="table-wrap">
+<table>
+<thead><tr><th>Comparison</th><th>Difference between means</th><th>IC simultaneo 95%</th><th>Adjusted p-value</th><th>Esito</th></tr></thead>
+<tbody>
+<tr><td>B − A</td><td>−3,0</td><td>[−4,8; −1,2]</td><td>0,002</td><td>Significant</td></tr>
+<tr><td>C − A</td><td>−5,0</td><td>[−6,8; −3,2]</td><td>&lt;0,001</td><td>Significant</td></tr>
+<tr><td>C − B</td><td>−2,0</td><td>[−3,8; −0,2]</td><td>0,026</td><td>Significant</td></tr>
+</tbody>
+</table>
+</div>
+<div class="pairplot" id="pairPlot">
+<div class="zero"></div>
+<div class="lab" style="top:58px">B − A</div>
+<div class="ci" style="top:64px;left:15%;width:28%"></div><div class="pt" style="top:64px;left:29%"></div>
+<div class="lab" style="top:132px">C − A</div>
+<div class="ci" style="top:138px;left:6%;width:28%"></div><div class="pt" style="top:138px;left:20%"></div>
+<div class="lab" style="top:206px">C − B</div>
+<div class="ci" style="top:212px;left:24%;width:28%"></div><div class="pt" style="top:212px;left:38%"></div>
+<div class="axislabel" style="left:8%">−7</div><div class="axislabel" style="left:29%">−4</div><div class="axislabel" style="left:50%">0</div><div class="axislabel" style="left:71%">4</div><div class="axislabel" style="left:92%">7</div>
+</div>
+</div>
+</div>
+<div class="question">
+<h3>What does an interval that crosses zero mean?</h3>
+<button class="choice qPost" data-ok="1">The difference between that pair of means is not significant at the specified level.</button>
+<button class="choice qPost" data-ok="0">The two means are exactly equal in the population.</button>
+<button class="choice qPost" data-ok="0">The global F-test must necessarily be non-significant.</button>
+<div class="feedback" id="postFb"></div>
+</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s5">← Back</button><button class="btn primary next" data-next="s7">Continue: beyond a single factor →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="s7">
+<div class="intro">
+<h2>From one-way to multi-way ANOVA</h2>
+<p>One-way ANOVA considers a single factor. In real applications, it may be useful to study several factors simultaneously.</p>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head light">One factor</div>
+<div class="card-body">
+<div class="formula">Jurisdiction → Case-resolution time</div>
+<p>We compare mean times across A, B, and C.</p>
+</div>
+</div>
+<div class="card">
+<div class="card-head orange">Two factors</div>
+<div class="card-body">
+<div class="formula">Jurisdiction + court size → Resolution time</div>
+<p>Multi-way ANOVA makes it possible to study multiple factors and their possible interactions.</p>
+</div>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<div class="card-head light">Parallel lines: no evident interaction</div>
+<div class="card-body"><div class="canvas-wrap"><canvas height="360" id="noInterCanvas" width="760"></canvas></div></div>
+</div>
+<div class="card">
+<div class="card-head orange">Non-parallel lines: possible interaction</div>
+<div class="card-body"><div class="canvas-wrap"><canvas height="360" id="interCanvas" width="760"></canvas></div></div>
+</div>
+</div>
+<div class="tip"><strong>Interaction:</strong> the effect of a legal procedure may change depending on court size. In this case, describing the two factors separately is not sufficient.</div>
+<div class="okbox"><strong>Looking ahead:</strong> in later courses, you will see that ANOVA can also be formulated as a statistical model and is closely connected to regression. Here, we focus on decomposing variability and comparing means.</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s6">← Back</button><button class="btn primary next" data-next="s8">Go to the final check →</button></div>
+</section>
+<section class="section" data-iple-group="4" id="s8">
+<div class="intro">
+<h2>Final quiz</h2>
+<p>Ten questions on variance decomposition, the t-test, the F-test, eta-squared, preliminary checks, and post hoc comparisons.</p>
+</div>
+<div class="progress"><div id="quizProgress"></div></div>
+<div id="quizBox"></div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s7">← Back</button><button class="btn primary" id="restartQuiz">Start again</button></div>
+</section>
+<section class="section" data-iple-group="5" id="exam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>Completing an ANOVA table</h3><p><strong>Question.</strong> There are k=3 groups and n=30 observations. SSB=120 and SSW=270. Calculate the degrees of freedom, mean squares, and F.</p><div class="exam-answer"><strong>Solution.</strong> df_between=2, df_within=27. MSB=120/2=60; MSW=270/27=10; F=60/10=6.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Decision from the F statistic</h3><p><strong>Question.</strong> For the previous example, the 5% critical value is 3.35. What is the conclusion?</p><div class="exam-answer"><strong>Solution.</strong> Because 6&gt;3.35, reject the null hypothesis that all population means are equal. ANOVA shows that at least one mean differs, but a post-hoc comparison is needed to identify which groups differ.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">Completing and interpreting ANOVA</div><div class="card-body"><div class="exam-prep-question">An ANOVA compares mean court duration in four jurisdictions using n=120 cases. State the degrees of freedom for between groups, within groups and total, and explain what a large F statistic indicates.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>With k=4 and n=120: df_between=k−1=3, df_within=n−k=116, and df_total=n−1=119. A large F means that variability among jurisdiction means is large relative to variability within jurisdictions; the p-value determines whether this is statistically significant.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> Obtains df_between=3 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Obtains df_within=116 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Obtains df_total=119 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Interprets F as a ratio of between to within variation <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></main>
+</div>
+<script>
+const fmt=(x,d=2)=>Number(x).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sections=[...document.querySelectorAll('.section')];
+const tabs=[...document.querySelectorAll('.tab')];
+function showSection(id){
+  sections.forEach(s=>s.classList.toggle('active',s.id===id));
+  tabs.forEach(t=>t.classList.toggle('active',t.dataset.target===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+tabs.forEach(t=>t.addEventListener('click',()=>showSection(t.dataset.target)));
+document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.next)));
+document.querySelectorAll('.prev').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.prev)));
+
+function bindQuestion(selector,fbId,okText,badText){
+  document.querySelectorAll(selector).forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll(selector).forEach(x=>x.classList.remove('correct','wrong'));
+      const ok=btn.dataset.ok==='1';
+      btn.classList.add(ok?'correct':'wrong');
+      const fb=document.getElementById(fbId);
+      fb.className='feedback show '+(ok?'ok':'err');
+      fb.textContent=ok?okText:badText;
+    });
+  });
+}
+bindQuestion('.qTwo','twoFb','Exactly. With two groups, the t-test is the most direct choice; ANOVA gives the same result because F=t².','Remember that ANOVA is particularly useful when there are more than two groups.');
+bindQuestion('.qEta','etaFb','Exactly. Eta-squared measures the proportion of variability associated with the groups.','Eta-squared is not a probability and does not demonstrate causality.');
+bindQuestion('.qPost','postFb','Exactly. Zero represents no difference between the two means.','An interval that includes zero does not prove exact equality of the means.');
+
+function mean(a){return a.reduce((s,v)=>s+v,0)/a.length}
+
+
+/* Two independent groups: overlap, t distribution and F=t^2 */
+function normalPdf(x,m,s){return Math.exp(-0.5*((x-m)/s)**2)/(s*Math.sqrt(2*Math.PI));}
+function tDensity(x,df){
+  const a=Math.exp(logGamma((df+1)/2)-logGamma(df/2))/Math.sqrt(df*Math.PI);
+  return a*Math.pow(1+x*x/df,-(df+1)/2);
+}
+function tCdf(x,df){
+  if(x===0)return .5;
+  const z=df/(df+x*x),ib=ibeta(z,df/2,.5);
+  return x>0?1-.5*ib:.5*ib;
+}
+function tCriticalTwoSided(alpha,df){
+  let lo=0,hi=1;
+  while(tCdf(hi,df)<1-alpha/2 && hi<100)hi*=2;
+  for(let i=0;i<80;i++){
+    const mid=(lo+hi)/2;
+    if(tCdf(mid,df)<1-alpha/2)lo=mid;else hi=mid;
+  }
+  return (lo+hi)/2;
+}
+function drawTwoNormals(mu1,mu2,sd){
+  const canvas=document.getElementById('twoNormalCanvas'),ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height,L=65,R=25,T=28,B=55;
+  const xmin=Math.min(mu1,mu2)-4*sd,xmax=Math.max(mu1,mu2)+4*sd;
+  const ymax=normalPdf(mu1,mu1,sd)*1.12;
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(w-L-R),Y=y=>T+(ymax-y)/ymax*(h-T-B);
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle='#dce5ef';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const px=L+i*(w-L-R)/5;ctx.beginPath();ctx.moveTo(px,T);ctx.lineTo(px,h-B);ctx.stroke();ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(xmin+i*(xmax-xmin)/5,1),px-12,h-B+22)}
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+  ctx.fillStyle='rgba(167,92,0,.24)';ctx.beginPath();ctx.moveTo(L,h-B);
+  for(let i=0;i<=600;i++){const x=xmin+i*(xmax-xmin)/600,y=Math.min(normalPdf(x,mu1,sd),normalPdf(x,mu2,sd));ctx.lineTo(X(x),Y(y));}
+  ctx.lineTo(w-R,h-B);ctx.closePath();ctx.fill();
+  [[mu1,'#2e8b57'],[mu2,'#6d5bd0']].forEach(([m,col])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();
+    for(let i=0;i<=600;i++){const x=xmin+i*(xmax-xmin)/600,y=normalPdf(x,m,sd);if(i===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}
+    ctx.stroke();ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(X(m),T);ctx.lineTo(X(m),h-B);ctx.stroke();ctx.setLineDash([]);
+  });
+  ctx.fillStyle='#2e8b57';ctx.font='bold 13px Arial';ctx.fillText('mean A',X(mu1)-25,T+15);
+  ctx.fillStyle='#6d5bd0';ctx.fillText('mean B',X(mu2)-25,T+35);
+}
+function drawTDistribution(tObs,df,alpha){
+  const canvas=document.getElementById('tDistCanvas'),ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height,L=65,R=25,T=25,B=55,crit=tCriticalTwoSided(alpha,df);
+  const xmax=Math.max(4.5,Math.abs(tObs)*1.25,crit*1.45),xmin=-xmax;
+  const ymax=tDensity(0,df)*1.12;
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(w-L-R),Y=y=>T+(ymax-y)/ymax*(h-T-B);
+  ctx.clearRect(0,0,w,h);ctx.strokeStyle='#dce5ef';ctx.lineWidth=1;
+  for(let i=0;i<=6;i++){const x=xmin+i*(xmax-xmin)/6,px=X(x);ctx.beginPath();ctx.moveTo(px,T);ctx.lineTo(px,h-B);ctx.stroke();ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(x,1),px-10,h-B+22)}
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+  function shade(a,b){ctx.fillStyle='rgba(180,35,24,.22)';ctx.beginPath();ctx.moveTo(X(a),h-B);for(let i=0;i<=220;i++){const x=a+(b-a)*i/220;ctx.lineTo(X(x),Y(tDensity(x,df)));}ctx.lineTo(X(b),h-B);ctx.closePath();ctx.fill();}
+  shade(xmin,-crit);shade(crit,xmax);
+  ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();
+  for(let i=0;i<=700;i++){const x=xmin+i*(xmax-xmin)/700,y=tDensity(x,df);if(i===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));}ctx.stroke();
+  ctx.strokeStyle='#b42318';ctx.lineWidth=2;ctx.setLineDash([5,5]);[-crit,crit].forEach(v=>{ctx.beginPath();ctx.moveTo(X(v),T);ctx.lineTo(X(v),h-B);ctx.stroke();});ctx.setLineDash([]);
+  ctx.strokeStyle='#c4681a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(X(Math.max(xmin,Math.min(xmax,tObs))),T);ctx.lineTo(X(Math.max(xmin,Math.min(xmax,tObs))),h-B);ctx.stroke();
+  ctx.fillStyle='#b42318';ctx.font='bold 12px Arial';ctx.fillText('−critical t',X(-crit)-35,T+15);ctx.fillText('+critical t',X(crit)-30,T+15);
+  ctx.fillStyle='#c4681a';ctx.fillText('observed t',Math.min(X(tObs)+7,w-95),T+34);
+}
+function updateTwoGroups(){
+  const gap=+document.getElementById('twoGap').value,sd=+document.getElementById('twoSd').value,n=+document.getElementById('twoN').value;
+  const mu1=18+gap/2,mu2=18-gap/2,df=2*n-2;
+  const t=(mu1-mu2)/(sd*Math.sqrt(2/n)),crit=tCriticalTwoSided(.05,df),p=2*(1-tCdf(Math.abs(t),df)),F=t*t;
+  document.getElementById('twoGapVal').textContent=fmt(gap,1)+' hours';
+  document.getElementById('twoSdVal').textContent=fmt(sd,1)+' hours';
+  document.getElementById('twoNVal').textContent=n;
+  document.getElementById('twoT').textContent=fmt(t,2);
+  document.getElementById('twoDf').textContent=df+' = '+(2*n)+' − 2';
+  document.getElementById('twoTCrit').textContent='±'+fmt(crit,3);
+  document.getElementById('twoP').textContent=p<.001?'<0,001':fmt(p,3);
+  document.getElementById('twoTSq').textContent=fmt(F,2);
+  document.getElementById('twoF').textContent=fmt(F,2);
+  document.getElementById('twoFDf').textContent='1; '+df;
+  drawTwoNormals(mu1,mu2,sd);drawTDistribution(t,df,.05);
+}
+['twoGap','twoSd','twoN'].forEach(id=>document.getElementById(id).addEventListener('input',updateTwoGroups));
+updateTwoGroups();
+
+/* Guided example */
+const guidedGroups=[
+  {name:'A',vals:[18,20,19,21],color:'#2e8b57'},
+  {name:'B',vals:[16,17,15,18],color:'#6d5bd0'},
+  {name:'C',vals:[14,15,13,16],color:'#147d8d'}
+];
+const guidedGrand=mean(guidedGroups.flatMap(g=>g.vals));
+const guidedMeans=guidedGroups.map(g=>mean(g.vals));
+const guidedCanvas=document.getElementById('guidedCanvas');
+function drawGuided(selectedG=0,selectedI=3){
+  const c=guidedCanvas,ctx=c.getContext('2d'),w=c.width,h=c.height,L=70,R=30,T=30,B=60;
+  ctx.clearRect(0,0,w,h);
+  const ymin=11,ymax=23,Y=y=>T+(ymax-y)/(ymax-ymin)*(h-T-B);
+  const xs=[180,450,720];
+  ctx.strokeStyle='#dce5ef';ctx.lineWidth=1;
+  for(let y=12;y<=22;y+=2){ctx.beginPath();ctx.moveTo(L,Y(y));ctx.lineTo(w-R,Y(y));ctx.stroke();ctx.fillStyle='#667085';ctx.font='13px Arial';ctx.fillText(y+' h',22,Y(y)+4)}
+  ctx.strokeStyle='#b42318';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(L,Y(guidedGrand));ctx.lineTo(w-R,Y(guidedGrand));ctx.stroke();
+  ctx.fillStyle='#b42318';ctx.fillText('grand mean',w-145,Y(guidedGrand)-8);
+  guidedGroups.forEach((g,gi)=>{
+    g.vals.forEach((v,i)=>{
+      const selected=(gi===selectedG&&i===selectedI);
+      ctx.fillStyle=selected?'#d81b60':g.color;
+      ctx.beginPath();ctx.arc(xs[gi]+(i-1.5)*18,Y(v),selected?9:6,0,Math.PI*2);ctx.fill();
+      if(selected){
+        ctx.strokeStyle='#ffffff';ctx.lineWidth=3;ctx.stroke();
+        ctx.strokeStyle='#d81b60';ctx.lineWidth=1.5;ctx.beginPath();
+        ctx.arc(xs[gi]+(i-1.5)*18,Y(v),12,0,Math.PI*2);ctx.stroke();
+      }
+    });
+    ctx.strokeStyle='#c4681a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(xs[gi]-42,Y(guidedMeans[gi]));ctx.lineTo(xs[gi]+42,Y(guidedMeans[gi]));ctx.stroke();
+    ctx.fillStyle='#344054';ctx.font='bold 15px Arial';ctx.fillText('Jurisdiction '+g.name,xs[gi]-48,h-26);
+  });
+  guidedCanvas._map={xs,Y};
+  updateDecomp(selectedG,selectedI);
+}
+function updateDecomp(gi,ii){
+  const v=guidedGroups[gi].vals[ii],gm=guidedMeans[gi],tot=v-guidedGrand,bet=gm-guidedGrand,within=v-gm;
+  document.getElementById('decompFormula').textContent=`${fmt(v,0)} − ${fmt(guidedGrand,2)} = (${fmt(gm,2)} − ${fmt(guidedGrand,2)}) + (${fmt(v,0)} − ${fmt(gm,2)})`;
+  document.getElementById('totDev').textContent=fmt(tot,2);
+  document.getElementById('betweenDev').textContent=fmt(bet,2);
+  document.getElementById('withinDev').textContent=fmt(within,2);
+}
+guidedCanvas.addEventListener('click',e=>{
+  const r=guidedCanvas.getBoundingClientRect(),mx=(e.clientX-r.left)*guidedCanvas.width/r.width,my=(e.clientY-r.top)*guidedCanvas.height/r.height;
+  let bg=0,bi=0,bd=Infinity;
+  guidedGroups.forEach((g,gi)=>g.vals.forEach((v,i)=>{
+    const px=guidedCanvas._map.xs[gi]+(i-1.5)*18,py=guidedCanvas._map.Y(v),d=(px-mx)**2+(py-my)**2;
+    if(d<bd){bd=d;bg=gi;bi=i}
+  }));
+  drawGuided(bg,bi);
+});
+drawGuided();
+
+/* F distribution helpers */
+function logGamma(z){
+  const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.984369578019571e-6,1.5056327351493116e-7];
+  if(z<0.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-logGamma(1-z);
+  z-=1;let x=0.9999999999998099;
+  for(let i=0;i<c.length;i++)x+=c[i]/(z+i+1);
+  const t=z+c.length-0.5;
+  return 0.5*Math.log(2*Math.PI)+(z+0.5)*Math.log(t)-t+Math.log(x);
+}
+function betacf(a,b,x){
+  const MAX=200,EPS=3e-12,FPMIN=1e-30;
+  let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<FPMIN)d=FPMIN;d=1/d;let h=d;
+  for(let m=1;m<=MAX;m++){
+    let m2=2*m,aa=m*(b-m)*x/((qam+m2)*(a+m2));
+    d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;h*=d*c;
+    aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+    d=1+aa*d;if(Math.abs(d)<FPMIN)d=FPMIN;c=1+aa/c;if(Math.abs(c)<FPMIN)c=FPMIN;d=1/d;
+    const del=d*c;h*=del;if(Math.abs(del-1)<EPS)break;
+  } return h;
+}
+function ibeta(x,a,b){
+  if(x<=0)return 0;if(x>=1)return 1;
+  const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
+  return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;
+}
+function fSurvival(F,d1,d2){
+  const x=d1*F/(d1*F+d2);
+  return Math.max(0,1-ibeta(x,d1/2,d2/2));
+}
+
+function fDensity(x,d1,d2){
+  if(x<=0)return 0;
+  const a=d1/2,b=d2/2;
+  const logB=logGamma(a)+logGamma(b)-logGamma(a+b);
+  const logf=a*Math.log(d1/d2)+(a-1)*Math.log(x)-logB-(a+b)*Math.log(1+d1*x/d2);
+  return Math.exp(logf);
+}
+function fCritical(alpha,d1,d2){
+  let lo=0,hi=1;
+  while(fSurvival(hi,d1,d2)>alpha && hi<1e6)hi*=2;
+  for(let i=0;i<80;i++){
+    const mid=(lo+hi)/2;
+    if(fSurvival(mid,d1,d2)>alpha)lo=mid;else hi=mid;
+  }
+  return (lo+hi)/2;
+}
+function drawFDistribution(Fobs,d1,d2,alpha){
+  const canvas=document.getElementById('fDistCanvas'),ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height,L=68,R=28,T=25,B=55;
+  const crit=fCritical(alpha,d1,d2);
+  const xmax=Math.max(5,crit*1.8,Fobs*1.35);
+  let ymax=0;
+  for(let i=1;i<=500;i++)ymax=Math.max(ymax,fDensity(i*xmax/500,d1,d2));
+  const X=x=>L+x/xmax*(w-L-R),Y=y=>T+(ymax-y)/ymax*(h-T-B);
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle='#dce5ef';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const px=L+i*(w-L-R)/5;ctx.beginPath();ctx.moveTo(px,T);ctx.lineTo(px,h-B);ctx.stroke();ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(i*xmax/5,1),px-10,h-B+22)}
+  ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+
+  // p-value area
+  ctx.fillStyle='rgba(180,35,24,.18)';
+  ctx.beginPath();ctx.moveTo(X(Math.min(Fobs,xmax)),h-B);
+  for(let i=0;i<=400;i++){
+    const x=Fobs+(xmax-Fobs)*i/400;
+    if(x>xmax)break;
+    ctx.lineTo(X(x),Y(fDensity(x,d1,d2)));
+  }
+  ctx.lineTo(w-R,h-B);ctx.closePath();ctx.fill();
+
+  // density curve
+  ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();
+  for(let i=1;i<=600;i++){
+    const x=i*xmax/600,y=fDensity(x,d1,d2);
+    if(i===1)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y));
+  }
+  ctx.stroke();
+
+  // critical line
+  ctx.strokeStyle='#c4681a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(crit),T);ctx.lineTo(X(crit),h-B);ctx.stroke();
+  ctx.fillStyle='#c4681a';ctx.font='bold 13px Arial';ctx.fillText('critical F',Math.min(X(crit)+6,w-95),T+16);
+
+  // observed line
+  const obsX=Math.min(Fobs,xmax);
+  ctx.strokeStyle='#b42318';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(obsX),T);ctx.lineTo(X(obsX),h-B);ctx.stroke();
+  ctx.fillStyle='#b42318';ctx.fillText('observed F',Math.min(X(obsX)+6,w-105),T+35);
+
+  document.getElementById('fObsDist').textContent=fmt(Fobs,2);
+  document.getElementById('fCritDist').textContent=fmt(crit,2);
+  document.getElementById('df1Dist').textContent=d1;
+  document.getElementById('df2Dist').textContent=d2;
+}
+function deterministicResiduals(n,sd,phase){
+  const a=[];for(let i=0;i<n;i++)a.push(Math.sin((i+1)*1.71+phase)+0.55*Math.cos((i+1)*0.83+phase*1.4));
+  const m=mean(a),centered=a.map(v=>v-m),ss=centered.reduce((s,v)=>s+v*v,0);
+  const scale=sd*Math.sqrt((n-1)/ss);
+  return centered.map(v=>v*scale);
+}
+function anova(groups){
+  const all=groups.flat(),grand=mean(all),k=groups.length,N=all.length;
+  const ssB=groups.reduce((s,g)=>s+g.length*(mean(g)-grand)**2,0);
+  const ssW=groups.reduce((s,g)=>{const m=mean(g);return s+g.reduce((q,v)=>q+(v-m)**2,0)},0);
+  const ssT=ssB+ssW,dfB=k-1,dfW=N-k,msB=ssB/dfB,msW=ssW/dfW,F=msB/msW,p=fSurvival(F,dfB,dfW);
+  return {grand,ssB,ssW,ssT,dfB,dfW,dfT:N-1,msB,msW,F,p,eta:ssB/ssT};
+}
+const fCanvas=document.getElementById('fCanvas');
+function drawGroups(canvas,groups){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=70,R=30,T=30,B=60,all=groups.flat();
+  const ymin=Math.min(...all)-2,ymax=Math.max(...all)+2,Y=y=>T+(ymax-y)/(ymax-ymin)*(h-T-B),xs=[180,450,720],cols=['#2e8b57','#6d5bd0','#147d8d'];
+  ctx.clearRect(0,0,w,h);ctx.strokeStyle='#dce5ef';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=ymin+i*(ymax-ymin)/5,py=Y(y);ctx.beginPath();ctx.moveTo(L,py);ctx.lineTo(w-R,py);ctx.stroke();ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(fmt(y,1),20,py+4)}
+  groups.forEach((g,gi)=>{
+    g.forEach((v,i)=>{ctx.fillStyle=cols[gi];ctx.globalAlpha=.72;ctx.beginPath();ctx.arc(xs[gi]+((i%7)-3)*9,Y(v),5,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1});
+    const m=mean(g);ctx.strokeStyle='#c4681a';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(xs[gi]-50,Y(m));ctx.lineTo(xs[gi]+50,Y(m));ctx.stroke();
+    ctx.fillStyle='#344054';ctx.font='bold 14px Arial';ctx.fillText('Group '+String.fromCharCode(65+gi),xs[gi]-35,h-25);
+  });
+}
+function updateF(){
+  const gap=+document.getElementById('meanGap').value,sd=+document.getElementById('withinSd').value,n=+document.getElementById('groupN').value,alpha=+document.getElementById('alphaF').value,base=16;
+  const means=[base+gap,base,base-gap];
+  const groups=means.map((m,i)=>deterministicResiduals(n,sd,i+1).map(r=>m+r));
+  const a=anova(groups);drawGroups(fCanvas,groups);
+  document.getElementById('meanGapVal').textContent=fmt(gap,1)+' hours';
+  document.getElementById('withinSdVal').textContent=fmt(sd,1)+' hours';
+  document.getElementById('groupNVal').textContent=n;
+  document.getElementById('fValue').textContent=fmt(a.F,2);
+  document.getElementById('pValue').textContent=a.p<.001?'<0,001':fmt(a.p,3);
+  document.getElementById('etaValue').textContent=fmt(a.eta,3);
+  document.getElementById('fDecision').textContent=a.p<alpha?'Reject H₀':'Do not reject H₀';
+  document.getElementById('ssBetween').textContent=fmt(a.ssB,2);document.getElementById('dfBetween').textContent=a.dfB;document.getElementById('msBetween').textContent=fmt(a.msB,2);
+  document.getElementById('ssWithin').textContent=fmt(a.ssW,2);document.getElementById('dfWithin').textContent=a.dfW;document.getElementById('msWithin').textContent=fmt(a.msW,2);
+  document.getElementById('ssTotal').textContent=fmt(a.ssT,2);document.getElementById('dfTotal').textContent=a.dfT;
+  document.getElementById('fTable').textContent=fmt(a.F,2);document.getElementById('pTable').textContent=a.p<.001?'<0,001':fmt(a.p,3);
+  drawFDistribution(a.F,a.dfB,a.dfW,alpha);
+}
+['meanGap','withinSd','groupN','alphaF'].forEach(id=>document.getElementById(id).addEventListener('input',updateF));
+updateF();
+
+/* Preliminary-check charts */
+function simpleAxes(canvas){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle='#344054';
+  ctx.beginPath();ctx.moveTo(55,20);ctx.lineTo(55,h-45);ctx.lineTo(w-20,h-45);ctx.stroke();
+  return {ctx,w,h,L:55,T:20,B:45,R:20};
+}
+(function(){
+  const canvas=document.getElementById('varCanvas'),{ctx,w,h,L,T,B,R}=simpleAxes(canvas),xs=[170,380,590],sds=[20,55,34],cols=['#2e8b57','#6d5bd0','#147d8d'];
+  xs.forEach((x,gi)=>{for(let i=0;i<18;i++){const y=h-B-100+(Math.sin(i*2.3+gi)*sds[gi]);ctx.fillStyle=cols[gi];ctx.beginPath();ctx.arc(x+((i%5)-2)*8,y,4,0,Math.PI*2);ctx.fill()}ctx.fillStyle='#344054';ctx.fillText('Group '+String.fromCharCode(65+gi),x-28,h-20)});
+})();
+(function(){
+  const canvas=document.getElementById('outCanvas'),{ctx,w,h,L,T,B,R}=simpleAxes(canvas),xs=[170,380,590],cols=['#2e8b57','#6d5bd0','#147d8d'];
+  xs.forEach((x,gi)=>{for(let i=0;i<15;i++){const y=h-B-95+Math.sin(i*1.8+gi)*28;ctx.fillStyle=cols[gi];ctx.beginPath();ctx.arc(x+((i%5)-2)*8,y,4,0,Math.PI*2);ctx.fill()}ctx.fillStyle='#344054';ctx.fillText('Group '+String.fromCharCode(65+gi),x-28,h-20)});
+  ctx.fillStyle='#b42318';ctx.beginPath();ctx.arc(590,T+20,8,0,Math.PI*2);ctx.fill();
+})();
+
+/* Interaction charts */
+function drawInteraction(canvas,interact){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,L=70,R=30,T=25,B=55,x1=210,x2=570;
+  ctx.clearRect(0,0,w,h);ctx.strokeStyle='#344054';ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+  ctx.fillStyle='#344054';ctx.font='13px Arial';ctx.fillText('Magazzino piccolo',x1-55,h-22);ctx.fillText('Magazzino grande',x2-55,h-22);
+  const series=interact?[[110,65],[85,78]]:[[110,85],[90,65]],cols=['#2e8b57','#c4681a'];
+  series.forEach((s,i)=>{ctx.strokeStyle=cols[i];ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x1,s[0]);ctx.lineTo(x2,s[1]);ctx.stroke();[0,1].forEach(j=>{ctx.fillStyle=cols[i];ctx.beginPath();ctx.arc(j?x2:x1,s[j],7,0,Math.PI*2);ctx.fill()})});
+  ctx.fillStyle='#2e8b57';ctx.fillText('Jurisdiction A',w-145,35);ctx.fillStyle='#c4681a';ctx.fillText('Jurisdiction C',w-145,55);
+}
+drawInteraction(document.getElementById('noInterCanvas'),false);
+drawInteraction(document.getElementById('interCanvas'),true);
+
+/* Quiz */
+const quiz=[
+ {q:'What is decomposed in ANOVA?',a:['The total variability of the response','The number of groups','The p-value'],ok:0},
+ {q:'With two independent groups and a common variance, what are the degrees of freedom?',a:['n₁+n₂−2','n−1 for each group','n₁+n₂'],ok:0},
+ {q:'With two groups, what relationship links the t-test and ANOVA?',a:['F=t²','F=t','F=√t'],ok:0},
+ {q:'When is the paired-samples t-test used?',a:['When observations are linked in pairs','When groups have different sample sizes','Whenever variances are equal'],ok:0},
+ {q:'Why is the F-distribution right-skewed?',a:['Because F is a ratio of non-negative quantities','Because it can take negative values','Because it depends only on the means'],ok:0},
+ {q:'A significant F-test indicates that...',a:['at least one mean differs','all means differ','the lowest mean is causally better'],ok:0},
+ {q:'What does eta-squared measure?',a:['The proportion of variability associated with the groups','The probability that H₀ is false','The number of comparisons'],ok:0},
+ {q:'If the variances are very different, which alternative may be considered?',a:['Welch\'s ANOVA','Tukey\'s test','Geometric mean'],ok:0},
+ {q:'Why are post hoc comparisons needed?',a:['To identify which pairs of groups differ','To calculate the grand mean','To make F equal to 1'],ok:0},
+ {q:'What do non-parallel lines suggest in a multi-way ANOVA?',a:['A possible interaction','Variances are certainly equal','No effects'],ok:0}
+];
+let qi=0,score=0;
+const quizBox=document.getElementById('quizBox');
+function renderQuiz(){
+  document.getElementById('quizProgress').style.width=(qi/quiz.length*100)+'%';
+  if(qi>=quiz.length){
+    quizBox.innerHTML=`<div class="card"><div class="card-head light">Result</div><div class="card-body"><p style="font-size:34px;font-weight:900;color:var(--blue)">${score}/10</p><p>${score>=8?'Excellent: you can connect decomposition, t-tests, F-tests, relevance, and post hoc comparisons.':score>=6?'Good result: review especially eta-squared and multiple comparisons.':'Review the sections on the F-statistic and preliminary checks.'}</p></div></div>`;
+    document.getElementById('quizProgress').style.width='100%';return;
+  }
+  const item=quiz[qi];
+  quizBox.innerHTML=`<div class="card"><div class="card-head light">Question ${qi+1} of ${quiz.length}</div><div class="card-body"><h3>${item.q}</h3>${item.a.map((x,i)=>`<button class="choice quizchoice" data-i="${i}">${x}</button>`).join('')}<div id="quizFb" class="feedback"></div></div></div>`;
+  document.querySelectorAll('.quizchoice').forEach(b=>b.addEventListener('click',()=>{
+    const i=+b.dataset.i,ok=i===item.ok;
+    document.querySelectorAll('.quizchoice').forEach(x=>x.disabled=true);
+    b.classList.add(ok?'correct':'wrong');
+    if(!ok)document.querySelectorAll('.quizchoice')[item.ok].classList.add('correct');
+    if(ok)score++;
+    const fb=document.getElementById('quizFb');fb.className='feedback show '+(ok?'ok':'err');
+    fb.innerHTML=(ok?'Correct answer.':'Review the highlighted concept.')+` <button class="btn primary" id="nextQuiz">Continue</button>`;
+    document.getElementById('nextQuiz').addEventListener('click',()=>{qi++;renderQuiz()});
+  }));
+}
+document.getElementById('restartQuiz').addEventListener('click',()=>{qi=0;score=0;renderQuiz()});
+renderQuiz();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "What is decomposed in ANOVA?", "options": ["The total variability of the response", "The number of groups", "The p-value"], "correct": 0, "explanation": ""}, {"question": "With two independent groups and a common variance, what are the degrees of freedom?", "options": ["n₁+n₂−2", "n−1 for each group", "n₁+n₂"], "correct": 0, "explanation": ""}, {"question": "With two groups, what relationship links the t-test and ANOVA?", "options": ["F=t²", "F=t", "F=√t"], "correct": 0, "explanation": ""}, {"question": "When is the paired-samples t-test used?", "options": ["When observations are linked in pairs", "When groups have different sample sizes", "Whenever variances are equal"], "correct": 0, "explanation": ""}, {"question": "Why is the F-distribution right-skewed?", "options": ["Because F is a ratio of non-negative quantities", "Because it can take negative values", "Because it depends only on the means"], "correct": 0, "explanation": ""}, {"question": "A significant F-test indicates that...", "options": ["at least one mean differs", "all means differ", "the lowest mean is causally better"], "correct": 0, "explanation": ""}, {"question": "What does eta-squared measure?", "options": ["The proportion of variability associated with the groups", "The probability that H₀ is false", "The number of comparisons"], "correct": 0, "explanation": ""}, {"question": "If the variances are very different, which alternative may be considered?", "options": ["Welch's ANOVA", "Tukey's test", "Geometric mean"], "correct": 0, "explanation": ""}, {"question": "Why are post hoc comparisons needed?", "options": ["To identify which pairs of groups differ", "To calculate the grand mean", "To make F equal to 1"], "correct": 0, "explanation": ""}, {"question": "What do non-parallel lines suggest in a multi-way ANOVA?", "options": ["A possible interaction", "Variances are certainly equal", "No effects"], "correct": 0, "explanation": ""}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("s8");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body>
+</html>

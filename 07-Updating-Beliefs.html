@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Changing Your Mind with Data | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{--blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#20242c;--muted:#667085;--orange:#c4681a;--orange2:#fff4e8;--green:#2e7d32;--red:#b42318;--purple:#6d5bd0;--teal:#147d8d;--line:#dce5ef;--soft:#f4f7fb;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);font-size:16px}.wrap{max-width:1160px;margin:28px auto;padding:0 16px 55px}.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:12px 12px 0 0;padding:40px 24px 31px;text-align:center;box-shadow:0 7px 20px rgba(23,107,77,.16)}.header .kicker{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800;opacity:.82;margin-bottom:9px}.header h1{font-size:31px;line-height:1.2;margin:0 0 7px}.header p{margin:0;font-size:18px;opacity:.95}.meta{background:#fff;border:1px solid var(--line);border-top:0;padding:11px 16px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.pill{border:1px solid #cbd9e9;background:#f4fbf7;color:var(--blue);padding:7px 11px;border-radius:999px;font-size:14px;font-weight:800}.tabbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-top:0;border-bottom:2px solid var(--blue);scrollbar-width:none}.tabbar::-webkit-scrollbar{display:none}.tab{border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;color:#697386;padding:12px 10px;min-width:125px;flex:1;font:700 12.5px Arial;cursor:pointer;white-space:nowrap}.tab:hover{background:#f4fbf7;color:var(--blue)}.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}.content{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:27px 30px;box-shadow:0 12px 28px rgba(23,39,64,.08)}.section{display:none}.section.active{display:block}.intro{background:var(--blue);color:#fff;border-radius:11px;padding:19px 22px;margin-bottom:20px}.intro h2{margin:0 0 7px;font-size:22px}.intro p{margin:0;line-height:1.65}.card,.mini,.case{background:#fff;border:1px solid #e3e8ef;border-radius:12px;margin-bottom:20px;overflow:hidden}.card-head{padding:14px 19px;font-size:18px;font-weight:800}.card-head.light{background:var(--light);color:var(--blue)}.card-head.dark{background:var(--blue);color:#fff}.card-head.orange{background:var(--orange2);color:#8b4707}.card-body{padding:19px 21px;line-height:1.68}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.mini{padding:16px;line-height:1.58;margin:0}.mini strong{color:var(--blue)}.question{background:var(--orange2);border:2px solid var(--orange);border-radius:12px;padding:18px;margin-bottom:20px}.question h3{color:#8e4c00;margin:0 0 8px}.question p{margin:0 0 10px;line-height:1.65}.formula{background:#eef8f3;border:1px solid #b8dac9;border-radius:10px;padding:14px 16px;text-align:center;color:var(--blue);font-weight:800;font-size:18px;line-height:1.8;margin:13px 0}.formula.orange{background:#fff7ee;border-color:#e8b67f;color:#8b4707}.tip,.warn,.okbox{padding:13px 15px;border-radius:0 9px 9px 0;margin:13px 0;line-height:1.62}.tip{background:#f2faf6;border-left:5px solid var(--blue)}.warn{background:#fff4e5;border-left:5px solid var(--orange)}.okbox{background:#eef8ef;border-left:5px solid var(--green)}.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:8px;padding:10px 17px;font:800 14px Arial;cursor:pointer;transition:.15s}.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff}.btn.orange{background:var(--orange);color:#fff}.btn.secondary{background:#e5edf7;color:var(--blue)}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}.choice{display:block;width:100%;text-align:left;border:1.5px solid #cfd8e3;background:#fff;border-radius:9px;padding:12px 14px;margin:8px 0;font:700 15px Arial;cursor:pointer}.choice:hover{border-color:var(--blue);background:#f7fbff}.choice.correct{border-color:var(--green);background:#eef8ef}.choice.wrong{border-color:var(--red);background:#fff1f0}.feedback{display:none;border-radius:8px;padding:11px 13px;margin-top:11px;line-height:1.55}.feedback.show{display:block}.feedback.ok{background:#eef8ef;color:#205f24;border:1px solid #a9d4ab}.feedback.err{background:#fff1f0;color:#8d1b13;border:1px solid #efb3ae}.feedback.info{background:#eef8f3;color:#154e80;border:1px solid #b8d3ef}.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:12px;padding:17px;margin-bottom:16px}.control{margin-bottom:13px}.control:last-child{margin-bottom:0}.control label{display:block;font-weight:800;margin-bottom:6px}.value{color:var(--orange);font-weight:800}input[type=range]{width:100%;accent-color:var(--orange)}select,input[type=number],textarea{width:100%;font:15px Arial;border:1.5px solid #cbd5e1;border-radius:8px;padding:9px 11px;background:#fff}textarea{min-height:100px;resize:vertical;line-height:1.55}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.kpi{background:#f4fbf7;border:1px solid #d4e3f2;border-radius:10px;padding:12px;text-align:center}.kpi b{display:block;color:var(--blue);font-size:22px;margin-top:5px}.kpi span{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.4px}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:stretch}.step{position:relative;background:#f4fbf7;border:1px solid #cfe0f2;border-radius:10px;padding:14px 9px;text-align:center;font-weight:800;color:var(--blue)}.step:not(:last-child):after{content:'→';position:absolute;right:-14px;top:38%;font-size:22px;color:var(--orange);z-index:2}.freq-grid{display:grid;grid-template-columns:repeat(40,1fr);gap:2px;background:#fff;padding:10px;border:1px solid var(--line);border-radius:10px}.dot{aspect-ratio:1;border-radius:2px;background:#e8edf3}.dot.tp{background:var(--red)}.dot.fp{background:var(--orange)}.dot.fn{background:var(--purple)}.dot.tn{background:#b7c3d0}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;margin:10px 0}.legend span:before{content:'';display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}.l-tp:before{background:var(--red)}.l-fp:before{background:var(--orange)}.l-fn:before{background:var(--purple)}.l-tn:before{background:#b7c3d0}.bar-wrap{height:34px;border-radius:8px;overflow:hidden;display:flex;background:#edf2f7;margin:12px 0}.bar{height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;min-width:0;transition:.25s}.bar.a{background:var(--blue)}.bar.b{background:var(--orange)}.bar.c{background:var(--teal)}.jurisdiction-row{display:grid;grid-template-columns:100px 1fr 94px 94px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.jurisdiction-row:last-child{border-bottom:0}.jurisdiction-name{font-weight:800;color:var(--blue)}.result-card{border:2px solid var(--blue);background:#f2faf6;border-radius:12px;padding:18px;line-height:1.65}.result-card h3{margin:0 0 8px;color:var(--blue)}.bayes-strip{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin:17px 0}.bayes-box{border:2px solid #c8d9ec;border-radius:12px;padding:16px;text-align:center;background:#f4fbf7}.bayes-box strong{display:block;color:var(--blue);font-size:18px;margin-bottom:5px}.arrow{font-size:27px;color:var(--orange);font-weight:900}.bias{border-left:5px solid var(--orange);background:#fff9f0;border-radius:0 10px 10px 0;padding:15px;margin-bottom:12px}.bias strong{color:#8b4707}.scenario-card{border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:15px}.scenario-card h3{color:var(--blue);margin:0 0 8px}.scenario-card p{line-height:1.6}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:12px}.compare-box{border-radius:10px;padding:15px;text-align:center}.compare-box.intuitive{background:#fff7ee;border:1px solid #edc28f}.compare-box.calc{background:#eef8f3;border:1px solid #bdd7ee}.compare-box b{display:block;font-size:27px;margin-top:5px}.history{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center}.portrait{height:150px;border-radius:50%;background:linear-gradient(135deg,#dce9f7,#f7fbff);display:flex;align-items:center;justify-content:center;color:var(--blue);font-weight:900;font-size:46px;border:4px solid #c4d8ed}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;margin:11px 0}th,td{border:1px solid #dbe4ee;padding:10px 9px;text-align:center}th{background:var(--blue);color:#fff;font-size:14px}td.left{text-align:left}.nav-bottom{display:flex;justify-content:space-between;gap:12px;margin-top:24px;padding-top:17px;border-top:1px solid var(--line)}details{border:1px solid #d8e2ed;border-radius:9px;margin:12px 0;background:#fbfdff}summary{cursor:pointer;font-weight:800;color:var(--blue);padding:13px 15px}details>div{padding:0 16px 16px;line-height:1.65}.progress{height:12px;background:#e9eef4;border-radius:999px;overflow:hidden}.progress>div{height:100%;width:0;background:var(--green);transition:.25s}
+@media(max-width:850px){.grid4,.grid3{grid-template-columns:1fr 1fr}.grid2,.comparison{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.step:not(:last-child):after{content:'↓';right:49%;top:auto;bottom:-23px}.bayes-strip{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.jurisdiction-row{grid-template-columns:78px 1fr}.jurisdiction-row input[type=number]{grid-column:auto}.history{grid-template-columns:1fr}.portrait{margin:auto}.freq-grid{grid-template-columns:repeat(25,1fr)}}@media(max-width:560px){.content{padding:20px 15px}.header h1{font-size:26px}.grid4,.grid3,.kpis{grid-template-columns:1fr}.freq-grid{grid-template-columns:repeat(20,1fr)}.jurisdiction-row{grid-template-columns:1fr}.tab{min-width:118px}}
+
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.timeline .mini{border-top:4px solid var(--blue)}.app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.person-tag{display:inline-block;background:var(--light);color:var(--blue);font-weight:800;border-radius:999px;padding:5px 9px;margin-bottom:7px}.bridge{background:linear-gradient(135deg,#eef8f3,#fff7ee);border:1px solid #cbdced;border-radius:12px;padding:17px 19px;line-height:1.65;margin:16px 0}@media(max-width:850px){.timeline,.app-grid{grid-template-columns:1fr}}
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header"><div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div><h1>Changing Your Mind with Data</h1><p>Bayes’ theorem</p></header>
+<div class="meta"><span class="pill">📊 Probabilistic reasoning</span><span class="pill">🏛️ Applications</span><span class="pill">🧠 Intuition and bias</span></div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Signals and Bayes</button><button class="iple-group-tab" data-iple-group="1" type="button">Conditional reasoning</button><button class="iple-group-tab" data-iple-group="2" type="button">Biases and Bayesian thinking</button><button class="iple-group-tab" data-iple-group="3" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="4" type="button">Preparing for the exam</button></nav><nav aria-label="Sezioni" class="tabbar iple-original-tabs"><button class="tab active" data-target="s1">1 · Intuition</button><button class="tab" data-target="s2">2 · Bayes</button><button class="tab" data-target="s3">3 · Simulator</button><button class="tab" data-target="s4">4 · Applications</button><button class="tab" data-target="s5">5 · Bias</button><button class="tab" data-target="s6">6 · Bayesian statistics</button><button class="tab" data-target="s7">7 · Check</button><button class="tab" data-target="exam-prep">Preparing for the exam</button></nav>
+<main class="content"><section class="section active" data-iple-group="0" id="s1">
+<div class="intro"><h2>How valuable is a signal?</h2><p>New information can greatly change what we think, but its meaning also depends on what we knew beforehand.</p></div>
+<div class="question"><h3>First, your judgement</h3><p>A disease affects 5% of people. The test is positive for 80% of people with the disease and for 5% of healthy people. A person tests positive: what is the probability that they actually have the disease?</p>
+<div class="control"><label>My estimate: <span class="value" id="guessVal">50%</span></label><input id="guess" max="100" min="0" type="range" value="50"/></div><div class="btn-row"><button class="btn orange" id="lockGuess">Compare with the calculation</button></div><div class="feedback info" id="guessFb"></div></div>
+<div class="grid3"><div class="mini"><strong>1. Before the test</strong><br/>The disease affects 5 people out of 100.</div><div class="mini"><strong>2. New information</strong><br/>The test is positive, but it can also be positive for a healthy person.</div><div class="mini"><strong>3. After the test</strong><br/>The probability changes by combining the initial frequency and the reliability of the test.</div></div>
+<div class="warn"><strong>Common error:</strong> confusing the probability of testing positive given that one has the disease with the probability of having the disease after a positive result.</div>
+<div class="formula">P(+ | disease) ≠ P(disease | +)</div>
+<div class="tip"><strong>Why begin with a diagnostic example?</strong> Because it immediately reveals an error in intuitive reasoning. In the following sections, we will use the same principle in public health, legal screening, credit policy, and fraud detection.</div>
+<div class="intro"><h2>Start with 100 people</h2><p>A table makes the two ways in which a test can be wrong visible and clarifies the group for which we are calculating the probability.</p></div>
+<div class="card"><div class="card-head light">What happens to the 100 people?</div><div class="card-body">
+<div class="table-wrap"><table><thead><tr><th></th><th>Positive test</th><th>Negative test</th><th>Total</th></tr></thead><tbody><tr><td class="left"><strong>People with the disease</strong></td><td id="fTP">4</td><td id="fFN">1</td><td id="fSick">5</td></tr><tr><td class="left"><strong>Healthy people</strong></td><td id="fFP">5</td><td id="fTN">90</td><td>95</td></tr><tr><td class="left"><strong>Total</strong></td><td id="fPos">9</td><td>91</td><td>100</td></tr></tbody></table></div>
+<div class="grid2"><div class="mini"><strong>False positive</strong><br/>A healthy person receives a positive result: this is a false alarm.</div><div class="mini"><strong>False negative</strong><br/>A person with the disease receives a negative result: the test fails to identify them.</div></div>
+<div class="question"><h3>Now restrict the group</h3><p>We are no longer choosing a person from all 100. We know that the test is positive, so we consider only the <strong>9 positive cases</strong>. Among these, 4 have the disease.</p><div class="formula orange" id="freqFormula">P(disease | positive) = 4 / 9 = 44,4%</div><div class="okbox"><strong>This is a conditional probability.</strong> The vertical bar “|” is read <em>given that</em>: P(disease | positive) is the probability of having the disease given that the test is positive.</div></div>
+</div></div>
+<div class="card"><div class="card-head orange">How do we describe test quality?</div><div class="card-body"><div class="grid2"><div class="mini"><strong>Sensitivity</strong><br/>We consider only people with the disease: how many correctly receive a positive result?<div class="formula">4 / 5 = 80%</div></div><div class="mini"><strong>Specificity</strong><br/>We consider only healthy people: how many correctly receive a negative result?<div class="formula">90 / 95 = 94,7% ≈ 95%</div></div></div><div class="tip">Sensitivity limits false negatives; specificity limits false positives. Neither is the same as P(disease | positive).</div></div></div>
+<div class="grid2"><div class="mini"><strong>Prior probability</strong><br/>Before the test: P(disease) = 5%.</div><div class="mini"><strong>Posterior probability</strong><br/>After a positive test: P(disease | positive) = 44.4%.</div></div>
+<div class="nav-bottom iple-old-section-nav"><span></span><button class="btn primary next" data-next="s2">Discover Bayes →</button></div></section><section class="section" data-iple-group="0" id="s2">
+<div class="intro"><h2>From conditional probability to Bayes</h2><p>New information narrows the reference space. Bayes allows the updated probability to be calculated without constructing the table every time.</p></div>
+<div class="bayes-strip"><div class="bayes-box"><strong>Prior</strong>What we know beforehand</div><div class="arrow">×</div><div class="bayes-box"><strong>Evidence</strong>How compatible the signal is with the hypothesis</div><div class="arrow">→</div><div class="bayes-box"><strong>Posterior</strong>What we believe afterwards</div></div>
+<div class="formula">P(A | B) = P(B | A) · P(A) / P(B)</div>
+<div class="card"><div class="card-head light">Reading the formula</div><div class="card-body"><div class="grid4"><div class="mini"><strong>P(A)</strong><br/>Prior: initial plausibility of A.</div><div class="mini"><strong>P(B | A)</strong><br/>How likely B is if A is true.</div><div class="mini"><strong>P(B)</strong><br/>How likely B is in general.</div><div class="mini"><strong>P(A | B)</strong><br/>Posterior: updated plausibility of A.</div></div></div></div>
+<div class="formula orange">P(M | +) = [P(+ | M)P(M)] / [P(+ | M)P(M) + P(+ | not M)P(not M)]</div><div class="formula">P(M | +) = (0,80 × 0,05) / [(0,80 × 0,05) + (0,05 × 0,95)] = 0,444 = 44,4%</div><div class="tip"><strong>Why?</strong> The numerator represents people who have the disease and test positive. The denominator represents all people who test positive: true positives plus false positives. This is the same 4/9 ratio observed in the table.</div>
+<details><summary>How is the formula derived?</summary><div>The joint probability can be written in two ways: P(A ∩ B) = P(A | B)P(B) and P(A ∩ B) = P(B | A)P(A). Equating the two expressions and dividing by P(B) gives Bayes’ theorem.</div></details>
+<details><summary>Further detail: total probability</summary><div>If A and not A exhaust all possibilities, then P(B) = P(B | A)P(A) + P(B | not A)P(not A). This is the denominator of the diagnostic formula.</div></details>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s1">← Back</button><button class="btn primary next" data-next="s3">Experiment →</button></div></section><section class="section" data-iple-group="1" id="s3">
+<div class="intro"><h2>The same test, different meanings</h2><p>Change the initial probability, sensitivity, and specificity. Observe how the meaning of a positive result changes.</p></div><div class="grid2"><div class="mini"><strong>Sensitivity</strong><br/>P(positive | disease): proportion of people with the disease identified by the test.</div><div class="mini"><strong>Specificity</strong><br/>P(negative | healthy): proportion of healthy people correctly identified.</div></div>
+<div class="controls"><div class="grid3"><div class="control"><label>Initial probability: <span class="value" id="prevVal">5%</span></label><input id="prev" max="50" min="1" type="range" value="5"/></div><div class="control"><label>Sensitivity: <span class="value" id="sensVal">80%</span></label><input id="sens" max="100" min="50" type="range" value="80"/></div><div class="control"><label>Specificity: <span class="value" id="specVal">95%</span></label><input id="spec" max="100" min="50" type="range" value="95"/></div></div></div>
+<div class="btn-row"><button class="btn secondary preset" data-p="5" data-se="80" data-sp="95">Initial example</button><button class="btn secondary preset" data-p="10" data-se="95" data-sp="95">High-risk group</button><button class="btn secondary preset" data-p="30" data-se="85" data-sp="90">Common event</button></div>
+<div class="kpis"><div class="kpi"><span>Prior</span><b id="simPrior">5,0%</b></div><div class="kpi"><span>P(disease | +)</span><b id="simPPV">44,4%</b></div><div class="kpi"><span>False positives among +</span><b id="simFalse">55,6%</b></div><div class="kpi"><span>P(healthy | −)</span><b id="simNPV">98,8%</b></div></div>
+<div class="comparison"><div class="compare-box intuitive">Before the test<b id="priorBig">5,0%</b></div><div class="compare-box calc">Given that the test is positive<b id="postBig">44,4%</b></div></div>
+<div class="tip" id="simText"></div>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s2">← Back</button><button class="btn primary next" data-next="s4">Continue to Applications →</button></div></section><section class="section" data-iple-group="1" id="s4">
+<div class="intro"><h2>Which jurisdiction did the appeal come from?</h2><p>An appeal is the observed evidence. Bayes allows us to trace it back to the most plausible cause by combining the prior share of cases and the appeal rate.</p></div>
+<div class="card"><div class="card-head dark">Three jurisdictions</div><div class="card-body">
+<div class="jurisdiction-row"><div class="jurisdiction-name">Jurisdiction A</div><div><label>Prior share <span class="value" id="qaV">50%</span></label><input id="qa" max="90" min="5" type="range" value="50"/></div><div><label>Appeal rate %</label><input id="da" max="30" min="0.1" step="0.1" type="number" value="1"/></div><div id="paPost"><strong>—</strong></div></div>
+<div class="jurisdiction-row"><div class="jurisdiction-name">Jurisdiction B</div><div><label>Prior share <span class="value" id="qbV">30%</span></label><input id="qb" max="90" min="5" type="range" value="30"/></div><div><label>Appeal rate %</label><input id="db" max="30" min="0.1" step="0.1" type="number" value="3"/></div><div id="pbPost"><strong>—</strong></div></div>
+<div class="jurisdiction-row"><div class="jurisdiction-name">Jurisdiction C</div><div><label>Prior share <span class="value" id="qcV">20%</span></label><input id="qc" max="90" min="5" type="range" value="20"/></div><div><label>Appeal rate %</label><input id="dc" max="30" min="0.1" step="0.1" type="number" value="6"/></div><div id="pcPost"><strong>—</strong></div></div>
+<div class="warn">The shares are normalised automatically: the ratios among the three values matter, even if the sliders do not sum exactly to 100.</div>
+<div class="bar-wrap"><div class="bar a" id="barA"></div><div class="bar b" id="barB"></div><div class="bar c" id="barC"></div></div>
+<div class="result-card"><h3 id="jurisdictionAnswer">Calculation in progress</h3><div id="jurisdictionExplain"></div></div>
+</div></div>
+<div class="grid3"><div class="mini"><strong>Prior</strong><br/>The prior share of cases from each jurisdiction.</div><div class="mini"><strong>Likelihood</strong><br/>The jurisdiction’s appeal rate.</div><div class="mini"><strong>Posterior</strong><br/>The probability of origin after observing the appeal.</div></div>
+<div class="intro"><h2>Evidence for policy and legal decision-making</h2><p>An algorithm, a sensor, or market research does not provide certainty: it produces evidence that updates probabilities.</p></div>
+<div id="bizCases"></div>
+<div class="card"><div class="card-head orange">Probability and decision are not the same thing</div><div class="card-body"><p>A fraud alert raises the probability of fraud from 0.5% to 20%. This is a strong update, but it does not mean that the transaction should automatically be blocked.</p><div class="grid3"><div class="mini"><strong>Cost of a false negative</strong><br/>The fraud goes undetected.</div><div class="mini"><strong>Cost of a false positive</strong><br/>A legitimate application is blocked.</div><div class="mini"><strong>Possible action</strong><br/>Additional verification instead of an automatic decision.</div></div><div class="tip">Bayes updates what is plausible. A policy or legal choice also requires costs, benefits, rights, and consequences.</div></div></div>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s3">← Back</button><button class="btn primary next" data-next="s5">Mind and probability →</button></div></section><section class="section" data-iple-group="2" id="s5">
+<div class="intro"><h2>Mental shortcuts</h2><p>Heuristics help us make decisions quickly when time and information are limited. They are often useful, but they can produce biases: systematic errors in probabilistic judgement.</p></div>
+<div class="bias"><strong>Representativeness</strong><br/>An applicant “looks like” the typical profile of a high-risk case and is judged risky, even when the default rate in the population is very low.</div><div class="bias"><strong>Confirmation bias</strong><br/>Someone convinced that a policy will succeed tends to seek favourable signals and minimise contrary ones. Bayesian reasoning instead requires the assessment to be updated even when the evidence points in the opposite direction.</div><div class="bias"><strong>Availability heuristic</strong><br/>After hearing news about fraud or a corporate failure, the event seems more frequent because it is easy to recall, not because the data actually show an increase.</div><div class="bias"><strong>Base-rate neglect</strong><br/>A highly convincing alert captures our attention, and we forget how rare the phenomenon was before the alert. This is the central error in the diagnostic example and in many fraud-detection systems.</div><div class="bridge"><strong>The contribution of Bayes</strong><br/>It does not eliminate heuristics, but forces us to make the starting point, quality of evidence, and updating process explicit. In this way, intuition can be compared with reasoning that can be checked.</div><div class="question"><h3>A quick check</h3><p>A screening model identifies 90% of genuinely irregular applications. Can we conclude that 90% of applications flagged by the model are genuinely irregular?</p><button class="choice biasChoice" data-c="0">Yes, because the model is 90% accurate</button><button class="choice biasChoice" data-c="1">No: we also need the base rate and the false-positive rate</button><div class="feedback" id="biasFb"></div></div>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s4">← Back</button><button class="btn primary next" data-next="s6">Bayesian statistics →</button></div></section><section class="section" data-iple-group="2" id="s6">
+<div class="intro"><h2>A different way of doing statistics</h2><p>Bayes’ theorem is not merely a formula for reversing conditional probabilities. It is the principle underlying an entire approach to inference: start from what we know, observe the data, and update uncertainty.</p></div>
+<div class="card"><div class="card-head dark">From a formula to a statistical method</div><div class="card-body">
+<div class="bayes-strip"><div class="bayes-box"><strong>Prior</strong>Information before the data</div><div class="arrow">×</div><div class="bayes-box"><strong>Likelihood</strong>How compatible the data are with possible values</div><div class="arrow">→</div><div class="bayes-box"><strong>Posterior</strong>Updated uncertainty</div></div>
+<div class="formula">Posterior distribution ∝ Likelihood × Prior distribution</div>
+<p>In Bayesian statistics, even an unknown parameter is described through a probability distribution. Before observing the data, we have a <strong>prior distribution</strong>; after observing the data, we obtain a <strong>posterior distribution</strong>.</p>
+<div class="tip"><strong>Key idea.</strong> The parameter does not change when the data arrive: our uncertainty about its value changes.</div>
+</div></div>
+<div class="grid2"><div class="mini"><strong>Frequentist approach</strong><br/>The parameter is fixed but unknown. Probability describes the behaviour of procedures in hypothetical repetitions of sampling.</div><div class="mini"><strong>Bayesian approach</strong><br/>Probability also expresses uncertainty about the parameter. Initial information and data are combined in the posterior distribution.</div></div>
+<div class="warn"><strong>This is not a competition between two schools.</strong> They are two different ways of formalising uncertainty. The choice depends on the problem, the available information, and the objective of the analysis.</div>
+<div class="card"><div class="card-head light">A policy example</div><div class="card-body"><p>A public institution wants to estimate the probability that an eligible citizen will take up a new benefit.</p><div class="flow"><div class="step">Previous evidence<br/><small>prior</small></div><div class="step">New applicant data</div><div class="step">Take-up model<br/><small>likelihood</small></div><div class="step">Updated probability<br/><small>posterior</small></div><div class="step">Policy decision</div></div><p style="margin-top:18px">Today’s posterior can become tomorrow’s prior when new data arrive.</p></div></div>
+<div class="card"><div class="card-head orange">Some key contributors</div><div class="card-body"><div class="grid3">
+<div class="mini"><strong>Thomas Bayes</strong><br/>He formulated the problem of inverse probability updating.</div><div class="mini"><strong>Pierre-Simon Laplace</strong><br/>He generalised the principle and demonstrated its scientific scope.</div><div class="mini"><strong>Harold Jeffreys</strong><br/>He developed a modern systematisation of Bayesian inference.</div><div class="mini"><strong>Dennis Lindley</strong><br/>He contributed to Bayesian decision theory.</div><div class="mini"><strong>Andrew Gelman</strong><br/>He has developed hierarchical models for the social sciences, economics, and data science.</div><div class="mini"><strong>David Spiegelhalter</strong><br/>He has applied Bayesian methods to risk and the communication of uncertainty.</div></div></div></div>
+<div class="card"><div class="card-head light">Where is it used today?</div><div class="card-body"><div class="grid3">
+<div class="mini"><strong>Forecasting</strong><br/>Update forecasts of economic demand, electoral support, or risk.</div><div class="mini"><strong>A/B testing</strong><br/>Progressively evaluate policy messages or public-information variants.</div><div class="mini"><strong>Political communication</strong><br/>Estimate participation, support, and response to public messages.</div><div class="mini"><strong>Credit and fraud</strong><br/>Update risk after each new piece of evidence.</div><div class="mini"><strong>Institutional risk</strong><br/>Combine historical data, expert judgement, and new evidence.</div><div class="mini"><strong>Decisions and forecasts</strong><br/>Combine initial information and new data to update estimates and choices.</div></div><div class="okbox"><strong>Well-known applications.</strong> Bayesian reasoning has been used in searches for missing objects, assessment of rare risks, classification, medicine, predictive maintenance, and decision models.</div></div></div>
+<div class="card"><div class="card-head dark">Why is it so important today?</div><div class="card-body"><p>For many years, Bayesian methods were used less than their theoretical strength would suggest, mainly because they required very complex calculations. The development of computers, statistical software, and new numerical algorithms has profoundly changed the situation.</p><p>Today, <strong>Bayesian statistics is one of the main approaches to statistical inference</strong>. It is used in scientific research, economics, finance, political science, medicine, data science, and numerous artificial-intelligence applications.</p><div class="grid2"><div class="mini"><strong>Before</strong><br/>Many models could only be applied to relatively simple problems.</div><div class="mini"><strong>Today</strong><br/>It is possible to update estimates and forecasts in complex models, including when data arrive progressively.</div></div><div class="okbox"><strong>Why it is useful.</strong> Bayesian inference makes it possible to integrate prior information and new data, continually update estimates, and represent explicitly the uncertainty accompanying a decision.</div><div class="tip"><strong>Remember.</strong> Bayes’ theorem is a rule of probability. Bayesian inference uses that principle to learn from data and draw conclusions about parameters, hypotheses, and predictions.</div></div></div>
+<div class="question"><h3>Before continuing</h3><p>What is the essential difference between Bayes’ theorem and Bayesian statistics?</p><button class="choice statChoice" data-c="0">There is no difference</button><button class="choice statChoice" data-c="1">The theorem is a probability rule; Bayesian statistics uses that principle to update uncertainty about parameters, hypotheses, and predictions</button><button class="choice statChoice" data-c="2">Bayesian statistics avoids using data</button><div class="feedback" id="statFb"></div></div>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s5">← Back</button><button class="btn primary next" data-next="s7">Go to the final check →</button></div></section><section class="section" data-iple-group="3" id="s7">
+<div class="intro"><h2>Final quiz</h2><p>Remembering the formula is not enough: you must recognise prior, evidence, and posterior, and interpret a signal correctly.</p></div>
+<div class="kpis"><div class="kpi"><span>Answers</span><b id="quizDone">0/8</b></div><div class="kpi"><span>Correct</span><b id="quizScore">0</b></div><div class="kpi"><span>Result</span><b id="quizPerc">0%</b></div><div class="kpi"><span>Level</span><b id="quizLevel">—</b></div></div><div class="progress"><div id="quizBar"></div></div><div id="quiz" style="margin-top:18px"></div>
+<div class="nav-bottom iple-old-section-nav"><button class="btn secondary prev" data-prev="s6">← Back</button><button class="btn ghost" id="resetQuiz">Start again</button></div></section><section class="section" data-iple-group="4" id="exam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>Bayes’ rule with a rare event</h3><p><strong>Question.</strong> A condition affects 2% of a population. A test has sensitivity 90% and a 5% false-positive rate. Find P(condition | positive).</p><div class="exam-answer"><strong>Solution.</strong> P = (0.90×0.02)/[(0.90×0.02)+(0.05×0.98)] = 0.018/0.067 ≈ 0.269. A positive result raises the probability substantially, but it is still only about 27% because the prior prevalence is low.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Why the base rate matters</h3><p><strong>Question.</strong> The same test is used in a high-risk group with prior probability 20%. Without calculating, should the posterior probability after a positive result be higher or lower?</p><div class="exam-answer"><strong>Solution.</strong> Higher. The likelihood information is unchanged, but the prior odds are larger. Bayes’ rule combines both pieces of information, so the same positive result has a different meaning in populations with different base rates.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">Bayes' rule in a legal-policy context</div><div class="card-body"><div class="exam-prep-question">A screening tool flags 80% of genuinely irregular applications and 10% of regular applications. Only 5% of applications are irregular. Calculate the probability that a flagged application is genuinely irregular.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>P(I|F)=0.80×0.05/[0.80×0.05+0.10×0.95]=0.04/0.135≈0.296. Only about 29.6% of flagged applications are genuinely irregular because the base rate is low.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> Uses the 5% base rate <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Computes the two joint probabilities <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Obtains about 0.296 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Explains the role of false positives and the base rate <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></main></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function showSection(id){$$('.section').forEach(x=>x.classList.toggle('active',x.id===id));$$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.target===id));window.scrollTo({top:0,behavior:'smooth'});}
+$$('.tab').forEach(b=>b.onclick=()=>showSection(b.dataset.target));$$('.next').forEach(b=>b.onclick=()=>showSection(b.dataset.next));$$('.prev').forEach(b=>b.onclick=()=>showSection(b.dataset.prev));
+function pct(x,d=1){return (100*x).toFixed(d).replace('.',',')+'%'}
+$('#guess').oninput=e=>$('#guessVal').textContent=e.target.value+'%';
+$('#lockGuess').onclick=()=>{const g=+$('#guess').value, exact=.80*.05/(.80*.05+.05*.95)*100;const diff=Math.abs(g-exact);$('#guessFb').className='feedback show info';$('#guessFb').innerHTML=`<strong>Calculation:</strong> P(M | +) = (0.80 × 0.05) / [(0.80 × 0.05) + (0.05 × 0.95)] = <strong>${exact.toFixed(1).replace('.',',')}%</strong>.<br>The numerator counts true positives; the denominator counts all positive results, including false positives. Your estimate was ${g}%. ${diff>25?'The difference is large: you probably confused P(+ | M) with P(M | +).':'Your intuition was reasonably close to the result.'}`};
+function buildFreq(){/* The table uses fixed natural frequencies per 100 people: 5 with the disease, 95 without it, 80% sensitivity, and approximately 95% specificity. */}buildFreq();
+function updateDiag(){const p=+$('#prev').value/100,se=+$('#sens').value/100,sp=+$('#spec').value/100;$('#prevVal').textContent=Math.round(p*100)+'%';$('#sensVal').textContent=Math.round(se*100)+'%';$('#specVal').textContent=Math.round(sp*100)+'%';const ppv=se*p/(se*p+(1-sp)*(1-p));const npv=sp*(1-p)/(sp*(1-p)+(1-se)*p);$('#simPrior').textContent=pct(p);$('#simPPV').textContent=pct(ppv);$('#simFalse').textContent=pct(1-ppv);$('#simNPV').textContent=pct(npv);$('#priorBig').textContent=pct(p);$('#postBig').textContent=pct(ppv);$('#simText').innerHTML=`With an initial probability of <strong>${pct(p)}</strong>, a positive result raises it to <strong>${pct(ppv)}</strong>. ${p<.05?'Because the phenomenon is rare, false positives may still be numerous.':'The base rate is sufficiently high: the positive signal has greater predictive value.'}`}
+['prev','sens','spec'].forEach(id=>$('#'+id).oninput=updateDiag);$$('.preset').forEach(b=>b.onclick=()=>{$('#prev').value=b.dataset.p;$('#sens').value=b.dataset.se;$('#spec').value=b.dataset.sp;updateDiag()});updateDiag();
+function updatePlants(){let q=[+$('#qa').value,+$('#qb').value,+$('#qc').value],sum=q.reduce((a,b)=>a+b,0);q=q.map(x=>x/sum);let d=[+$('#da').value/100,+$('#db').value/100,+$('#dc').value/100];['qaV','qbV','qcV'].forEach((id,i)=>$('#'+id).textContent=pct(q[i],0));const weights=q.map((x,i)=>x*d[i]),den=weights.reduce((a,b)=>a+b,0),post=weights.map(x=>x/den);['paPost','pbPost','pcPost'].forEach((id,i)=>$('#'+id).innerHTML=`P(${String.fromCharCode(65+i)} | appeal)<br><strong>${pct(post[i])}</strong>`);['A','B','C'].forEach((x,i)=>{const e=$('#bar'+x);e.style.width=(post[i]*100)+'%';e.textContent=post[i]>.08?`${x} ${pct(post[i],0)}`:''});const m=Math.max(...post),idx=post.indexOf(m),name=String.fromCharCode(65+idx);$('#jurisdictionAnswer').textContent=`Jurisdiction ${name} is the most likely source: ${pct(m)}`;$('#jurisdictionExplain').innerHTML=`Each jurisdiction’s contribution to observed appeals is <strong>prior share × appeal rate</strong>. Jurisdiction ${name} accounts for the largest share among observed appeals, even though it does not necessarily have the highest prior share or the highest appeal rate when considered separately.`}
+['qa','qb','qc','da','db','dc'].forEach(id=>$('#'+id).oninput=updatePlants);updatePlants();
+const cases=[
+{t:'Political participation · Interest signal',c:'Historically, 12% of citizens attend a public consultation. A model assigns a “high interest” signal to 70% of participants and 20% of non-participants.',q:'After the signal, what is the probability of participation?',a:.70*.12/(.70*.12+.20*.88),opts:['About 12%','About 32%','About 70%'],ok:1,e:'The signal increases the probability, but not to 70%: 70% is P(signal | participation), not P(participation | signal).'},
+{t:'Credit · High-risk applicant',c:'3% of applicants default. The system flags 80% of defaulters and 10% of applicants who remain solvent.',q:'Does a flag almost certainly imply default?',a:.8*.03/(.8*.03+.1*.97),opts:['Yes, because the system finds 80% of defaulters','No: the updated probability is approximately 20%','No: the probability remains exactly 3%'],ok:1,e:'Default is rare. False alarms generated among the many solvent applicants carry substantial weight.'},
+{t:'Maintenance · Sensor alarm',c:'A machine has an initial failure probability of 5%. The sensor activates in 90% of failures and in 8% of cases without failure.',q:'What is the probability of failure after the alarm?',a:.9*.05/(.9*.05+.08*.95),opts:['Circa 5%','Circa 37%','Circa 90%'],ok:1,e:'The alarm is informative and greatly increases the probability, but 90% is the sensor’s sensitivity, not the posterior probability.'}
+];
+function renderCases(){let h='';cases.forEach((c,i)=>{h+=`<div class="scenario-card"><h3>${c.t}</h3><p>${c.c}</p><p><strong>${c.q}</strong></p>${c.opts.map((o,j)=>`<button class="choice caseChoice" data-i="${i}" data-j="${j}">${o}</button>`).join('')}<div id="caseFb${i}" class="feedback"></div></div>`});$('#bizCases').innerHTML=h;$$('.caseChoice').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,j=+b.dataset.j,c=cases[i],box=$('#caseFb'+i);b.parentElement.querySelectorAll('.caseChoice').forEach(x=>x.disabled=true);b.classList.add(j===c.ok?'correct':'wrong');box.className='feedback show '+(j===c.ok?'ok':'err');box.innerHTML=`${j===c.ok?'Correct.':'Not yet.'} ${c.e} Result: <strong>${pct(c.a)}</strong>.`})}renderCases();
+$$('.biasChoice').forEach(b=>b.onclick=()=>{const ok=b.dataset.c==='1';$$('.biasChoice').forEach(x=>x.disabled=true);b.classList.add(ok?'correct':'wrong');$('#biasFb').className='feedback show '+(ok?'ok':'err');$('#biasFb').textContent=ok?'Correct. Without the base rate and false-positive rate, we cannot reverse the probability.':'No. You confused P(flagged | default) with P(default | flagged).'});
+$$('.statChoice').forEach(b=>b.onclick=()=>{const ok=b.dataset.c==='1';$$('.statChoice').forEach(x=>x.disabled=true);b.classList.add(ok?'correct':'wrong');$('#statFb').className='feedback show '+(ok?'ok':'err');$('#statFb').textContent=ok?'Correct. The theorem is a probability rule; Bayesian statistics uses it as a general principle of inference and updating.':'Review this. Bayesian statistics uses data and Bayes’ theorem to update uncertainty.'});
+const quizData=[
+['Which element represents the prior probability?',['The probability of the hypothesis before the new evidence','The probability after observing the data','The frequency of false positives'],0,'The prior describes what was plausible before the new information.'],
+['A test identifies 95% of cases. This number is:',['P(case | positive)','P(positive | case)','P(no case | negative)'],1,'It is sensitivity: the probability of a positive result given that the case is present.'],
+['If an event is very rare, a positive signal:',['Always implies that the event occurred','May produce many false positives even with a good test','Never changes the probability'],1,'The base rate remains essential for interpreting the signal.'],
+['In the jurisdiction example, the prior share is:',['The likelihood','The prior','The posterior'],1,'Before observing the appeal, its origin is described by the prior shares.'],
+['Posterior ∝ Likelihood × Prior means that:',['The data always erase prior information','Initial information and data are combined','The prior is always more important than the data'],1,'Updating combines what we knew with the new evidence.'],
+['An alert raises risk from 1% to 15%. Which statement is correct?',['The alert is useless','Risk has increased substantially, but most alerts may still be false','The certainty of risk is 85%'],1,'A large relative increase is not the same as certainty.'],
+['Bayes helps a policy decision because it:',['Eliminates the need to assess costs and consequences','Updates probability when new information arrives','Guarantees that the decision will be correct'],1,'Bayes updates uncertainty; the decision also requires values and consequences.'],
+['Base-rate neglect consists of:',['Ignoring the initial frequency of the phenomenon','Using too much prior information','Confusing the mean and median'],0,'It is the tendency to ignore the base rate and focus only on the evidence.']
+];
+let answers={};function renderQuiz(){answers={};$('#quiz').innerHTML=quizData.map((q,i)=>`<div class="scenario-card"><h3>${i+1}. ${q[0]}</h3>${q[1].map((o,j)=>`<button class="choice qChoice" data-i="${i}" data-j="${j}">${o}</button>`).join('')}<div id="qfb${i}" class="feedback"></div></div>`).join('');$$('.qChoice').forEach(b=>b.onclick=()=>answerQuiz(+b.dataset.i,+b.dataset.j));updateScore()}
+function answerQuiz(i,j){if(answers[i]!==undefined)return;answers[i]=j;const q=quizData[i],card=$('#qfb'+i).parentElement;card.querySelectorAll('.qChoice').forEach((b,k)=>{b.disabled=true;if(k===q[2])b.classList.add('correct');else if(k===j)b.classList.add('wrong')});const ok=j===q[2],fb=$('#qfb'+i);fb.className='feedback show '+(ok?'ok':'err');fb.textContent=(ok?'Correct. ':'Review this. ')+q[3];updateScore()}
+function updateScore(){const done=Object.keys(answers).length,score=Object.entries(answers).filter(([i,j])=>+j===quizData[+i][2]).length,per=done?Math.round(score/done*100):0;$('#quizDone').textContent=done+'/8';$('#quizScore').textContent=score;$('#quizPerc').textContent=per+'%';$('#quizBar').style.width=(done/8*100)+'%';$('#quizLevel').textContent=done<8?'—':score>=7?'Excellent':score>=5?'Good':'Needs consolidation'}
+$('#resetQuiz').onclick=renderQuiz;renderQuiz();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "Which element represents the prior probability?", "options": ["The probability of the hypothesis before the new evidence", "The probability after observing the data", "The frequency of false positives"], "correct": 0, "explanation": "The prior describes what was plausible before the new information."}, {"question": "A test identifies 95% of cases. This number is:", "options": ["P(case | positive)", "P(positive | case)", "P(no case | negative)"], "correct": 1, "explanation": "It is sensitivity: the probability of a positive result given that the case is present."}, {"question": "If an event is very rare, a positive signal:", "options": ["Always implies that the event occurred", "May produce many false positives even with a good test", "Never changes the probability"], "correct": 1, "explanation": "The base rate remains essential for interpreting the signal."}, {"question": "In the jurisdiction example, the prior share is:", "options": ["The likelihood", "The prior", "The posterior"], "correct": 1, "explanation": "Before observing the appeal, its origin is described by the prior shares."}, {"question": "Posterior ∝ Likelihood × Prior means that:", "options": ["The data always erase prior information", "Initial information and data are combined", "The prior is always more important than the data"], "correct": 1, "explanation": "Updating combines what we knew with the new evidence."}, {"question": "An alert raises risk from 1% to 15%. Which statement is correct?", "options": ["The alert is useless", "Risk has increased substantially, but most alerts may still be false", "The certainty of risk is 85%"], "correct": 1, "explanation": "A large relative increase is not the same as certainty."}, {"question": "Bayes helps a policy decision because it:", "options": ["Eliminates the need to assess costs and consequences", "Updates probability when new information arrives", "Guarantees that the decision will be correct"], "correct": 1, "explanation": "Bayes updates uncertainty; the decision also requires values and consequences."}, {"question": "Base-rate neglect consists of:", "options": ["Ignoring the initial frequency of the phenomenon", "Using too much prior information", "Confusing the mean and median"], "correct": 0, "explanation": "It is the tendency to ignore the base rate and focus only on the evidence."}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("s7");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body></html>

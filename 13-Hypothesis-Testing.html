@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Hypothesis Testing | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{--blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#20242c;--muted:#667085;--orange:#c4681a;--orange2:#fff4e8;--green:#2e7d32;--red:#b42318;--purple:#6d5bd0;--teal:#147d8d;--line:#dce5ef;--soft:#f4f7fb;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);font-size:16px}.wrap{max-width:1180px;margin:28px auto;padding:0 16px 55px}.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:12px 12px 0 0;padding:38px 24px 28px;text-align:center;box-shadow:0 7px 20px rgba(23,107,77,.16)}.header .kicker{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800;opacity:.82;margin-bottom:9px}.header h1{font-size:32px;line-height:1.2;margin:0 0 7px}.header p{margin:0;font-size:18px;opacity:.95}.meta{background:#fff;border:1px solid var(--line);border-top:0;padding:11px 16px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.pill{border:1px solid #cbd9e9;background:#f4fbf7;color:var(--blue);padding:7px 11px;border-radius:999px;font-size:14px;font-weight:800}.tabbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-top:0;border-bottom:2px solid var(--blue);scrollbar-width:none}.tabbar::-webkit-scrollbar{display:none}.tab{border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;color:#697386;padding:12px 10px;min-width:130px;flex:1;font:700 12.5px Arial;cursor:pointer;white-space:nowrap}.tab:hover{background:#f4fbf7;color:var(--blue)}.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}.content{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:27px 30px;box-shadow:0 12px 28px rgba(23,39,64,.08)}.section{display:none}.section.active{display:block}.intro{background:var(--blue);color:#fff;border-radius:11px;padding:19px 22px;margin-bottom:20px}.intro h2{margin:0 0 7px;font-size:22px}.intro p{margin:0;line-height:1.65}.card{background:#fff;border:1px solid #e3e8ef;border-radius:12px;margin-bottom:20px;overflow:hidden}.card-head{padding:14px 19px;font-size:18px;font-weight:800}.card-head.light{background:var(--light);color:var(--blue)}.card-head.dark{background:var(--blue);color:#fff}.card-head.orange{background:var(--orange2);color:#8b4707}.card-body{padding:19px 21px;line-height:1.68}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}.mini{background:#fff;border:1px solid #e3e8ef;border-radius:12px;padding:16px;line-height:1.58}.mini strong{color:var(--blue)}.question{background:var(--orange2);border:2px solid var(--orange);border-radius:12px;padding:18px;margin-bottom:20px}.question h3{color:#8e4c00;margin:0 0 8px}.formula{background:#eef8f3;border:1px solid #b8dac9;border-radius:10px;padding:14px 16px;text-align:center;color:var(--blue);font-weight:800;font-size:18px;line-height:1.8;margin:13px 0}.tip,.warn,.okbox{padding:13px 15px;border-radius:0 9px 9px 0;margin:13px 0;line-height:1.62}.tip{background:#f2faf6;border-left:5px solid var(--blue)}.warn{background:#fff4e5;border-left:5px solid var(--orange)}.okbox{background:#eef8ef;border-left:5px solid var(--green)}.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:8px;padding:10px 17px;font:800 14px Arial;cursor:pointer;transition:.15s}.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#eaf2fb;color:var(--blue)}.btn.orange{background:var(--orange);color:#fff}.btn.active{box-shadow:0 0 0 3px rgba(23,107,77,.18)}.control{margin:12px 0}.control label{display:flex;justify-content:space-between;font-weight:800;color:#344054;margin-bottom:7px}.control input[type=range]{width:100%;accent-color:var(--blue)}select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-weight:700;color:#344054}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin:14px 0}.kpi{background:#f4fbf7;border:1px solid #dce9f7;border-radius:10px;padding:12px;text-align:center}.kpi span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}.kpi b{display:block;color:var(--blue);font-size:20px;margin-top:5px}.canvas-wrap{background:#fff;border:1px solid #dfe6ee;border-radius:12px;padding:10px;overflow:hidden}.canvas-wrap canvas{width:100%;height:auto;display:block}.legend{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;font-size:13px;color:#475467;margin-top:8px}.dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}.matrix{width:100%;border-collapse:collapse;margin-top:12px}.matrix th,.matrix td{border:1px solid #dce5ef;padding:14px;text-align:center;vertical-align:middle}.matrix th{background:#eef8f3;color:var(--blue)}.matrix td.clickable{cursor:pointer;font-weight:800}.matrix td.clickable:hover{outline:3px solid rgba(23,107,77,.18);outline-offset:-3px}.cell-ok{background:#eef8ef;color:#1e6a28}.cell-a{background:#fff0ef;color:var(--red)}.cell-b{background:#fff7e8;color:#8e4c00}.power{background:#eef7ff;color:var(--blue)}.feedback{display:none;padding:12px 14px;border-radius:8px;margin-top:12px}.feedback.show{display:block}.feedback.ok{background:#eef8ef;border:1px solid #b9dfbf;color:#1f6a29}.feedback.err{background:#fff0ef;border:1px solid #f3c3bf;color:#8e2018}.choice{display:block;width:100%;text-align:left;border:1px solid #d6dee8;background:#fff;border-radius:9px;padding:11px 13px;margin:9px 0;cursor:pointer;font:700 15px Arial;color:#344054}.choice:hover{background:#f6faff;border-color:#9ebfe4}.choice.correct{background:#eaf7ec;border-color:#6ab375;color:#1f6a29}.choice.wrong{background:#fff0ef;border-color:#df8078;color:#92231c}.progress{height:9px;background:#e5eaf0;border-radius:99px;overflow:hidden;margin:10px 0 18px}.progress>div{height:100%;width:0;background:var(--blue);transition:.25s}.small{font-size:13px;color:var(--muted)}.big-number{font-size:34px;font-weight:900;color:var(--blue)}.scenario{border-left:5px solid var(--teal);background:#f0fbfd;padding:14px 16px;border-radius:0 9px 9px 0}.tag{display:inline-block;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;background:#eef8f3;color:var(--blue);margin:2px}.toggle{display:flex;gap:8px;flex-wrap:wrap}.callout{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;border:1px solid #e1e7ef;border-radius:12px;padding:16px}.icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--light);color:var(--blue);font-size:26px;font-weight:900}.app-card{border:1px solid #dfe6ee;border-radius:11px;padding:15px;background:#fff}.app-card h4{margin:0 0 8px;color:var(--blue)}details{border:1px solid #dce5ef;border-radius:10px;margin:12px 0;background:#fafcff}summary{cursor:pointer;padding:13px 15px;font-weight:800;color:var(--blue)}details>div{padding:0 15px 15px;line-height:1.65}.footer-note{text-align:center;color:var(--muted);font-size:13px;margin-top:18px}.section-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:17px;border-top:1px solid var(--line)}.section-nav .btn{min-width:125px}.choice-panel{margin-top:15px;padding:16px;border:1px solid #cfe0f3;border-radius:10px;background:#f4fbf7;line-height:1.62}.formula.compact{font-size:15px;padding:9px;margin:9px 0}.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px}.step{display:flex;align-items:center;gap:10px;border:1px solid #dce5ef;border-radius:10px;padding:12px;background:#f4fbf7}.step b{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff}.step span{font-size:14px;font-weight:700;color:#344054}
+@media(max-width:850px){.steps4{grid-template-columns:1fr 1fr}.grid2,.grid3,.hero-grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.content{padding:20px 16px}.header h1{font-size:27px}.tab{min-width:145px}.matrix{font-size:13px}.matrix th,.matrix td{padding:10px 6px}}
+
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header"><div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div><h1>Hypothesis Testing</h1><p>How to make decisions from data</p></header>
+<div class="meta"><span class="pill">z, t, and proportion tests</span><span class="pill">Interactive simulations</span><span class="pill">10 final questions</span></div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Logic and errors</button><button class="iple-group-tab" data-iple-group="1" type="button">Choosing a test</button><button class="iple-group-tab" data-iple-group="2" type="button">Power and simulation</button><button class="iple-group-tab" data-iple-group="3" type="button">p-values and applications</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><nav aria-label="Sezioni" class="tabbar iple-original-tabs">
+<button class="tab active" data-target="s1">1. Logic</button>
+<button class="tab" data-target="s2">2. Errors</button>
+<button class="tab" data-target="s3">3. Tests</button>
+<button class="tab" data-target="s4">4. Power</button>
+<button class="tab" data-target="s5">5. Explore</button>
+<button class="tab" data-target="s6">6. Repeated tests</button>
+<button class="tab" data-target="s7">7. p-value</button>
+<button class="tab" data-target="s8">8. Applications</button>
+<button class="tab" data-target="s9">9. Assessment</button>
+<button class="tab" data-target="exam-prep">Preparing for the exam</button></nav>
+<main class="content">
+<section class="section active" data-iple-group="0" id="s1">
+<div class="intro"><h2>What is hypothesis testing?</h2><p>It is a procedure that uses sample data to assess whether a statement about the population is compatible with what we have observed.</p></div>
+<div class="card"><div class="card-head dark">The logic of hypothesis testing</div><div class="card-body">
+<div class="steps4">
+<div class="step"><b>1</b><span>Formulate a question about the population</span></div>
+<div class="step"><b>2</b><span>Define H<sub>0</sub> and H<sub>1</sub></span></div>
+<div class="step"><b>3</b><span>Observe the sampling outcome</span></div>
+<div class="step"><b>4</b><span>Assess how plausible it is under H<sub>0</sub></span></div>
+</div>
+<div class="grid2">
+<div class="mini"><strong>Null hypothesis H<sub>0</sub></strong><p>It is the reference statement that we provisionally assume to be true in order to construct the test: no change, no effect, or a specific parameter value.</p></div>
+<div class="mini"><strong>Alternative hypothesis H<sub>1</sub></strong><p>It describes the change or effect we want to detect: a value that is different from, greater than, or less than the one specified by H<sub>0</sub>.</p></div>
+</div>
+<div class="tip"><strong>Sampling as an experiment.</strong> More precisely, drawing the sample is the random experiment; the observed sample is its outcome. The statistic calculated from the data is the result we compare with what H<sub>0</sub> would make plausible.</div>
+<div class="warn"><strong>Analogy with proof by contradiction.</strong> We assume H<sub>0</sub> and examine its consequences. If the observed result would be very rare under H<sub>0</sub>, we reject it. The analogy is not perfect: we do not obtain a certain logical contradiction, but probabilistic evidence.</div>
+<div class="formula">H<sub>0</sub> assumed true → distribution of possible outcomes → observed outcome → decision</div>
+</div></div>
+<div class="hero-grid">
+<div class="card"><div class="card-head light">The case: administrative processing times</div><div class="card-body">
+<p>A public agency reports a mean application-processing time of <strong>48 days</strong>. After a reorganisation, administrators are concerned that processing times have increased.</p>
+<div class="formula">H<sub>0</sub>: μ = 48     H<sub>1</sub>: μ &gt; 48</div>
+<p>A sample produces a mean of <strong>50 days</strong>. Are two additional days enough to conclude that the process has worsened?</p>
+<div class="question"><h3>First impression</h3><p>Make a choice. You do not need to calculate anything yet.</p><div class="btn-row"><button class="btn primary firstChoice" data-answer="yes">Yes, the time has increased</button><button class="btn secondary firstChoice" data-answer="no">I cannot draw a conclusion yet</button></div><div class="feedback" id="firstFeedback"></div></div>
+</div></div>
+<div class="card"><div class="card-head orange">What is missing?</div><div class="card-body">
+<div class="callout"><div class="icon">?</div><div><strong>Sampling variability.</strong><br/>Even if the true mean were still 48 days, different samples would produce different means.</div></div>
+<div class="tip"><strong>Test question:</strong> how plausible is it to observe a mean of 50, or an even more extreme value, if H<sub>0</sub> were true?</div>
+<p>A decision requires a test statistic, a reference distribution, and a decision rule.</p>
+</div></div>
+</div>
+<div class="okbox"><strong>Objective:</strong> understand the logic of hypothesis testing; select and interpret z, t, and proportion tests; distinguish decision errors; and analyse power.</div>
+</section><section class="section" data-iple-group="0" id="s2">
+<div class="intro"><h2>The four possible situations</h2><p>Reality may correspond to H<sub>0</sub> or H<sub>1</sub>; our decision may be correct or incorrect.</p></div>
+<table class="matrix"><tr><th>Reality</th><th>Do not reject H<sub>0</sub></th><th>Reject H<sub>0</sub></th></tr><tr><th>H<sub>0</sub> true</th><td class="clickable cell-ok" data-cell="correct0">Correct decision</td><td class="clickable cell-a" data-cell="alpha">Type I error (α)</td></tr><tr><th>H<sub>1</sub> true</th><td class="clickable cell-b" data-cell="beta">Type II error (β)</td><td class="clickable power" data-cell="power">Correct decision: power (1−β)</td></tr></table>
+<div class="tip" id="matrixFeedback">Click a cell in the table.</div>
+<div class="grid2"><div class="card"><div class="card-head orange">Type I error</div><div class="card-body"><div class="formula">α = P(rejecting H<sub>0</sub> | H<sub>0</sub> true)</div><p>It is a <strong>false positive</strong>: we report a change that does not exist.</p><p>Example: concluding that the process has worsened when the mean time is still 48 days.</p></div></div><div class="card"><div class="card-head light">Type II error</div><div class="card-body"><div class="formula">β = P(not rejecting H<sub>0</sub> | H<sub>1</sub> true)</div><p>It is a <strong>false negative</strong>: we fail to detect a real change.</p><p>Example: failing to detect a genuine increase in processing times.</p></div></div></div>
+<div class="card"><div class="card-head dark">The alarm metaphor</div><div class="card-body"><div class="grid2"><div class="scenario"><strong>False alarm</strong><br/>The alarm sounds, but there is no problem. This is a Type I error.</div><div class="scenario"><strong>Undetected problem</strong><br/>A problem exists, but the alarm does not sound. This is a Type II error.</div></div></div></div>
+</section><section class="section" data-iple-group="1" id="s3">
+<div class="intro"><h2>Which test?</h2><p>Choose the problem: the hypotheses, formula, reference distribution, checks, and graph will change.</p></div>
+<div class="card"><div class="card-head light">Choose the problem</div><div class="card-body">
+<div class="toggle test-chooser"><button class="btn primary active testPick" data-test="z">Mean: z-test</button><button class="btn secondary testPick" data-test="t">Mean: t-test</button><button class="btn secondary testPick" data-test="p">Proportion</button></div>
+<div class="choice-panel" id="testChoiceBox"></div>
+<details>
+<summary>Summary of the three test statistics</summary>
+<div>
+<div class="grid3">
+<div class="mini"><strong>Mean, known σ</strong>
+<div class="formula compact">z = (x̄ − μ<sub>0</sub>) / (σ / √n)</div>
+<div class="small">Under H<sub>0</sub>: z is approximately distributed as N(0,1).</div>
+</div>
+<div class="mini"><strong>Mean, unknown σ</strong>
+<div class="formula compact">t = (x̄ − μ<sub>0</sub>) / (s / √n)</div>
+<div class="small">Under H<sub>0</sub>: t follows a Student's t-distribution with n−1 degrees of freedom.</div>
+</div>
+<div class="mini"><strong>Proportion</strong>
+<div class="formula compact">z = (p̂ − p<sub>0</sub>) / √[p<sub>0</sub>(1−p<sub>0</sub>)/n]</div>
+<div class="small">Variability is calculated under H<sub>0</sub>, using p<sub>0</sub>.</div>
+</div>
+</div>
+</div>
+</details>
+</div></div>
+<div class="card"><div class="card-head dark" id="testDemoTitle">Try a decision using the z-test</div><div class="card-body">
+<div class="grid2"><div>
+<div class="control"><label><span id="testObsLabel">Observed sample mean x̄</span><b id="testObsVal">50,0</b></label><input id="testObs" max="54" min="44" step="0.1" type="range" value="50"/></div>
+<div class="control"><label><span>Sample size n</span><b id="testNVal">36</b></label><input id="testN" max="300" min="9" step="1" type="range" value="36"/></div>
+<div class="control"><label><span id="testVarLabel">Known standard deviation σ</span><b id="testVarVal">6,0</b></label><input id="testVar" max="12" min="2" step="0.2" type="range" value="6"/></div>
+<div class="control"><label><span>Significance level α</span><b id="testAlphaVal">0,05</b></label><input id="testAlpha" max="10" min="1" step="1" type="range" value="5"/></div>
+</div><div>
+<div class="kpis"><div class="kpi"><span id="testSELabel">Standard error</span><b id="testSE">1,00</b></div><div class="kpi"><span id="testCritLabel">Critical threshold for x̄</span><b id="testCrit">49,64</b></div><div class="kpi"><span id="testStatLabel">z-statistic</span><b id="testStat">2,00</b></div><div class="kpi"><span>Decision</span><b id="testDecision">Reject H₀</b></div></div>
+<div class="tip" id="testExplain"></div><div class="small" id="testConditions"></div>
+</div></div>
+<div class="canvas-wrap"><canvas height="380" id="testCanvas" width="1000"></canvas></div>
+<div class="legend"><span><i class="dot" style="background:#176b4d"></i>Distribution under H₀</span><span><i class="dot" style="background:#f7c56f"></i>Critical region α</span><span><i class="dot" style="background:#b42318"></i>Observed result</span></div>
+</div></div>
+<div class="tip"><strong>The common principle:</strong> the statistic measures how many standard errors separate the observed result from the value hypothesised in H<sub>0</sub>.</div><div class="small"><strong>Note:</strong> in this section, the three examples are set up as right-tailed tests, consistent with questions such as “has the value increased?”. A two-tailed test considers both tails.</div>
+<div class="warn"><strong>Do not reject H<sub>0</sub></strong> does not mean proving that H<sub>0</sub> is true: it means that the data do not provide sufficient evidence against H<sub>0</sub>.</div>
+</section><section class="section" data-iple-group="2" id="s4">
+<div class="intro"><h2>What is power?</h2><p>Power measures the test's ability to detect a difference when that difference truly exists.</p></div>
+<div class="formula">Power = 1 − β = P(rejecting H<sub>0</sub> | H<sub>1</sub> true)</div>
+<div class="card"><div class="card-head light">The key figure: two distributions</div><div class="card-body"><p>The blue curve describes what would happen if H<sub>0</sub> were true. The orange curve describes a specific alternative H<sub>1</sub>. The critical value separates the non-rejection region from the rejection region.</p><div class="canvas-wrap"><canvas height="390" id="powerIntroCanvas" width="1000"></canvas></div><div class="legend"><span><i class="dot" style="background:#176b4d"></i>H₀</span><span><i class="dot" style="background:#d97706"></i>H₁</span><span><i class="dot" style="background:#ef4444"></i>α</span><span><i class="dot" style="background:#f7c56f"></i>β</span><span><i class="dot" style="background:#72c17a"></i>Power</span></div></div></div>
+<div class="grid3"><div class="mini"><strong>n increases</strong><p>The curves become narrower, overlap less, and power increases.</p></div><div class="mini"><strong>The effect increases</strong><p>The curves move farther apart: a large difference is easier to detect.</p></div><div class="mini"><strong>Variability increases</strong><p>The curves become wider and power decreases.</p></div></div>
+<div class="warn"><strong>Power is not a single number for all of H<sub>1</sub>.</strong> It depends on the specific value of μ under the alternative, that is, on the effect size being considered.</div>
+</section><section class="section" data-iple-group="2" id="s5">
+<div class="intro"><h2>Explore the test</h2><p>Adjust the controls and observe how the curve widths, overlap, α, β, and power change. To isolate these mechanisms, the simulator uses a z-test for a mean.</p></div>
+<div class="card"><div class="card-head dark">Main simulator</div><div class="card-body">
+<div class="grid2"><div><div class="control"><label><span>Sample size n</span><b id="simNVal">36</b></label><input id="simN" max="400" min="9" step="1" type="range" value="36"/></div><div class="control"><label><span>Significance level α</span><b id="simAlphaVal">0,05</b></label><input id="simAlpha" max="10" min="1" step="1" type="range" value="5"/></div><div class="control"><label><span>Standard deviation σ</span><b id="simSigmaVal">6,0</b></label><input id="simSigma" max="12" min="2" step="0.2" type="range" value="6"/></div><div class="control"><label><span>Effect Δ = μ₁ − μ₀</span><b id="simDeltaVal">3,0</b></label><input id="simDelta" max="8" min="0.2" step="0.1" type="range" value="3"/></div><div class="control"><label><span>Type of test</span></label><select id="simType"><option value="right">Right-tailed: H₁: μ &gt; μ₀</option><option value="two">Two-sided: H₁: μ ≠ μ₀</option></select></div></div>
+<div><div class="kpis"><div class="kpi"><span>Standard error</span><b id="simSE">1,00</b></div><div class="kpi"><span>Critical value</span><b id="simCritical">49,64</b></div><div class="kpi"><span>β</span><b id="simBeta">0,09</b></div><div class="kpi"><span>Power</span><b id="simPower">91%</b></div></div><div class="tip" id="simMessage"></div><div class="small">Reference values: μ₀ = 48 hours; μ₁ = μ₀ + Δ.</div></div></div>
+<div class="canvas-wrap"><canvas height="420" id="simCanvas" width="1000"></canvas></div>
+<div class="legend"><span><i class="dot" style="background:#176b4d"></i>Distribution under H₀</span><span><i class="dot" style="background:#d97706"></i>Distribution under H₁</span><span><i class="dot" style="background:#ef4444"></i>Error α</span><span><i class="dot" style="background:#f7c56f"></i>Error β</span><span><i class="dot" style="background:#72c17a"></i>Power</span></div>
+</div></div>
+<div class="grid2"><div class="card"><div class="card-head orange">The trade-off between α and β</div><div class="card-body"><p>Holding n, σ, and the effect constant, increasing α makes it easier to reject H<sub>0</sub> and increases power, but it also increases the risk of a false positive.</p></div></div><div class="card"><div class="card-head light">How can both be reduced?</div><div class="card-body"><p>In general, more information must be collected: increasing n makes the distributions more concentrated and allows both α and β to be kept under control.</p></div></div></div>
+</section><section class="section" data-iple-group="3" id="s7">
+<div class="intro"><h2>The p-value: an example using the z-test</h2><p>It is not the probability that H<sub>0</sub> is true. It is an area calculated using H<sub>0</sub> as the reference; the same logic also applies to the t-test and the proportion test.</p></div>
+<div class="steps4"><div class="step"><b>1</b><span>Assumi H<sub>0</sub> true</span></div><div class="step"><b>2</b><span>Locate the observed result</span></div><div class="step"><b>3</b><span>Consider equally extreme results</span></div><div class="step"><b>4</b><span>Measure the area: this is the p-value</span></div></div>
+<div class="card"><div class="card-head light">Move the observed result</div><div class="card-body">
+<div class="grid2"><div><div class="control"><label><span>Observed mean x̄</span><b id="pMeanVal">50,0</b></label><input id="pMean" max="54" min="46" step="0.1" type="range" value="50"/></div><div class="control"><label><span>n</span><b id="pNVal">36</b></label><input id="pN" max="196" min="9" step="1" type="range" value="36"/></div><div class="control"><label><span>σ</span><b id="pSigmaVal">6,0</b></label><input id="pSigma" max="12" min="2" step="0.2" type="range" value="6"/></div></div><div><div class="kpis"><div class="kpi"><span>observed z</span><b id="pZ">2,00</b></div><div class="kpi"><span>p-value</span><b id="pValue">0,0228</b></div><div class="kpi"><span>α</span><b>0,05</b></div><div class="kpi"><span>Decision</span><b id="pDecision">Reject H₀</b></div></div><div class="tip" id="pExplain"></div></div></div>
+<div class="canvas-wrap"><canvas height="360" id="pCanvas" width="1000"></canvas></div>
+<div class="formula">p-value = P(observed result or more extreme | H<sub>0</sub> true)</div>
+</div></div>
+<div class="grid2"><div class="mini"><strong>p-value piccolo</strong><p>The observed result would be rare under H<sub>0</sub>: the data provide evidence against H<sub>0</sub>.</p></div><div class="mini"><strong>large p-value</strong><p>The result is not sufficiently rare under H<sub>0</sub>: we do not have enough evidence to reject it.</p></div></div>
+<div class="warn"><strong>Three incorrect interpretations:</strong> the p-value is not the probability that H<sub>0</sub> is true, it is not the probability that we have made an error, and it does not measure the size or economic importance of the effect.</div>
+</section><section class="section" data-iple-group="3" id="s6">
+<div class="intro"><h2>Many tests, not just one</h2><p>Probability becomes visible when we repeat the same experiment many times.</p></div>
+<div class="card"><div class="card-head light">Simulate 200 experiments</div><div class="card-body"><div class="grid2"><div><div class="control"><label><span>True state</span></label><select id="manyScenario"><option value="h0">H₀ true: μ = 48</option><option value="h1">H₁ true: μ = 51</option></select></div><div class="control"><label><span>Sample size n</span><b id="manyNVal">36</b></label><input id="manyN" max="225" min="9" step="1" type="range" value="36"/></div><div class="control"><label><span>Significance level α</span><b id="manyAlphaVal">0,05</b></label><input id="manyAlpha" max="10" min="1" step="1" type="range" value="5"/></div><div class="btn-row"><button class="btn primary" id="runMany">Generate 200 tests</button></div></div><div><div class="kpis"><div class="kpi"><span>Reject H₀</span><b id="manyReject">–</b></div><div class="kpi"><span>Do not reject H₀</span><b id="manyKeep">–</b></div><div class="kpi"><span>Percentage</span><b id="manyRate">–</b></div><div class="kpi"><span>Interpretation</span><b id="manyLabel">–</b></div></div><div class="tip" id="manyExplain">Choose the scenario and start the simulation.</div></div></div><div class="canvas-wrap"><canvas height="430" id="manyCanvas" width="1000"></canvas></div><div class="small">Each square represents an experiment. Its colour indicates whether the test rejected H<sub>0</sub>.</div></div></div>
+<div class="tip"><strong>When H<sub>0</sub> is true:</strong> the proportion of rejections approximates α. <strong>When H<sub>1</sub> is true:</strong> the proportion of rejections approximates power.</div>
+</section><section class="section" data-iple-group="3" id="s8">
+<div class="intro"><h2>Decisions in Politics, Law and Economics</h2><p>The same statistical error can have very different economic consequences depending on the context.</p></div>
+<div class="grid2"><div class="app-card"><h4>Policy-compliance monitoring</h4><p><strong>H₀:</strong> the mean weight meets the standard.<br/><strong>α error:</strong> unnecessarily stopping a correctly operating line.<br/><strong>β error:</strong> failing to detect packages that do not meet the standard.</p></div><div class="app-card"><h4>Public communication</h4><p><strong>H₀:</strong> the new information campaign does not increase participation.<br/><strong>α error:</strong> funding an ineffective campaign.<br/><strong>β error:</strong> discarding a genuinely useful campaign.</p></div><div class="app-card"><h4>Public administration</h4><p><strong>H₀:</strong> processing times have not increased.<br/><strong>α error:</strong> intervening in a stable process.<br/><strong>β error:</strong> ignoring a genuine deterioration.</p></div><div class="app-card"><h4>Labour economics</h4><p><strong>H₀:</strong> the training does not improve productivity.<br/><strong>α error:</strong> funding an ineffective programme.<br/><strong>β error:</strong> giving up an effective programme.</p></div></div>
+<div class="card"><div class="card-head orange">Statistical significance ≠ substantive relevance</div><div class="card-body"><p>A new system reduces mean handling time from 30.0 to 29.8 minutes. With a very large sample, a difference of 0.2 minutes may be statistically significant.</p><div class="question"><h3>Policy question</h3><p>Does a reduction of 12 seconds justify the cost of the new system?</p></div><p>The test measures statistical evidence. A policy or institutional decision must also consider costs, benefits, equity, and effect size.</p></div></div>
+</section><section class="section" data-iple-group="4" id="s9">
+<div class="intro"><h2>Final quiz</h2><p>Complete the quiz first. Then continue to the worked exam-style examples below.</p></div>
+<div class="card"><div class="card-head dark">Final assessment</div><div class="card-body"><div class="small" id="quizCount"></div><div class="progress"><div id="quizProgress"></div></div><div id="quizBox"></div><div class="feedback" id="quizFeedback"></div><div class="btn-row"><button class="btn primary" id="quizNext" style="display:none">Next question</button><button class="btn secondary" id="quizRestart" style="display:none">Start again</button></div></div></div>
+</section><section class="section" data-iple-group="5" id="exam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>A one-sample test</h3><p><strong>Question.</strong> A sample gives x̄=12.4, hypothesised mean μ₀=12, s=2, and n=100. Compute the test statistic.</p><div class="exam-answer"><strong>Solution.</strong> t=(12.4−12)/(2/√100)=0.4/0.2=2. For a two-sided 5% test with many degrees of freedom, this is just beyond the approximate critical value 1.96, so H₀ is rejected.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Type I error in context</h3><p><strong>Question.</strong> H₀ states that a public programme has no effect. What is a Type I error?</p><div class="exam-answer"><strong>Solution.</strong> It is concluding that the programme has an effect when in reality it has none. The significance level α controls the long-run probability of this error under H₀.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">Formulating and concluding a test</div><div class="card-body"><div class="exam-prep-question">A study compares mean case duration before and after a reform. State the null and alternative hypotheses and explain what p=0.018 means at the 5% level.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>For a two-sided comparison, H0: μ_before=μ_after and H1: μ_before≠μ_after. A p-value of 0.018 means that, if H0 were true and the model assumptions held, a result at least this incompatible with H0 would occur with probability 1.8%. Since 0.018&lt;0.05, reject H0; do not interpret the p-value as the probability that H0 is true.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> States H0 correctly <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> States a coherent alternative <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Compares p with α=0.05 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Gives a correct, non-Bayesian interpretation of p <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></main><div class="footer-note">Hypothesis testing · errors and power</div>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id), fmt=(x,d=2)=>Number(x).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+function erf(x){const s=x<0?-1:1; x=Math.abs(x); const a1=.254829592,a2=-.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=.3275911,t=1/(1+p*x);return s*(1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x))}
+function cdf(z){return .5*(1+erf(z/Math.sqrt(2)))}
+function invNorm(p){if(p<=0||p>=1)return NaN;const a=[-39.6968302866538,220.946098424521,-275.928510446969,138.357751867269,-30.6647980661472,2.50662827745924],b=[-54.4760987982241,161.585836858041,-155.698979859887,66.8013118877197,-13.2806815528857],c=[-.00778489400243029,-.322396458041136,-2.40075827716184,-2.54973253934373,4.37466414146497,2.93816398269878],d=[.00778469570904146,.32246712907004,2.445134137143,3.75440866190742],pl=.02425,ph=1-pl;let q,r;if(p<pl){q=Math.sqrt(-2*Math.log(p));return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}if(p>ph){q=Math.sqrt(-2*Math.log(1-p));return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}q=p-.5;r=q*q;return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}
+function pdf(x,m,s){return Math.exp(-.5*((x-m)/s)**2)/(s*Math.sqrt(2*Math.PI))}
+function randn(){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+
+function alphaValue(slider){return +slider.value/100}
+function setTab(id){document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.target===id));document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo({top:0,behavior:'smooth'}); if(id==='s4')drawPowerIntro(); if(id==='s5')updateSimulator();}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>setTab(t.dataset.target)));
+
+document.querySelectorAll('.firstChoice').forEach(b=>b.addEventListener('click',()=>{const ok=b.dataset.answer==='no',f=$('firstFeedback');f.className='feedback show '+(ok?'ok':'err');f.innerHTML=ok?'<strong>Correct.</strong> The observed difference must be compared with the variability expected under H₀.':'<strong>Not yet.</strong> A mean of 50 may be due to a genuine increase, but also to sampling variability.';}));
+
+const matrixText={correct0:'If H₀ is true and we do not reject it, the decision is correct.',alpha:'Type I error: we reject H₀ when it is true. This is the risk controlled by α.',beta:'Type II error: we do not reject H₀ when a specific alternative is true. This is a false negative.',power:'Correct decision under H₁: we detect the real effect. The probability of doing so is the power, 1−β.'};document.querySelectorAll('[data-cell]').forEach(td=>td.addEventListener('click',()=>{$('matrixFeedback').innerHTML='<strong>'+matrixText[td.dataset.cell]+'</strong>'}));
+
+function drawTwoCurves(canvas,n=36,sigma=6,alpha=.05,delta=3,type='right',showLabels=true){const mu0=48,mu1=mu0+delta,se=sigma/Math.sqrt(n),c=canvas,ctx=c.getContext('2d'),W=c.width,H=c.height,p=65,base=H-70,zcrit=type==='right'?invNorm(1-alpha):invNorm(1-alpha/2),left=mu0-zcrit*se,right=mu0+zcrit*se,min=Math.min(mu0,mu1)-5*se,max=Math.max(mu0,mu1)+5*se,X=x=>p+(x-min)/(max-min)*(W-2*p),peak=pdf(mu0,mu0,se),scale=(H-125)/peak;ctx.clearRect(0,0,W,H);ctx.strokeStyle='#d0d7df';ctx.beginPath();ctx.moveTo(p,base);ctx.lineTo(W-p,base);ctx.stroke();
+function fillArea(m,a,b,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(X(a),base);for(let i=0;i<=260;i++){const x=a+(b-a)*i/260;ctx.lineTo(X(x),base-pdf(x,m,se)*scale)}ctx.lineTo(X(b),base);ctx.closePath();ctx.fill()}
+if(type==='right'){fillArea(mu0,right,max,'rgba(239,68,68,.38)');fillArea(mu1,min,right,'rgba(247,197,111,.48)');fillArea(mu1,right,max,'rgba(114,193,122,.45)')}else{fillArea(mu0,min,left,'rgba(239,68,68,.34)');fillArea(mu0,right,max,'rgba(239,68,68,.34)');fillArea(mu1,left,right,'rgba(247,197,111,.45)');fillArea(mu1,min,left,'rgba(114,193,122,.38)');fillArea(mu1,right,max,'rgba(114,193,122,.38)')}
+function curve(m,color){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=600;i++){const x=min+(max-min)*i/600,y=base-pdf(x,m,se)*scale;if(i===0)ctx.moveTo(X(x),y);else ctx.lineTo(X(x),y)}ctx.stroke()}curve(mu0,'#176b4d');curve(mu1,'#d97706');ctx.strokeStyle='#7c2d12';ctx.lineWidth=2;ctx.setLineDash([6,5]);[...(type==='two'?[left,right]:[right])].forEach(v=>{ctx.beginPath();ctx.moveTo(X(v),35);ctx.lineTo(X(v),base);ctx.stroke()});ctx.setLineDash([]);if(showLabels){ctx.fillStyle='#176b4d';ctx.font='bold 15px Arial';ctx.textAlign='center';ctx.fillText('H₀',X(mu0),base+30);ctx.fillStyle='#d97706';ctx.fillText('H₁',X(mu1),base+30);ctx.fillStyle='#7c2d12';ctx.font='13px Arial';ctx.fillText(type==='right'?'critical value':'critical values',type==='right'?X(right):(X(left)+X(right))/2,25)}return {mu0,mu1,se,zcrit,left,right,min,max}}
+
+const testTexts={
+ z:'<strong>z-test for a mean.</strong> It is used when the population standard deviation σ is known.<div class="formula compact">z = (x̄ − μ<sub>0</sub>) / (σ / √n)</div><div class="small"><strong>Hypotheses in the example:</strong> H<sub>0</sub>: μ = μ<sub>0</sub>; H<sub>1</sub>: μ &gt; μ<sub>0</sub>.<br/><strong>Rule:</strong> reject H<sub>0</sub> if z &gt; z<sub>1−α</sub>. The sample must be random and observations independent; the population should be normal or the sample sufficiently large.</div>',
+ t:'<strong>t-test for a mean.</strong> It is used when σ is unknown and is estimated using the sample standard deviation s.<div class="formula compact">t = (x̄ − μ<sub>0</sub>) / (s / √n)</div><div class="small"><strong>Degrees of freedom:</strong> n−1. <strong>Hypotheses in the example:</strong> H<sub>0</sub>: μ = μ<sub>0</sub>; H<sub>1</sub>: μ &gt; μ<sub>0</sub>.<br/><strong>Rule:</strong> reject H<sub>0</sub> if t &gt; t<sub>1−α,n−1</sub>. With small samples, it is important that the distribution does not depart substantially from normality.</div>',
+ p:'<strong>z-test for a proportion.</strong> It compares the sample proportion p̂ with the value p<sub>0</sub> hypothesised under H<sub>0</sub>.<div class="formula compact">z = (p̂ − p<sub>0</sub>) / √[p<sub>0</sub>(1−p<sub>0</sub>)/n]</div><div class="small"><strong>Hypotheses in the example:</strong> H<sub>0</sub>: p = p<sub>0</sub>; H<sub>1</sub>: p &gt; p<sub>0</sub>.<br/><strong>Rule:</strong> reject H<sub>0</sub> if z &gt; z<sub>1−α</sub>. The normal approximation requires sufficient expected successes and failures under H<sub>0</sub>.</div>'
+};
+let activeTest='z';
+function logGamma(z){const c=[676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];if(z<.5)return Math.log(Math.PI)-Math.log(Math.sin(Math.PI*z))-logGamma(1-z);z-=1;let x=.99999999999980993;for(let i=0;i<c.length;i++)x+=c[i]/(z+i+1);const t=z+c.length-.5;return .5*Math.log(2*Math.PI)+(z+.5)*Math.log(t)-t+Math.log(x)}
+function tPdf(x,df){return Math.exp(logGamma((df+1)/2)-logGamma(df/2)) / Math.sqrt(df*Math.PI) * Math.pow(1+x*x/df,-(df+1)/2)}
+function tCritical(prob,df){const z=invNorm(prob),v=df,z2=z*z,z3=z2*z,z5=z3*z2,z7=z5*z2;return z+(z3+z)/(4*v)+(5*z5+16*z3+3*z)/(96*v*v)+(3*z7+19*z5+17*z3-15*z)/(384*v*v*v)}
+function configureTest(k){activeTest=k;$('testChoiceBox').innerHTML=testTexts[k];document.querySelectorAll('.testPick').forEach(b=>{const on=b.dataset.test===k;b.classList.toggle('active',on);b.classList.toggle('primary',on);b.classList.toggle('secondary',!on)});const obs=$('testObs'),n=$('testN'),vr=$('testVar');if(k==='z'){ $('testDemoTitle').textContent='Try a decision with the z-test';$('testObsLabel').textContent='Observed sample mean x̄';$('testVarLabel').textContent='Known standard deviation σ';$('testStatLabel').textContent='Statistics z';$('testCritLabel').textContent='Critical threshold for x̄';obs.min=44;obs.max=54;obs.step=.1;obs.value=50;n.min=9;n.max=300;n.value=36;vr.min=2;vr.max=12;vr.step=.2;vr.value=6;}else if(k==='t'){ $('testDemoTitle').textContent='Try a decision using the t-test';$('testObsLabel').textContent='Observed sample mean x̄';$('testVarLabel').textContent='Sample standard deviation s';$('testStatLabel').textContent='t-statistic';$('testCritLabel').textContent='Critical threshold for x̄';obs.min=44;obs.max=54;obs.step=.1;obs.value=50;n.min=3;n.max=200;n.value=12;vr.min=2;vr.max=12;vr.step=.2;vr.value=6;}else{ $('testDemoTitle').textContent='Try a decision for a proportion';$('testObsLabel').textContent='Observed sample proportion p̂';$('testVarLabel').textContent='Proportion ipotizzata p₀';$('testStatLabel').textContent='Statistics z';$('testCritLabel').textContent='Critical threshold for p̂';obs.min=.35;obs.max=.75;obs.step=.01;obs.value=.62;n.min=20;n.max=500;n.value=100;vr.min=.1;vr.max=.9;vr.step=.01;vr.value=.5;}updateTestDemo()}
+function updateTestDemo(){const obs=+$('testObs').value,n=+$('testN').value,v=+$('testVar').value,alpha=alphaValue($('testAlpha'));let se,stat,crit,decision,center,min,max,density,peak,label,condition='';if(activeTest==='z'){center=48;se=v/Math.sqrt(n);const q=invNorm(1-alpha);crit=center+q*se;stat=(obs-center)/se;decision=obs>=crit;min=center-5*se;max=center+5*se;density=x=>pdf(x,center,se);peak=density(center);label='H₀: μ = 48';condition='critical z = '+fmt(q,3)+'. σ is known: the reference is the standard normal distribution.';}else if(activeTest==='t'){center=48;se=v/Math.sqrt(n);const df=n-1,q=tCritical(1-alpha,df);crit=center+q*se;stat=(obs-center)/se;decision=obs>=crit;min=center-5.5*se;max=center+5.5*se;density=x=>tPdf((x-center)/se,df)/se;peak=density(center);label='H₀: μ = 48';condition='critical t = '+fmt(q,3)+'. σ is unknown: we use s and a t-distribution with '+df+' degrees of freedom.';}else{center=v;se=Math.sqrt(center*(1-center)/n);const q=invNorm(1-alpha);crit=center+q*se;stat=(obs-center)/se;decision=obs>=crit;min=Math.max(0,center-5*se);max=Math.min(1,center+5*se);density=x=>pdf(x,center,se);peak=density(center);label='H₀: p = '+fmt(center,2);const a=n*center,b=n*(1-center);condition='critical z = '+fmt(q,3)+'. Expected successes: '+fmt(a,1)+'; expected failures: '+fmt(b,1)+(a>=5&&b>=5?'. The normal approximation is reasonable.':'. Warning: weak normal approximation.');}
+$('testObsVal').textContent=activeTest==='p'?fmt(obs,2):fmt(obs,1);$('testNVal').textContent=n;$('testVarVal').textContent=activeTest==='p'?fmt(v,2):fmt(v,1);$('testAlphaVal').textContent=fmt(alpha,2);$('testSE').textContent=activeTest==='p'?fmt(se,3):fmt(se,2);$('testCrit').textContent=activeTest==='p'?fmt(crit,3):fmt(crit,2);$('testStat').textContent=fmt(stat,2);$('testDecision').textContent=decision?'Reject H₀':'Do not reject H₀';$('testExplain').innerHTML=decision?'<strong>The result lies in the critical region.</strong> At the selected α level, the data provide evidence against H₀.':'<strong>The result does not lie in the critical region.</strong> The data do not provide sufficient evidence to reject H₀.';$('testConditions').textContent=condition;
+const c=$('testCanvas'),ctx=c.getContext('2d'),W=c.width,H=c.height,pad=65,base=H-65,X=x=>pad+(x-min)/(max-min)*(W-2*pad),scale=(H-120)/peak;ctx.clearRect(0,0,W,H);ctx.strokeStyle='#ccd5df';ctx.beginPath();ctx.moveTo(pad,base);ctx.lineTo(W-pad,base);ctx.stroke();ctx.fillStyle='rgba(247,197,111,.65)';ctx.beginPath();ctx.moveTo(X(crit),base);for(let i=0;i<=400;i++){const x=crit+(max-crit)*i/400;ctx.lineTo(X(x),base-density(x)*scale)}ctx.lineTo(X(max),base);ctx.closePath();ctx.fill();ctx.strokeStyle='#176b4d';ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=700;i++){const x=min+(max-min)*i/700,y=base-density(x)*scale;if(i===0)ctx.moveTo(X(x),y);else ctx.lineTo(X(x),y)}ctx.stroke();ctx.strokeStyle='#c4681a';ctx.lineWidth=3;ctx.setLineDash([7,5]);ctx.beginPath();ctx.moveTo(X(crit),35);ctx.lineTo(X(crit),base);ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle='#b42318';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(X(obs),45);ctx.lineTo(X(obs),base);ctx.stroke();ctx.textAlign='center';ctx.font='bold 15px Arial';ctx.fillStyle='#176b4d';ctx.fillText(label,X(center),base+30);ctx.fillStyle='#c4681a';ctx.fillText('critical value',X(crit),27);ctx.fillStyle='#b42318';ctx.fillText(activeTest==='p'?'p̂ = '+fmt(obs,2):'x̄ = '+fmt(obs,1),X(obs),43)}
+document.querySelectorAll('.testPick').forEach(b=>b.addEventListener('click',()=>configureTest(b.dataset.test)));['testObs','testN','testVar','testAlpha'].forEach(id=>$(id).addEventListener('input',updateTestDemo));configureTest('z');
+
+function drawPowerIntro(){drawTwoCurves($('powerIntroCanvas'),36,6,.05,3,'right',true)}drawPowerIntro();
+
+function updateSimulator(){const n=+$('simN').value,alpha=alphaValue($('simAlpha')),sigma=+$('simSigma').value,delta=+$('simDelta').value,type=$('simType').value,mu0=48,mu1=mu0+delta,se=sigma/Math.sqrt(n),zcrit=type==='right'?invNorm(1-alpha):invNorm(1-alpha/2);let beta,power,critText;if(type==='right'){const crit=mu0+zcrit*se;beta=cdf((crit-mu1)/se);power=1-beta;critText=fmt(crit,2)}else{const left=mu0-zcrit*se,right=mu0+zcrit*se;beta=cdf((right-mu1)/se)-cdf((left-mu1)/se);power=1-beta;critText=fmt(left,2)+' / '+fmt(right,2)}$('simNVal').textContent=n;$('simAlphaVal').textContent=fmt(alpha,2);$('simSigmaVal').textContent=fmt(sigma,1);$('simDeltaVal').textContent=fmt(delta,1);$('simSE').textContent=fmt(se,2);$('simCritical').textContent=critText;$('simBeta').textContent=fmt(beta,3);$('simPower').textContent=fmt(power*100,1)+'%';let msg;if(power<.5)msg='<strong>Low power.</strong> The curves overlap substantially: the test often risks failing to detect the effect.';else if(power<.8)msg='<strong>Moderate power.</strong> The test detects the effect in a substantial proportion, but not all, of the samples.';else msg='<strong>High power.</strong> The distributions are sufficiently separated for the test to detect the real effect frequently.';$('simMessage').innerHTML=msg;drawTwoCurves($('simCanvas'),n,sigma,alpha,delta,type,true)}
+['simN','simAlpha','simSigma','simDelta','simType'].forEach(id=>$(id).addEventListener('input',updateSimulator));updateSimulator();
+
+function runMany(){const scenario=$('manyScenario').value,n=+$('manyN').value,alpha=alphaValue($('manyAlpha')),mu0=48,mu=scenario==='h0'?48:51,sigma=6,se=sigma/Math.sqrt(n),crit=mu0+invNorm(1-alpha)*se;let reject=0;const vals=[];for(let i=0;i<200;i++){const m=mu+se*randn(),r=m>=crit;if(r)reject++;vals.push(r)}const keep=200-reject,rate=reject/200;$('manyReject').textContent=reject;$('manyKeep').textContent=keep;$('manyRate').textContent=fmt(rate*100,1)+'%';$('manyLabel').textContent=scenario==='h0'?'≈ α':'≈ power';$('manyExplain').innerHTML=scenario==='h0'?'<strong>H₀ is true.</strong> Rejections are false positives; their frequency should fluctuate around α.':'<strong>H₁ is true.</strong> Rejections are correct detections; their frequency approximates power.';const c=$('manyCanvas'),ctx=c.getContext('2d'),W=c.width,H=c.height,cols=20,rows=10,gap=8,cell=Math.min((W-80-(cols-1)*gap)/cols,(H-70-(rows-1)*gap)/rows),startX=(W-(cols*cell+(cols-1)*gap))/2,startY=35;ctx.clearRect(0,0,W,H);vals.forEach((r,i)=>{const x=startX+(i%cols)*(cell+gap),y=startY+Math.floor(i/cols)*(cell+gap);ctx.fillStyle=r?'#b42318':'#2e7d32';ctx.beginPath();ctx.roundRect(x,y,cell,cell,4);ctx.fill()});ctx.fillStyle='#475467';ctx.font='14px Arial';ctx.textAlign='center';ctx.fillText('Red = reject H₀ · Green = do not reject H₀',W/2,H-18)}
+['manyN','manyAlpha'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='manyN')$('manyNVal').textContent=$(id).value;else $('manyAlphaVal').textContent=fmt(alphaValue($(id)),2)}));$('runMany').addEventListener('click',runMany);runMany();
+
+function updateP(){const mean=+$('pMean').value,n=+$('pN').value,sigma=+$('pSigma').value,mu0=48,se=sigma/Math.sqrt(n),z=(mean-mu0)/se,p=1-cdf(z),decision=p<=.05;$('pMeanVal').textContent=fmt(mean,1);$('pNVal').textContent=n;$('pSigmaVal').textContent=fmt(sigma,1);$('pZ').textContent=fmt(z,2);$('pValue').textContent=fmt(p,4);$('pDecision').textContent=decision?'Reject H₀':'Do not reject H₀';$('pExplain').innerHTML='<strong>Interpretation:</strong> if H₀ were true, the probability of observing a mean at least this large would be approximately '+fmt(p*100,2)+'%.';const c=$('pCanvas'),ctx=c.getContext('2d'),W=c.width,H=c.height,pad=60,base=H-60,min=mu0-5*se,max=mu0+5*se,X=x=>pad+(x-min)/(max-min)*(W-2*pad),scale=(H-110)/pdf(mu0,mu0,se);ctx.clearRect(0,0,W,H);ctx.fillStyle='rgba(239,68,68,.38)';ctx.beginPath();ctx.moveTo(X(mean),base);for(let i=0;i<=300;i++){const x=mean+(max-mean)*i/300;ctx.lineTo(X(x),base-pdf(x,mu0,se)*scale)}ctx.lineTo(X(max),base);ctx.closePath();ctx.fill();ctx.strokeStyle='#176b4d';ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=600;i++){const x=min+(max-min)*i/600,y=base-pdf(x,mu0,se)*scale;if(i===0)ctx.moveTo(X(x),y);else ctx.lineTo(X(x),y)}ctx.stroke();ctx.strokeStyle='#b42318';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(mean),40);ctx.lineTo(X(mean),base);ctx.stroke();ctx.fillStyle='#b42318';ctx.font='bold 14px Arial';ctx.textAlign='center';ctx.fillText('area = p-value',Math.min(W-115,X(mean)+110),40);ctx.fillStyle='#176b4d';ctx.fillText('H₀: μ = 48',X(mu0),base+28)}
+['pMean','pN','pSigma'].forEach(id=>$(id).addEventListener('input',updateP));updateP();
+
+const quiz=[
+{q:'When σ is unknown, which test is used for a mean?',a:['t-test with n−1 degrees of freedom','z-test with σ','Proportion test','No test'],c:0,e:'When σ is unknown, replace σ with s and use Student\'s t.'},
+{q:'What does H₀ represent?',a:['The reference situation','The probability that the test is correct','The effect size','The observed value'],c:0,e:'H₀ describes the reference scenario against which the data are assessed.'},
+{q:'Rejecting H₀ when H₀ is true is:',a:['Type I error','Type II error','Power','Correct decision'],c:0,e:'It is a false positive and its probability is α.'},
+{q:'Not rejecting H₀ when H₁ is true is:',a:['Type II error','Type I error','Power','Practical significance'],c:0,e:'It is a false negative and its probability is β.'},
+{q:'The power of a test is:',a:['1−β','1−α','α+β','The probability that H₀ is true'],c:0,e:'Power is the probability of detecting a real effect.'},
+{q:'All else being equal, as n increases:',a:['Power increases','Power decreases','α increases automatically','The effect becomes smaller'],c:0,e:'The standard error decreases and the distributions overlap less.'},
+{q:'If we do not reject H₀, can we say that H₀ is true?',a:['No, there is simply insufficient evidence to reject it','Yes, always','Yes, if the p-value is large','Only when n is small'],c:0,e:'Failure to reject is not proof that H₀ is true.'},
+{q:'The p-value is:',a:['The probability, under H₀, of observing a result this extreme or more extreme','The probability that H₀ is true','The effect size','The power of the test'],c:0,e:'It is a probability calculated using H₀ as the reference.'},
+{q:'In a test for a proportion, the standard error under H₀ is:',a:['√[p₀(1−p₀)/n]','s/√n','σ/√n','√[p̂(1−p̂)]'],c:0,e:'In a test for a proportion, variability is calculated under H₀: SE = √[p₀(1−p₀)/n].'},
+{q:'Is a statistically significant result necessarily important in substantive terms?',a:['No, practical relevance must also be considered','Yes, because p&lt;0.05','Yes, if n is large','No, because tests are not useful'],c:0,e:'Statistical significance does not replace policy, legal, and economic assessment.'}
+];let qi=0,score=0,answered=false;function renderQuiz(){answered=false;$('quizNext').style.display='none';$('quizRestart').style.display='none';$('quizFeedback').className='feedback';$('quizCount').textContent='Question '+(qi+1)+' of '+quiz.length;$('quizProgress').style.width=(qi/quiz.length*100)+'%';const item=quiz[qi];$('quizBox').innerHTML='<h3>'+item.q+'</h3>'+item.a.map((x,i)=>'<button class="choice" data-i="'+i+'">'+x+'</button>').join('');document.querySelectorAll('#quizBox .choice').forEach(b=>b.addEventListener('click',()=>answerQuiz(+b.dataset.i)))}function answerQuiz(i){if(answered)return;answered=true;const item=quiz[qi],buttons=[...document.querySelectorAll('#quizBox .choice')];buttons[item.c].classList.add('correct');if(i!==item.c)buttons[i].classList.add('wrong');else score++;$('quizFeedback').textContent=(i===item.c?'Correct. ':'Incorrect. ')+item.e;$('quizFeedback').className='feedback show '+(i===item.c?'ok':'err');$('quizNext').style.display='inline-block'}$('quizNext').addEventListener('click',()=>{qi++;if(qi<quiz.length)renderQuiz();else{$('quizProgress').style.width='100%';$('quizCount').textContent='Check completed';$('quizBox').innerHTML='<h3>Result: '+score+' / '+quiz.length+'</h3><p>'+(score>=8?'Excellent: you distinguish errors, power, and significance.':'Review especially the decision matrix, power, and the interpretation of the p-value.')+'</p>';$('quizFeedback').className='feedback';$('quizNext').style.display='none';$('quizRestart').style.display='inline-block'}});$('quizRestart').addEventListener('click',()=>{qi=0;score=0;renderQuiz()});renderQuiz();
+})();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "When σ is unknown, which test is used for a mean?", "options": ["t-test with n−1 degrees of freedom", "z-test with σ", "Proportion test", "No test"], "correct": 0, "explanation": "When σ is unknown, replace σ with s and use Student's t."}, {"question": "What does H₀ represent?", "options": ["The reference situation", "The probability that the test is correct", "The effect size", "The observed value"], "correct": 0, "explanation": "H₀ describes the reference scenario against which the data are assessed."}, {"question": "Rejecting H₀ when H₀ is true is:", "options": ["Type I error", "Type II error", "Power", "Correct decision"], "correct": 0, "explanation": "It is a false positive and its probability is α."}, {"question": "Not rejecting H₀ when H₁ is true is:", "options": ["Type II error", "Type I error", "Power", "Practical significance"], "correct": 0, "explanation": "It is a false negative and its probability is β."}, {"question": "The power of a test is:", "options": ["1−β", "1−α", "α+β", "The probability that H₀ is true"], "correct": 0, "explanation": "Power is the probability of detecting a real effect."}, {"question": "All else being equal, as n increases:", "options": ["Power increases", "Power decreases", "α increases automatically", "The effect becomes smaller"], "correct": 0, "explanation": "The standard error decreases and the distributions overlap less."}, {"question": "If we do not reject H₀, can we say that H₀ is true?", "options": ["No, there is simply insufficient evidence to reject it", "Yes, always", "Yes, if the p-value is large", "Only when n is small"], "correct": 0, "explanation": "Failure to reject is not proof that H₀ is true."}, {"question": "The p-value is:", "options": ["The probability, under H₀, of observing a result this extreme or more extreme", "The probability that H₀ is true", "The effect size", "The power of the test"], "correct": 0, "explanation": "It is a probability calculated using H₀ as the reference."}, {"question": "In a test for a proportion, the standard error under H₀ is:", "options": ["√[p₀(1−p₀)/n]", "s/√n", "σ/√n", "√[p̂(1−p̂)]"], "correct": 0, "explanation": "In a test for a proportion, variability is calculated under H₀: SE = √[p₀(1−p₀)/n]."}, {"question": "Is a statistically significant result necessarily important in substantive terms?", "options": ["No, practical relevance must also be considered", "Yes, because p&lt;0.05", "Yes, if n is large", "No, because tests are not useful"], "correct": 0, "explanation": "Statistical significance does not replace policy, legal, and economic assessment."}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("s9");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body>
+</html>

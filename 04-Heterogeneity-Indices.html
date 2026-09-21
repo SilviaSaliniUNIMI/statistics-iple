@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heterogeneity Indices | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{
+  --blue:#176b4d; --blue2:#2e8b57; --light:#eaf7f0; --ink:#222; --muted:#667085;
+  --orange:#c4681a; --orange2:#fff4e8; --green:#2e7d32; --red:#c0392b; --purple:#6d5bd0;
+  --line:#dde4ee; --soft:#f4f7fb; --card:#ffffff; --teal:#147d8d;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;font-size:16px;color:var(--ink)}
+.wrap{max-width:1080px;margin:30px auto;padding:0 16px 54px}
+.header{border-radius:10px 10px 0 0;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;padding:54px 24px 42px;text-align:center;box-shadow:0 6px 18px rgba(23,107,77,.13)}
+.header .kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-bottom:12px;font-weight:700}
+.header h1{font-size:29px;line-height:1.22;margin:0 0 10px;font-weight:800}
+.header p{font-size:18px;line-height:1.5;margin:0;opacity:.95}
+.meta-row{background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);padding:12px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;color:#43536a;font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #cdd9e8;background:#f4fbf7;border-radius:999px;padding:7px 12px;font-weight:700;color:var(--blue)}
+.tabbar{background:#fff;border:1px solid var(--line);border-top:none;display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:2px solid var(--blue)}
+.tabbar::-webkit-scrollbar{display:none}.tab{cursor:pointer;padding:12px 9px;font-size:12.5px;font-weight:700;white-space:nowrap;border:0;border-right:1px solid var(--line);flex:1;text-align:center;color:#697386;background:#fff;border-bottom:3px solid transparent;min-width:130px;transition:.18s}
+.tab:hover{background:#f4fbf7;color:var(--blue)}.tab.active{color:var(--blue);background:var(--light);border-bottom:3px solid var(--blue);margin-bottom:-2px}
+.content{background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;padding:32px 30px;min-height:580px;box-shadow:0 12px 30px rgba(23,39,64,.08)}
+.section{display:none}.section.active{display:block}
+.card-blue{background:var(--blue);color:#fff;padding:21px;border-radius:10px;margin-bottom:22px}.card-blue h2{margin:0 0 10px;font-size:20px}.card-blue p{margin:0;line-height:1.75}
+.card-intro{background:var(--light);border:1px solid var(--blue);border-radius:10px;padding:20px;margin-bottom:22px}.card-intro h2{font-size:20px;color:var(--blue);margin:0 0 10px}.card-intro p{margin:0;line-height:1.75}
+.card{background:#fff;border:1px solid #e7eaf0;border-radius:13px;margin-bottom:22px;overflow:hidden}.card-head{padding:15px 20px;font-weight:800;font-size:18px}.card-head.light{background:var(--light);color:var(--blue)}.card-head.dark{background:var(--blue);color:#fff}.card-body{padding:20px 22px;line-height:1.75}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:820px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.content{padding:24px 17px}.header{padding:40px 18px 34px}.tab{min-width:150px}.wrap{margin-top:14px}}
+.mini-card{background:#f4fbf7;border:1px solid #d8e6f5;border-radius:10px;padding:16px;line-height:1.65}.mini-card strong{color:var(--blue)}
+.box-orange{background:var(--orange2);border:2px solid var(--orange);border-radius:13px;padding:20px;margin-bottom:22px}.box-orange h3{font-size:18px;margin:0 0 12px;color:#a85d00}
+.tip{background:#f2faf6;border-left:5px solid var(--blue);padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;line-height:1.7}.warn{background:#fff3e0;border-left:5px solid var(--orange);padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;line-height:1.7}.okbox{background:#eef8ef;border-left:5px solid var(--green);padding:14px 16px;border-radius:0 10px 10px 0;margin:14px 0;line-height:1.7}
+.formula{background:#eef8f3;border:1px solid #c3d9f7;border-radius:10px;padding:14px 16px;text-align:center;color:var(--blue);font-weight:800;margin:14px 0;line-height:1.8}
+.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:13px;padding:18px;margin-bottom:18px}.control{margin:0 0 16px}.control:last-child{margin-bottom:0}.control label{display:block;font-weight:800;margin-bottom:7px;color:#4a4a4a}.value{color:#a85d00;font-weight:800}
+input[type=range]{width:100%;accent-color:var(--orange);cursor:pointer} input[type=text],input[type=number],select,textarea{font-family:inherit;font-size:15px;border:1.5px solid #cbd5e1;border-radius:8px;padding:10px 12px;background:#fff;width:100%} textarea{min-height:120px;resize:vertical;line-height:1.55}
+.btn-row{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap}.btn-group{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:11px 21px;border-radius:9px;border:none;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:.15s}.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#e0e8f4;color:var(--blue)}.btn.orange{background:var(--orange);color:#fff}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+.canvas-card{background:#fafafa;border:1px solid #e5e7eb;border-radius:12px;padding:18px;margin-bottom:20px;overflow:hidden}.canvas-card h4{margin:0 0 12px;font-size:16px}.chart{width:100%;height:auto;border:1px solid #ddd;border-radius:8px;background:#fff;display:block}
+.readout{background:#f4fbf7;border:1px solid #d3e2f2;border-radius:10px;padding:13px 16px;margin-top:12px;font-size:14px;line-height:1.7;color:#344054}.readout strong{color:var(--blue)}
+.table-wrap{overflow-x:auto}.data{width:100%;border-collapse:collapse;font-size:14px}.data th,.data td{padding:10px 12px;border:1px solid #e5e7eb;text-align:center}.data th{background:var(--light);color:var(--blue)}.data td.left,.data th.left{text-align:left}.data tr.highlight{background:#fff9f0}.data tr.good{background:#eef8ef}.data input{min-width:78px;text-align:right;padding:8px}
+.quiz-option{display:block;width:100%;text-align:left;margin:8px 0;padding:12px 14px;border:2px solid #e2e8f0;border-radius:10px;background:#fff;cursor:pointer;font-size:15px;line-height:1.5;transition:.15s}.quiz-option:hover{background:#f7fbff;border-color:#bdd7f2}.quiz-option.correct{border-color:var(--green);background:#e8f5e9}.quiz-option.wrong{border-color:var(--red);background:#ffebee}
+.feedback{display:none;margin-top:10px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.65}.feedback.ok{display:block;background:#e8f5e9;border:1px solid var(--green);color:#1b5e20}.feedback.err{display:block;background:#ffebee;border:1px solid var(--red);color:#8a1f16}.feedback.info{display:block;background:#eef8f3;border:1px solid #c3d9f7;color:#123c69}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.kpi{background:#f4fbf7;border:1px solid #d8e6f5;border-radius:11px;padding:13px;text-align:center}.kpi .n{font-size:21px;font-weight:900;color:var(--blue)}.kpi .l{font-size:12px;color:#667085;margin-top:4px}@media(max-width:700px){.kpi-row{grid-template-columns:1fr 1fr}}
+.gauge{height:18px;background:#edf2f7;border-radius:999px;overflow:hidden;margin:10px 0}.gauge>div{height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--green));transition:.25s}.badge{display:inline-block;border-radius:999px;padding:5px 10px;background:#eef8f3;color:var(--blue);font-size:12px;font-weight:800;margin:2px}.source-card{border:1px solid #d7e4f1;background:#fbfdff;border-radius:12px;padding:16px}.source-card a{color:var(--blue);font-weight:800;text-decoration:none}.source-card a:hover{text-decoration:underline}
+.app-card{border:1px solid #e3e8ef;border-radius:12px;padding:18px;background:#fff;line-height:1.65}.app-card h3{margin:0 0 8px;color:var(--blue);font-size:18px}.app-card .icon{font-size:28px;margin-bottom:8px}.small{font-size:13px;color:#667085;line-height:1.6}.center{text-align:center}.hidden{display:none!important}.section-number{display:inline-block;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:8px}
+footer{font-size:12px;color:#667085;text-align:center;margin-top:20px}
+
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"],["$","$"]],displayMath:[["\\[","\\]"]]}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<div class="header">
+<div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div>
+<h1>Heterogeneity Indices</h1>
+<p>Gini and Shannon: measuring how concentrated a categorical distribution is in a few categories or how diversified it is across many categories.</p>
+</div>
+<div class="meta-row">
+<span class="pill">Editable table</span>
+<span class="pill">Applied scenarios</span>
+<span class="pill">Final quiz</span>
+</div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Understanding heterogeneity</button><button class="iple-group-tab" data-iple-group="1" type="button">Indices and origins</button><button class="iple-group-tab" data-iple-group="2" type="button">Interactive exploration</button><button class="iple-group-tab" data-iple-group="3" type="button">Applications</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><div class="tabbar iple-original-tabs" id="tabbar">
+<button class="tab active" data-tab="1">1 · What it is</button>
+<button class="tab" data-tab="2">2 · Gini and Shannon</button>
+<button class="tab" data-tab="3">3 · History</button>
+<button class="tab" data-tab="4">4 · Simulator</button>
+<button class="tab" data-tab="5">5 · Experiments</button>
+<button class="tab" data-tab="6">6 · Applications</button>
+<button class="tab" data-tab="7">7 · Applied case</button>
+<button class="tab" data-tab="8">8 · Quiz</button>
+<button class="tab" data-tab="exam-prep">Preparing for the exam</button></div>
+<div class="content">
+<section class="section active" data-iple-group="0" id="tab1">
+<div class="card-blue"><h2>Variability exists even without numbers</h2><p>For a qualitative variable, we cannot calculate distances between categories. We can, however, observe how units are distributed among them. If all units belong to the same category, the distribution is homogeneous; if they are evenly distributed, it is heterogeneous.</p></div>
+<div class="card-intro"><span class="section-number">Section 1</span><h2>Three political systems, one hundred seats, three distributions</h2><p>Imagine that 100 parliamentary seats are distributed across five political parties. The total is always the same, but the composition changes radically.</p></div>
+<div class="table-wrap"><table class="data"><thead><tr><th>Scenario</th><th>Party A</th><th>Party B</th><th>Party C</th><th>Party D</th><th>Party E</th></tr></thead><tbody><tr><td class="left"><strong>Concentrated</strong></td><td>100</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td class="left"><strong>Intermediate</strong></td><td>50</td><td>25</td><td>15</td><td>10</td><td>0</td></tr><tr class="good"><td class="left"><strong>Balanced</strong></td><td>20</td><td>20</td><td>20</td><td>20</td><td>20</td></tr></tbody></table></div>
+<div class="grid3" style="margin-top:18px">
+<div class="mini-card"><strong>Minimum heterogeneity</strong><br/>A single category contains all units.</div>
+<div class="mini-card"><strong>Intermediate heterogeneity</strong><br/>Several categories are present, but some dominate.</div>
+<div class="mini-card"><strong>Maximum heterogeneity</strong><br/>The relative frequencies are all equal to \(1/k\).</div>
+</div>
+<div class="box-orange"><h3>Initial prediction</h3><p>Which scenario should have an index equal to 0? Which should reach the maximum? Keep your answer in mind and check it in the following sections.</p></div>
+<div class="tip"><strong>Key idea.</strong> Heterogeneity does not depend on the names of the categories, but on how frequencies are distributed among them.</div>
+<div class="btn-row iple-old-section-nav"><span></span><button class="btn primary" data-to="2">Discover the indices →</button></div>
+</section>
+<section class="section" data-iple-group="0" id="tab2">
+<div class="card-intro"><span class="section-number">Section 2</span><h2>Two ways of measuring diversity</h2><p>The Gini and Shannon indices operate on relative frequencies \(f_i\). Both equal 0 when one category contains the entire distribution and reach their maximum when the categories are equally likely.</p></div>
+<div class="grid2">
+<div class="card"><div class="card-head light">Gini heterogeneity index</div><div class="card-body">
+<div class="formula">\[H_G=1-\sum_{i=1}^{k}f_i^2\]</div>
+<p>The sum of squares increases when a few categories dominate. Subtracting it from 1 gives a measure of differences among categories.</p>
+<p><strong>Minimum:</strong> 0. <strong>Maximum:</strong> \((k-1)/k\).</p>
+<div class="formula">\[H_{G,norm}=\frac{H_G}{(k-1)/k}\]</div>
+</div></div>
+<div class="card"><div class="card-head light">Shannon index or entropy</div><div class="card-body">
+<div class="formula">\[H_S=-\sum_{i=1}^{k}f_i\log(f_i)\]</div>
+<p>It measures the uncertainty associated with the category of a randomly selected unit. If all categories are equally likely, uncertainty is at its maximum.</p>
+<p><strong>Minimum:</strong> 0. <strong>Maximum:</strong> \(\log(k)\).</p>
+<div class="formula">\[H_{S,norm}=\frac{-\sum f_i\log(f_i)}{\log(k)}\]</div>
+</div></div>
+</div>
+<div class="warn"><strong>The logarithm base.</strong> The raw Shannon value changes when using the natural logarithm, base 2, or base 10. The normalised index does not change, provided the numerator and denominator use the same base.</div>
+<div class="card"><div class="card-head dark">Why normalise?</div><div class="card-body"><p>The theoretical maximum depends on the number of categories. With 2 categories, the raw Gini index can reach only 0.5; with 5 categories, it reaches 0.8. Normalisation places both indices on the 0–1 interval and facilitates comparison.</p>
+<div class="table-wrap"><table class="data"><thead><tr><th>Number of categories</th><th>Maximum raw Gini</th><th>Maximum raw Shannon</th><th>Normalised maximum</th></tr></thead><tbody><tr><td>2</td><td>0,500</td><td>log(2)</td><td>1</td></tr><tr><td>5</td><td>0,800</td><td>log(5)</td><td>1</td></tr><tr><td>10</td><td>0,900</td><td>log(10)</td><td>1</td></tr></tbody></table></div></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="1">← Back</button><button class="btn primary" data-to="3">Meet the authors →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="tab3">
+<div class="card-intro"><span class="section-number">Section 3</span><h2>Corrado Gini, Claude Shannon, and the history of the indices</h2><p>The two indices originated in different scientific contexts: statistics of variability and mutability on the one hand, and the mathematical theory of communication on the other.</p></div>
+<div class="grid2">
+<div class="card"><div class="card-head light">Corrado Gini (1884–1965)</div><div class="card-body">
+<p>An Italian statistician, demographer, and sociologist, born in <strong>Motta di Livenza</strong>, in the Treviso area. He studied variability, mutability, and concentration, making a decisive contribution to the development of summary indices for describing distributions.</p>
+<p><strong>Key works:</strong></p>
+<p><em>Variability and Mutability</em> (1912)<br/><em>On the Measurement of Concentration and Variability of Characteristics</em> (1914)</p>
+</div></div>
+<div class="card"><div class="card-head light">Claude E. Shannon (1916–2001)</div><div class="card-body">
+<p>An American mathematician and engineer, regarded as the founder of information theory. In 1948 he published <em>A Mathematical Theory of Communication</em>, showing that information and uncertainty could be quantified.</p>
+<p>Shannon entropy is now used far beyond telecommunications: in ecology, linguistics, computer science, machine learning, network analysis, and many other fields.</p>
+</div></div>
+</div>
+<div class="source-card">
+<strong>StatisticAll – Festival of Statistics and Demography.</strong><br/>
+    For more than ten years, Treviso has hosted a festival devoted to the public communication of statistics, demography, and data culture. The event is jointly organised by the <strong>Association Corrado Gini</strong>, by the <strong>Italian Statistical Society (SIS)</strong> and the <strong>Italian National Institute of Statistics (ISTAT)</strong>. Its location in Treviso recalls the connection with the area where Corrado Gini was born.
+  </div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="2">← Back</button><button class="btn primary" data-to="4">Open the simulator →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="tab4">
+<div class="card-intro"><span class="section-number">Section 4</span><h2>Simulator: modify the frequencies</h2><p>Enter the absolute frequencies in the table. The total, relative frequencies, contributions to the two indices, charts, and normalised indices are updated automatically.</p></div>
+<div class="controls">
+<div class="control"><label>Preset scenario</label><select id="scenarioSelect"><option value="balanced">Maximum heterogeneity: 20, 20, 20, 20, 20</option><option value="concentrated">Minimum heterogeneity: 100, 0, 0, 0, 0</option><option value="dominant">One dominant category: 70, 10, 10, 5, 5</option><option value="gradual">Gradual distribution: 40, 25, 15, 12, 8</option><option value="two">Two equal categories: 50, 50, 0, 0, 0</option><option value="rare">Rare category: 49, 25, 25, 1, 0</option><option value="random">Generate random distribution</option></select></div>
+<div class="btn-group"><button class="btn secondary" id="applyScenario">Apply scenario</button><button class="btn orange" id="equalize">Make equal</button><button class="btn ghost" id="resetSim">Reset</button></div>
+</div>
+<div class="grid2">
+<div>
+<div class="table-wrap"><table class="data" id="simTable"><thead><tr><th>Category</th><th>nᵢ</th><th>fᵢ</th><th>fᵢ²</th><th>−fᵢ log(fᵢ)</th></tr></thead><tbody></tbody><tfoot><tr class="highlight"><th>Total</th><th id="sumN">—</th><th id="sumF">—</th><th id="sumSq">—</th><th id="sumSh">—</th></tr></tfoot></table></div>
+</div>
+<div class="canvas-card"><h4>Distribution of relative frequencies</h4><canvas class="chart" height="390" id="simCanvas" width="500"></canvas></div>
+</div>
+<div class="kpi-row"><div class="kpi"><div class="n" id="gRaw">—</div><div class="l">Raw Gini</div></div><div class="kpi"><div class="n" id="gNorm">—</div><div class="l">Normalised Gini</div></div><div class="kpi"><div class="n" id="sRaw">—</div><div class="l">Raw Shannon</div></div><div class="kpi"><div class="n" id="sNorm">—</div><div class="l">Normalised Shannon</div></div></div>
+<div class="grid2"><div><strong>Normalised Gini</strong><div class="gauge"><div id="gGauge"></div></div></div><div><strong>Normalised Shannon</strong><div class="gauge"><div id="sGauge"></div></div></div></div>
+<div class="readout" id="simReadout"></div>
+<div class="tip"><strong>Try it.</strong> Increase one category and reduce the others. Then distribute the same units more evenly. Observe how both indices respond.</div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="3">← Back</button><button class="btn primary" data-to="5">Run the experiments →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="tab5">
+<div class="card-intro"><span class="section-number">Section 5</span><h2>Guided experiments</h2><p>The indices increase when units are distributed more evenly. However, Gini and Shannon do not respond identically to every change.</p></div>
+<div class="card"><div class="card-head dark">Experiment A · Move cases from the dominant category</div><div class="card-body">
+<p>Starting point: 80, 5, 5, 5, 5. Progressively move units from the first category to the other four.</p>
+<div class="controls"><div class="control"><label>Units transferred from category A: <span class="value" id="transferVal">0</span></label><input id="transferSlider" max="60" min="0" step="4" type="range" value="0"/></div></div>
+<div class="table-wrap"><table class="data"><thead><tr><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>Gini norm.</th><th>Shannon norm.</th></tr></thead><tbody><tr><td id="ta">80</td><td id="tb">5</td><td id="tc">5</td><td id="td">5</td><td id="te">5</td><td id="tg">—</td><td id="ts">—</td></tr></tbody></table></div>
+</div></div>
+<div class="grid2">
+<div class="card"><div class="card-head light">Experiment B · Split a category</div><div class="card-body"><p>Compare 50, 30, 20 with 50, 30, 10, 10. No units have been added: the classification has changed.</p><div class="readout" id="splitResult"></div><div class="warn">The measure also depends on how categories are defined. A more detailed classification may increase the observed heterogeneity.</div></div></div>
+<div class="card"><div class="card-head light">Experiment C · Add a rare category</div><div class="card-body"><p>Compare 50, 25, 25 with 49, 25, 25, 1. Shannon tends to register the appearance of rare categories with particular sensitivity.</p><div class="readout" id="rareResult"></div></div></div>
+</div>
+<div class="card"><div class="card-head light">Gini and Shannon: same ranking, different sensitivity</div><div class="card-body"><div class="table-wrap"><table class="data"><thead><tr><th>Index</th><th>Mechanism</th><th>Intuitive interpretation</th></tr></thead><tbody><tr><td>Gini</td><td>Squared frequencies</td><td>Responds strongly to the dominance of larger categories.</td></tr><tr><td>Shannon</td><td>Terms −f log(f)</td><td>Also registers the presence and rarity of small categories.</td></tr><tr><td>Both</td><td>Entire distribution</td><td>Minimum with one category; maximum with equal frequencies.</td></tr></tbody></table></div></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="4">← Back</button><button class="btn primary" data-to="6">Discover the applications →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="tab6">
+<div class="card-intro"><span class="section-number">Section 6</span><h2>Where are heterogeneity indices used?</h2><p>The same mathematical idea—describing how much variety and balance exist among categories—recurs in very different disciplines.</p></div>
+<div class="grid3">
+<div class="app-card"><div class="icon">🌿</div><h3>Politics</h3><p>Party-system fragmentation, coalition diversity, and balance among parliamentary groups.</p></div>
+<div class="app-card"><div class="icon">🛒</div><h3>Law</h3><p>Distribution of case types, judicial outcomes, and legal remedies across categories.</p></div>
+<div class="app-card"><div class="icon">👥</div><h3>Economics</h3><p>Export diversification, sectoral composition, and concentration of economic activity.</p></div>
+<div class="app-card"><div class="icon">🏭</div><h3>Public administration</h3><p>Distribution of expenditure, service requests, or policy instruments across categories.</p></div>
+<div class="app-card"><div class="icon">🌳</div><h3>Machine learning</h3><p>Gini impurity and entropy are criteria used in classification trees to make nodes more “pure”.</p></div>
+<div class="app-card"><div class="icon">💬</div><h3>Linguistics and information</h3><p>Lexical variety, distribution of symbols, predictability of sequences, and message compression.</p></div>
+</div>
+<div class="warn"><strong>An index describes; it does not judge.</strong> High heterogeneity in a party system does not automatically imply representation, stability, or democratic quality. Additional questions, indicators, and information are required.</div>
+<div class="card"><div class="card-head dark">A note on measures of concentration</div><div class="card-body"><p>Corrado Gini also developed measures of concentration for transferable quantities, such as income and wealth, which are now often associated with the Lorenz curve. They are not the same as the categorical index studied here and are mentioned only briefly.</p></div></div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="5">← Back</button><button class="btn primary" data-to="7">Tackle the Applied case →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="tab7">
+<div class="card-intro"><span class="section-number">Section 7</span><h2>You are a political-system analyst</h2><p>Three countries allocate parliamentary seats among four parties. The percentages represent seat shares. Which party system is the most fragmented? Which is most exposed to domination by a single party?</p></div>
+<div class="table-wrap"><table class="data"><thead><tr><th>Country</th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>Gini norm.</th><th>Shannon norm.</th></tr></thead><tbody id="companyRows"></tbody></table></div>
+<div class="grid2" style="margin-top:18px">
+<div class="canvas-card"><h4>Seat shares</h4><canvas class="chart" height="390" id="companyCanvas" width="500"></canvas></div>
+<div>
+<div class="controls"><div class="control"><label>Country displayed</label><select id="companySelect"><option value="Country A">Country A</option><option value="Country B">Country B</option><option value="Country C">Country C</option></select></div></div>
+<div class="readout" id="companyReadout"></div>
+<div class="box-orange"><h3>Task</h3><p>Write a 120–180-word note. Identify the most fragmented and the most concentrated party system, state what additional institutional information you would request, and explain why a high heterogeneity index alone does not imply effective political representation.</p></div>
+<textarea id="companyComment" placeholder="Write your recommendation here..."></textarea>
+<div class="btn-group" style="margin-top:10px"><button class="btn secondary" id="copyComment">Copy text</button><button class="btn ghost" id="downloadComment">Download .txt</button></div>
+<div class="feedback" id="commentFb"></div>
+</div>
+</div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="6">← Back</button><button class="btn primary" data-to="8">Go to the quiz →</button></div>
+</section>
+<section class="section" data-iple-group="4" id="tab8">
+<div class="card-intro"><span class="section-number">Section 8</span><h2>Final quiz</h2><p>Answer the questions. The feedback explains the reasoning, not merely the correct answer.</p></div>
+<div id="quiz"></div>
+<div class="kpi-row"><div class="kpi"><div class="n" id="quizScore">0/8</div><div class="l">Correct answers</div></div><div class="kpi"><div class="n" id="quizDone">0</div><div class="l">Questions completed</div></div><div class="kpi"><div class="n" id="quizPerc">0%</div><div class="l">Score</div></div><div class="kpi"><div class="n" id="quizLevel">—</div><div class="l">Level</div></div></div>
+<div class="tip"><strong>Final message.</strong> Two distributions may have the same number of categories but very different levels of heterogeneity. Both the number of categories present and how frequencies are distributed matter.</div>
+<div class="btn-row iple-old-section-nav"><button class="btn secondary" data-to="7">← Back</button><button class="btn primary" data-to="1">Start again from the beginning</button></div>
+</section>
+<section class="section" data-iple-group="5" id="tabexam-prep"><div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>This final section contains two short worked examples followed by a 4-point practice question in the style of the IPLE written examination.</p></div>
+<div class="exam-worked-wrap"><h3>Two short worked examples</h3><p>Read the question, identify the required method, and then follow the calculation and interpretation.</p><div class="exam-worked-grid"><article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>Gini–Simpson heterogeneity</h3><p><strong>Question.</strong> Three political affiliations have relative frequencies 0.50, 0.30, and 0.20. Calculate 1 − Σp².</p><div class="exam-answer"><strong>Solution.</strong> 1 − (0.50² + 0.30² + 0.20²) = 1 − 0.38 = 0.62. The index is the probability that two randomly selected individuals belong to different categories.</div></article><article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Same mode, different diversity</h3><p><strong>Question.</strong> Distribution A is (0.60, 0.20, 0.20) and distribution B is (0.60, 0.39, 0.01). They have the same modal category. Are they equally heterogeneous?</p><div class="exam-answer"><strong>Solution.</strong> No. A spreads the remaining 40% evenly, whereas B concentrates almost all of it in one category. A therefore has greater categorical heterogeneity even though the mode and its frequency are the same.</div></article></div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">Heterogeneity of a categorical distribution</div><div class="card-body"><div class="exam-prep-question">Parliamentary seats are distributed as 40%, 30%, 20%, and 10% across four parties. Calculate the Gini heterogeneity index and interpret it.</div><label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Write calculations and interpretation here before checking the solution." style="width:100%;min-height:150px;margin-top:8px"></textarea><details><summary>Show the guided solution</summary><div><p>H_G = 1 − (0.40²+0.30²+0.20²+0.10²) = 1 − 0.30 = 0.70. The distribution is fairly diversified, but it is not maximally heterogeneous: with four equally represented parties the maximum would be 0.75.</p></div></details><h3>Self-assessment rubric</h3><p>Tick only the elements that are clearly present in your answer.</p><div class="exam-rubric"><label><input class="exam-rubric-item" type="checkbox"/> Uses relative frequencies <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Squares and sums the four shares correctly <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Obtains H_G = 0.70 <strong>(1 point)</strong></label><label><input class="exam-rubric-item" type="checkbox"/> Compares the result with the maximum 0.75 <strong>(1 point)</strong></label></div><button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span></div></div></section></div>
+<footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')], sections=[...document.querySelectorAll('.section')];
+function showTab(n){tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab==n));sections.forEach(s=>s.classList.toggle('active',s.id==='tab'+n));window.scrollTo({top:0,behavior:'smooth'});if(n==4)updateSim();if(n==5)updateExperiments();if(n==7)updateCompanies();}
+tabs.forEach(t=>t.addEventListener('click',()=>showTab(t.dataset.tab)));document.querySelectorAll('[data-to]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.to)));
+function calc(vals){const positive=vals.filter(v=>v>0);const total=vals.reduce((a,b)=>a+b,0);const k=vals.length;const fs=vals.map(v=>total? v/total:0);const sq=fs.map(f=>f*f);const sh=fs.map(f=>f>0? -f*Math.log(f):0);const g=1-sq.reduce((a,b)=>a+b,0);const s=sh.reduce((a,b)=>a+b,0);const gmax=k>1?(k-1)/k:0;const smax=k>1?Math.log(k):0;return{total,k,fs,sq,sh,g,s,gn:gmax?g/gmax:0,sn:smax?s/smax:0,active:positive.length};}
+function f3(x){return Number(x).toFixed(3).replace('.',',')}
+function drawBars(canvas,vals,labels,opts={}){const c=canvas,ctx=c.getContext('2d'),W=c.width,H=c.height;ctx.clearRect(0,0,W,H);const m={l:52,r:20,t:25,b:55};const max=opts.max||Math.max(...vals,1);ctx.strokeStyle='#475467';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(m.l,m.t);ctx.lineTo(m.l,H-m.b);ctx.lineTo(W-m.r,H-m.b);ctx.stroke();ctx.font='12px Arial';ctx.fillStyle='#475467';for(let i=0;i<=5;i++){let y=H-m.b-(H-m.t-m.b)*i/5;ctx.fillText((max*i/5).toFixed(1),8,y+4);ctx.strokeStyle='#edf2f7';ctx.beginPath();ctx.moveTo(m.l,y);ctx.lineTo(W-m.r,y);ctx.stroke();}const gap=16,bw=(W-m.l-m.r-gap*(vals.length+1))/vals.length;vals.forEach((v,i)=>{const h=(H-m.t-m.b)*v/max;const x=m.l+gap+i*(bw+gap),y=H-m.b-h;ctx.fillStyle=['#2e8b57','#6d5bd0','#147d8d','#c4681a','#2e7d32'][i%5];ctx.fillRect(x,y,bw,h);ctx.fillStyle='#344054';ctx.textAlign='center';ctx.fillText(labels[i],x+bw/2,H-m.b+20);ctx.fillText((v*100).toFixed(1)+'%',x+bw/2,Math.max(m.t+12,y-6));});ctx.textAlign='left';}
+const cats=['A','B','C','D','E'];let simVals=[20,20,20,20,20];const tbody=document.querySelector('#simTable tbody');
+function buildTable(){tbody.innerHTML='';cats.forEach((c,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${c}</td><td><input type="number" min="0" step="1" data-i="${i}" value="${simVals[i]}"></td><td id="f${i}">—</td><td id="sq${i}">—</td><td id="sh${i}">—</td>`;tbody.appendChild(tr);});tbody.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{simVals[+e.target.dataset.i]=Math.max(0,+e.target.value||0);updateSim();}));}
+function updateSim(){const r=calc(simVals);r.fs.forEach((f,i)=>{document.getElementById('f'+i).textContent=f3(f);document.getElementById('sq'+i).textContent=f3(r.sq[i]);document.getElementById('sh'+i).textContent=f3(r.sh[i]);});sumN.textContent=r.total;sumF.textContent=f3(r.fs.reduce((a,b)=>a+b,0));sumSq.textContent=f3(r.sq.reduce((a,b)=>a+b,0));sumSh.textContent=f3(r.sh.reduce((a,b)=>a+b,0));gRaw.textContent=f3(r.g);gNorm.textContent=f3(r.gn);sRaw.textContent=f3(r.s);sNorm.textContent=f3(r.sn);gGauge.style.width=(r.gn*100)+'%';sGauge.style.width=(r.sn*100)+'%';drawBars(simCanvas,r.fs,cats,{max:1});let msg=r.total===0?'Enter at least one positive frequency.':r.gn<.15?'Distribution almost entirely concentrated in one category.':r.gn<.5?'Low or moderate heterogeneity: some categories dominate.':r.gn<.85?'High, but not maximum, heterogeneity.':'Very balanced distribution: heterogeneity close to the maximum.';simReadout.innerHTML=`<strong>${msg}</strong><br/>Active categories: ${r.active} out of ${r.k}. Normalisation nevertheless considers the ${r.k} categories defined in the table.`;}
+buildTable();updateSim();
+const presets={balanced:[20,20,20,20,20],concentrated:[100,0,0,0,0],dominant:[70,10,10,5,5],gradual:[40,25,15,12,8],two:[50,50,0,0,0],rare:[49,25,25,1,0]};
+function setSim(v){simVals=[...v];tbody.querySelectorAll('input').forEach((x,i)=>x.value=simVals[i]);updateSim();}
+applyScenario.onclick=()=>{const v=scenarioSelect.value==='random'?Array.from({length:5},()=>Math.floor(Math.random()*50)+1):presets[scenarioSelect.value];setSim(v)};equalize.onclick=()=>setSim([20,20,20,20,20]);resetSim.onclick=()=>{scenarioSelect.value='balanced';setSim([20,20,20,20,20]);};
+function updateExperiments(){const t=+transferSlider.value;transferVal.textContent=t;const each=t/4,v=[80-t,5+each,5+each,5+each,5+each],r=calc(v);[ta,tb,tc,td,te].forEach((el,i)=>el.textContent=f3(v[i]));tg.textContent=f3(r.gn);ts.textContent=f3(r.sn);const a=calc([50,30,20]),b=calc([50,30,10,10]);splitResult.innerHTML=`Before: normalised Gini <strong>${f3(a.gn)}</strong>, normalised Shannon <strong>${f3(a.sn)}</strong>.<br/>After splitting: normalised Gini <strong>${f3(b.gn)}</strong>, normalised Shannon <strong>${f3(b.sn)}</strong>.`;const c=calc([50,25,25]),d=calc([49,25,25,1]);rareResult.innerHTML=`Without rare category: normalised Gini <strong>${f3(c.gn)}</strong>, normalised Shannon <strong>${f3(c.sn)}</strong>.<br/>With rare category: normalised Gini <strong>${f3(d.gn)}</strong>, normalised Shannon <strong>${f3(d.sn)}</strong>.`;}
+transferSlider.oninput=updateExperiments;updateExperiments();
+const companies={'Country A':[25,25,25,25],'Country B':[60,20,15,5],'Country C':[90,5,3,2]};
+function updateCompanies(){companyRows.innerHTML='';Object.entries(companies).forEach(([n,v])=>{const r=calc(v);companyRows.innerHTML+=`<tr><td class="left"><strong>${n}</strong></td>${v.map(x=>`<td>${x}%</td>`).join('')}<td>${f3(r.gn)}</td><td>${f3(r.sn)}</td></tr>`});const n=companySelect.value,v=companies[n],r=calc(v);drawBars(companyCanvas,v.map(x=>x/100),['F1','F2','F3','F4'],{max:1});companyReadout.innerHTML=`<strong>${n}</strong>: the largest party holds ${Math.max(...v)}%. Normalised Gini = <strong>${f3(r.gn)}</strong>; normalised Shannon = <strong>${f3(r.sn)}</strong>. ${n==='Country A'?'This is the most balanced party distribution.':n==='Country C'?'It is highly concentrated in the first party.':'It has an intermediate level of fragmentation.'}`;}
+companySelect.onchange=updateCompanies;updateCompanies();
+copyComment.onclick=async()=>{try{await navigator.clipboard.writeText(companyComment.value);commentFb.className='feedback ok';commentFb.textContent='Text copied to the clipboard.';}catch(e){commentFb.className='feedback err';commentFb.textContent='Copying unavailable: select and copy manually.';}};
+downloadComment.onclick=()=>{const blob=new Blob([companyComment.value],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='party_system_heterogeneity.txt';a.click();URL.revokeObjectURL(a.href);};
+const questions=[
+ {q:'When does the Gini heterogeneity index equal 0?',a:['When all categories have the same frequency','When a single category contains all units','When there are two categories'],c:1,e:'The minimum is obtained under complete homogeneity: one relative frequency is 1 and all the others are 0.'},
+ {q:'With five categories, what is the maximum of the raw Gini index?',a:['0,5','0,8','1'],c:1,e:'The maximum is (k−1)/k = 4/5 = 0.8.'},
+ {q:'Why are the indices normalised?',a:['To remove rare categories','To compare distributions with different numbers of categories','To convert frequencies into percentages'],c:1,e:'The raw maximum depends on k; normalisation places the range on 0–1.'},
+ {q:'When does Shannon reach its maximum?',a:['When all categories are equally likely','When one category dominates','When the categories are in alphabetical order'],c:0,e:'Uncertainty is greatest when every category has probability 1/k.'},
+ {q:'What happens when one category is split into two subcategories?',a:['The indices cannot change','Observed heterogeneity may increase','The Gini index always becomes 0'],c:1,e:'The indices also depend on the granularity of the classification.'},
+ {q:'Which index tends to be particularly sensitive to the presence of rare categories?',a:['Shannon','The arithmetic mean','The range'],c:0,e:'The term −f log(f) also registers small frequencies.'},
+ {q:'Is the Gini coefficient of inequality the same as the categorical index in this activity?',a:['Yes, it is the same formula','No, they are different measures associated with the same author','Only when k=2'],c:1,e:'The concentration coefficient and the heterogeneity index answer different questions.'},
+ {q:'Does a high party-system heterogeneity index automatically demonstrate democratic quality?',a:['Yes','No: it describes the distribution, not the quality of relationships or equity','Only in large countries'],c:1,e:'A summary index must be interpreted in context and combined with other information.'}
+];
+let answers={};function renderQuiz(){quiz.innerHTML='';questions.forEach((x,i)=>{const div=document.createElement('div');div.className='card';div.innerHTML=`<div class="card-head light">Question ${i+1}</div><div class="card-body"><p><strong>${x.q}</strong></p>${x.a.map((z,j)=>`<button class="quiz-option" data-q="${i}" data-a="${j}">${z}</button>`).join('')}<div class="feedback" id="qfb${i}"></div></div>`;quiz.appendChild(div)});quiz.querySelectorAll('.quiz-option').forEach(b=>b.onclick=()=>answerQ(+b.dataset.q,+b.dataset.a,b));}
+function answerQ(q,a,btn){answers[q]=a;document.querySelectorAll(`[data-q="${q}"]`).forEach(b=>{b.disabled=true;b.classList.toggle('correct',+b.dataset.a===questions[q].c);b.classList.toggle('wrong',+b.dataset.a===a&&a!==questions[q].c)});const ok=a===questions[q].c,fb=document.getElementById('qfb'+q);fb.className='feedback '+(ok?'ok':'err');fb.innerHTML=(ok?'<strong>Correct.</strong> ':'<strong>Review this.</strong> ')+questions[q].e;const done=Object.keys(answers).length,score=Object.entries(answers).filter(([i,v])=>v===questions[i].c).length,p=Math.round(score/questions.length*100);quizScore.textContent=`${score}/${questions.length}`;quizDone.textContent=done;quizPerc.textContent=p+'%';quizLevel.textContent=p>=85?'Excellent':p>=65?'Good':p>=45?'Basic':'Review needed';}
+renderQuiz();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "When does the Gini heterogeneity index equal 0?", "options": ["When all categories have the same frequency", "When a single category contains all units", "When there are two categories"], "correct": 1, "explanation": "The minimum is obtained under complete homogeneity: one relative frequency is 1 and all the others are 0."}, {"question": "With five categories, what is the maximum of the raw Gini index?", "options": ["0,5", "0,8", "1"], "correct": 1, "explanation": "The maximum is (k−1)/k = 4/5 = 0.8."}, {"question": "Why are the indices normalised?", "options": ["To remove rare categories", "To compare distributions with different numbers of categories", "To convert frequencies into percentages"], "correct": 1, "explanation": "The raw maximum depends on k; normalisation places the range on 0–1."}, {"question": "When does Shannon reach its maximum?", "options": ["When all categories are equally likely", "When one category dominates", "When the categories are in alphabetical order"], "correct": 0, "explanation": "Uncertainty is greatest when every category has probability 1/k."}, {"question": "What happens when one category is split into two subcategories?", "options": ["The indices cannot change", "Observed heterogeneity may increase", "The Gini index always becomes 0"], "correct": 1, "explanation": "The indices also depend on the granularity of the classification."}, {"question": "Which index tends to be particularly sensitive to the presence of rare categories?", "options": ["Shannon", "The arithmetic mean", "The range"], "correct": 0, "explanation": "The term −f log(f) also registers small frequencies."}, {"question": "Is the Gini coefficient of inequality the same as the categorical index in this activity?", "options": ["Yes, it is the same formula", "No, they are different measures associated with the same author", "Only when k=2"], "correct": 1, "explanation": "The concentration coefficient and the heterogeneity index answer different questions."}, {"question": "Does a high party-system heterogeneity index automatically demonstrate democratic quality?", "options": ["Yes", "No: it describes the distribution, not the quality of relationships or equity", "Only in large countries"], "correct": 1, "explanation": "A summary index must be interpreted in context and combined with other information."}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("tab8");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script></body>
+</html>

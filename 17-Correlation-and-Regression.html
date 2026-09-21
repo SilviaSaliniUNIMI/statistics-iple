@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Correlation, Regression, and Dummy Variables | IPLE Statistics · Silvia Salini</title>
+<style>
+:root{--blue:#176b4d;--blue2:#2e8b57;--light:#eaf7f0;--ink:#20242c;--muted:#667085;--orange:#c4681a;--orange2:#fff4e8;--green:#2e7d32;--red:#b42318;--purple:#6d5bd0;--teal:#147d8d;--line:#dce5ef;--soft:#f4f7fb;--card:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--soft);font-family:Arial,"Helvetica Neue",sans-serif;color:var(--ink);font-size:16px}.wrap{max-width:1180px;margin:28px auto;padding:0 16px 55px}.header{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:12px 12px 0 0;padding:38px 24px 28px;text-align:center;box-shadow:0 7px 20px rgba(23,107,77,.16)}.header .kicker{text-transform:uppercase;letter-spacing:2px;font-size:12px;font-weight:800;opacity:.82;margin-bottom:9px}.header h1{font-size:32px;line-height:1.2;margin:0 0 7px}.header p{margin:0;font-size:18px;opacity:.95}.meta{background:#fff;border:1px solid var(--line);border-top:0;padding:11px 16px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}.pill{border:1px solid #cbd9e9;background:#f4fbf7;color:var(--blue);padding:7px 11px;border-radius:999px;font-size:14px;font-weight:800}.tabbar{display:flex;overflow-x:auto;background:#fff;border:1px solid var(--line);border-top:0;border-bottom:2px solid var(--blue);scrollbar-width:none}.tabbar::-webkit-scrollbar{display:none}.tab{border:0;border-right:1px solid var(--line);border-bottom:3px solid transparent;background:#fff;color:#697386;padding:12px 10px;min-width:128px;flex:1;font:700 12.5px Arial;cursor:pointer;white-space:nowrap}.tab:hover{background:#f4fbf7;color:var(--blue)}.tab.active{background:var(--light);color:var(--blue);border-bottom-color:var(--blue);margin-bottom:-2px}.content{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;padding:27px 30px;box-shadow:0 12px 28px rgba(23,39,64,.08)}.section{display:none}.section.active{display:block}.intro{background:var(--blue);color:#fff;border-radius:11px;padding:19px 22px;margin-bottom:20px}.intro h2{margin:0 0 7px;font-size:22px}.intro p{margin:0;line-height:1.65}.card{background:#fff;border:1px solid #e3e8ef;border-radius:12px;margin-bottom:20px;overflow:hidden}.card-head{padding:14px 19px;font-size:18px;font-weight:800}.card-head.light{background:var(--light);color:var(--blue)}.card-head.dark{background:var(--blue);color:#fff}.card-head.orange{background:var(--orange2);color:#8b4707}.card-body{padding:19px 21px;line-height:1.68}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:18px}.mini{background:#fff;border:1px solid #e3e8ef;border-radius:12px;padding:16px;line-height:1.58}.mini strong{color:var(--blue)}.question{background:var(--orange2);border:2px solid var(--orange);border-radius:12px;padding:18px;margin-bottom:20px}.question h3{color:#8e4c00;margin:0 0 8px}.formula{background:#eef8f3;border:1px solid #b8dac9;border-radius:10px;padding:14px 16px;text-align:center;color:var(--blue);font-weight:800;font-size:18px;line-height:1.8;margin:13px 0}.tip,.warn,.okbox{padding:13px 15px;border-radius:0 9px 9px 0;margin:13px 0;line-height:1.62}.tip{background:#f2faf6;border-left:5px solid var(--blue)}.warn{background:#fff4e5;border-left:5px solid var(--orange)}.okbox{background:#eef8ef;border-left:5px solid var(--green)}.btn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}.btn{border:0;border-radius:8px;padding:10px 17px;font:800 14px Arial;cursor:pointer;transition:.15s}.btn:hover{transform:translateY(-1px)}.btn.primary{background:var(--blue);color:#fff}.btn.secondary{background:#eaf2fb;color:var(--blue)}.btn.orange{background:var(--orange);color:#fff}.btn.active{box-shadow:0 0 0 3px rgba(23,107,77,.18)}.choice{display:block;width:100%;text-align:left;border:1px solid #d6dee8;background:#fff;border-radius:9px;padding:11px 13px;margin:9px 0;cursor:pointer;font:700 15px Arial;color:#344054}.choice:hover{background:#f6faff;border-color:#9ebfe4}.choice.correct{background:#eaf7ec;border-color:#6ab375;color:#1f6a29}.choice.wrong{background:#fff0ef;border-color:#df8078;color:#92231c}.feedback{display:none;padding:12px 14px;border-radius:8px;margin-top:12px}.feedback.show{display:block}.feedback.ok{background:#eef8ef;border:1px solid #b9dfbf;color:#1f6a29}.feedback.err{background:#fff0ef;border:1px solid #f3c3bf;color:#8e2018}.section-nav{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:17px;border-top:1px solid var(--line)}.controls{background:#fff9f0;border:2px solid var(--orange);border-radius:12px;padding:17px}.control{margin:12px 0}.control label{display:flex;justify-content:space-between;font-weight:800;color:#344054;margin-bottom:7px}.control input[type=range]{width:100%;accent-color:var(--orange)}select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-weight:700;color:#344054}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:11px;margin:14px 0}.kpi{background:#f4fbf7;border:1px solid #dce9f7;border-radius:10px;padding:12px;text-align:center}.kpi span{display:block;color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}.kpi b{display:block;color:var(--blue);font-size:20px;margin-top:5px}.canvas-wrap{background:#fff;border:1px solid #dfe6ee;border-radius:12px;padding:10px;overflow:hidden}.canvas-wrap canvas{width:100%;height:auto;display:block}.legend{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;font-size:13px;color:#475467;margin-top:8px}.dot{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}.toggle{display:flex;gap:8px;flex-wrap:wrap}.toggle button{border:1.5px solid #c7d2df;background:#fff;color:var(--blue);padding:9px 13px;border-radius:999px;font-weight:800;cursor:pointer}.toggle button.active{background:var(--blue);color:#fff;border-color:var(--blue)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:center}th{background:#f3f7fb;color:var(--blue)}.small{font-size:13px;color:var(--muted)}.progress{height:9px;background:#e5eaf0;border-radius:99px;overflow:hidden;margin:10px 0 18px}.progress>div{height:100%;width:0;background:var(--blue);transition:.25s}.checklist label{display:block;padding:10px 0;border-bottom:1px solid #e7edf4}.checklist input{margin-right:9px}@media(max-width:850px){.grid2,.grid3,.hero-grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.content{padding:20px 16px}.header h1{font-size:27px}.tab{min-width:145px}}
+.software{background:#0d1724;color:#eef5ff;border-radius:10px;padding:16px;overflow:auto;font-family:"Courier New",monospace;font-size:14px;line-height:1.5}.software table{color:#eef5ff;min-width:720px}.software th,.software td{border-bottom:1px solid #334155;background:transparent;color:#eef5ff;text-align:right}.software th:first-child,.software td:first-child{text-align:left}.assumption-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.assumption{border:1px solid #dce5ef;border-radius:10px;padding:14px;background:#fbfdff}.assumption strong{color:var(--blue)}@media(max-width:850px){.assumption-grid{grid-template-columns:1fr}}.ci-scale{position:relative;height:66px;margin:16px 8px 6px}.ci-axis{position:absolute;left:0;right:0;top:30px;height:2px;background:#aab7c6}.ci-zero{position:absolute;left:12%;top:12px;width:3px;height:38px;background:var(--red)}.ci-segment{position:absolute;left:38%;width:45%;top:24px;height:14px;border-radius:8px;background:var(--blue)}.ci-point{position:absolute;left:60%;top:17px;width:4px;height:28px;background:var(--orange)}.ci-label{position:absolute;top:48px;font-size:12px;color:var(--muted);transform:translateX(-50%)}.definition-list{display:grid;gap:10px}.definition-list div{padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:#fbfdff}.definition-list strong{color:var(--blue)}
+/* IPLE visual identity: green primary, orange accent */
+:root{--blue:#176b4d!important;--blue2:#2e8b57!important;--light:#eaf7f0!important;--soft:#f6f7f2!important;--orange:#c4681a!important;--orange2:#fff3e7!important;--teal:#287d72!important;}
+.header{background:linear-gradient(135deg,#155f46,#2e8b57)!important;}
+.tab.active{background:#eaf7f0!important;color:#155f46!important;border-bottom-color:#c4681a!important;}
+.tabbar,.tabs{border-bottom-color:#c4681a!important;}
+.exam-prep-badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#fff3e7;color:#87430c;font-weight:800;font-size:12px;margin-bottom:8px}
+.exam-prep-question{border:2px solid #c4681a;background:#fffaf4;border-radius:12px;padding:18px;margin:16px 0;line-height:1.7}
+.exam-rubric{display:grid;gap:9px;margin:12px 0}.exam-rubric label{display:block;padding:10px 12px;border:1px solid #cfded5;border-radius:9px;background:#fbfdfb}.exam-score{font-weight:900;color:#176b4d;font-size:20px;margin-left:10px}
+
+/* Written-exam preparation additions */
+.exam-worked-wrap{margin:0 0 22px;padding:18px;border:1px solid #d9e7dd;border-radius:12px;background:#f7fbf8}
+.exam-worked-wrap>h3{margin:0 0 6px;color:var(--green,#2f6f52)}
+.exam-worked-wrap>p{margin:0 0 15px;line-height:1.6}
+.exam-worked-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.exam-worked-card{background:#fff;border:1px solid #dce6df;border-top:4px solid var(--orange,#d97706);border-radius:10px;padding:15px;line-height:1.62}
+.exam-worked-card h3{margin:5px 0 10px;color:var(--green,#2f6f52);font-size:17px}
+.exam-worked-card p{margin:8px 0}
+.exam-mini-label{display:inline-block;padding:4px 8px;border-radius:999px;background:#fff2df;color:#8a4a00;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.35px}
+.exam-answer{margin-top:10px;padding:12px 13px;border-left:4px solid var(--green,#2f6f52);background:#eef7f1;border-radius:0 8px 8px 0}
+.exam-try-title{margin:20px 0 10px;padding:10px 13px;border-radius:9px;background:#fff4e6;color:#814600;font-weight:800}
+@media(max-width:760px){.exam-worked-grid{grid-template-columns:1fr}}
+
+
+/* Bottom navigation between the harmonised learning sections. */
+.iple-group-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:30px 0 4px;padding-top:20px;border-top:2px solid var(--line,#d7e4dc)}
+.iple-group-nav button{max-width:48%;white-space:normal;text-align:center}
+.iple-group-nav .iple-nav-spacer{flex:1}
+@media(max-width:640px){.iple-group-nav{align-items:stretch}.iple-group-nav button{max-width:none;flex:1;padding:10px 8px;font-size:12px}}
+
+
+/* Layout safeguard for harmonised pages: grouped chapters remain separate and
+   only the single group-level Previous/Next control is displayed. */
+.section[data-iple-group]{clear:both;width:100%;position:relative}
+.section[data-iple-group]::after{content:"";display:block;clear:both}
+.section[data-iple-group] > .section-nav.iple-old-section-nav,
+.section[data-iple-group] > .nav-bottom.iple-old-section-nav,
+.section[data-iple-group] > .nav.iple-old-section-nav,
+.section[data-iple-group] > .btn-row.iple-old-section-nav{display:none!important}
+.iple-group-nav{clear:both;position:relative;z-index:2}
+
+
+/* Dummy variables and interactions */
+.dummy-hero{background:linear-gradient(135deg,#eef8f1,#fff5e8);border:1px solid #cfe3d6;border-left:6px solid var(--green);border-radius:12px;padding:18px 20px;margin:0 0 20px;line-height:1.68}
+.dummy-hero h3{margin:0 0 8px;color:var(--green)}
+.dummy-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.dummy-card{border:1px solid #dce6df;border-radius:12px;background:#fff;overflow:hidden}
+.dummy-card .head{padding:13px 16px;background:#eef8f1;color:var(--green);font-weight:900;font-size:17px}
+.dummy-card.orange .head{background:#fff3e7;color:#8a470d}
+.dummy-card .body{padding:17px;line-height:1.68}
+.dummy-eq{background:#f7faf8;border:1px solid #d9e6de;border-radius:9px;padding:12px 14px;text-align:center;font-weight:800;margin:10px 0;line-height:1.75}
+.group-lines{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.group-line{border:1px solid #dce5ef;border-radius:9px;padding:11px;background:#fbfdff;line-height:1.55}
+.group-line strong{color:var(--green)}
+.coeff-table{width:100%;border-collapse:collapse;margin:13px 0;font-size:14px}
+.coeff-table th,.coeff-table td{border:1px solid #dce5ef;padding:9px;text-align:left;vertical-align:top}
+.coeff-table th{background:#f1f7f3;color:var(--green)}
+.line-demo{display:block;width:100%;height:auto;background:#fff;border:1px solid #dce5ef;border-radius:10px;margin:12px 0}
+.exam-command{background:#fff8ee;border-left:5px solid var(--orange);padding:13px 15px;border-radius:0 9px 9px 0;margin:14px 0;line-height:1.65}
+@media(max-width:850px){.dummy-grid,.group-lines{grid-template-columns:1fr}}
+
+</style>
+<style id="iple-group-navigation-style">
+/* Harmonised navigation: original teaching content is retained and grouped under 4-6 tabs. */
+.iple-original-tabs{display:none!important}
+.iple-groupbar{display:flex;flex-wrap:wrap;gap:0;background:#fff;border:1px solid var(--line,#d7e4dc);border-top:0;border-bottom:3px solid var(--green,var(--blue,#176b4d));position:sticky;top:0;z-index:50;box-shadow:0 5px 14px rgba(31,57,45,.07)}
+.iple-group-tab{flex:1 1 145px;min-height:48px;border:0;border-right:1px solid var(--line,#d7e4dc);border-bottom:3px solid transparent;background:#fff;color:#5e6c66;padding:10px 8px;font:800 12.5px Arial,"Helvetica Neue",sans-serif;cursor:pointer;line-height:1.25}
+.iple-group-tab:last-child{border-right:0}
+.iple-group-tab:hover{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d))}
+.iple-group-tab.active{background:var(--light,#eaf7f0);color:var(--green,var(--blue,#176b4d));border-bottom-color:var(--orange,#c4681a)}
+.iple-old-section-nav{display:none!important}
+.section.active + .section.active{margin-top:34px;padding-top:30px;border-top:3px solid var(--line,#d7e4dc)}
+@media(max-width:760px){.iple-groupbar{position:static}.iple-group-tab{flex:1 1 48%;font-size:12px}.section.active + .section.active{margin-top:24px;padding-top:22px}}
+</style>
+
+<style id="iple-standard-final-quiz-style">
+.iple-standard-final-quiz{max-width:900px;margin:0 auto}
+.iple-standard-quiz-card{overflow:hidden}
+.iple-standard-quiz-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.iple-standard-quiz-count{font-weight:900}
+.iple-standard-quiz-score{font-size:13px;font-weight:800;opacity:.88}
+.iple-standard-quiz-track{height:10px;background:#e7edf4;border-radius:999px;overflow:hidden;margin:0 0 20px}
+.iple-standard-quiz-fill{height:100%;width:0;background:var(--green,#2e7d32);transition:width .2s ease}
+.iple-standard-quiz-question{margin:0 0 15px;line-height:1.45}
+.iple-standard-quiz-options{display:grid;gap:9px}
+.iple-standard-quiz-option{width:100%;text-align:left;cursor:pointer}
+.iple-standard-quiz-option:disabled{cursor:default;opacity:1}
+.iple-standard-quiz-option.iple-answer-correct{border-color:var(--green,#2e7d32)!important;background:#eaf6ec!important;color:#1f5d25!important}
+.iple-standard-quiz-option.iple-answer-wrong{border-color:var(--red,#b42318)!important;background:#fff0ef!important;color:#7a271a!important}
+.iple-standard-quiz-feedback{display:none;margin-top:14px;padding:13px 15px;border-radius:9px;line-height:1.6}
+.iple-standard-quiz-feedback.show{display:block}
+.iple-standard-quiz-feedback.ok{background:#eaf6ec;border:1px solid var(--green,#2e7d32);color:#1f5d25}
+.iple-standard-quiz-feedback.err{background:#fff0ef;border:1px solid var(--red,#b42318);color:#7a271a}
+.iple-standard-quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line,#dbe4ef)}
+.iple-standard-quiz-nav .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.iple-standard-quiz-result{display:none}
+.iple-standard-quiz-result.show{display:block}
+.iple-standard-quiz-result .big{font-size:36px;font-weight:900;color:var(--green,#2e7d32)}
+@media(max-width:620px){.iple-standard-quiz-nav{align-items:stretch}.iple-standard-quiz-nav .btn{flex:1}.iple-standard-quiz-score{width:100%;text-align:center}}
+</style><meta name="author" content="Silvia Salini"/><meta name="copyright" content="Silvia Salini"/></head>
+<body>
+<div class="wrap">
+<header class="header"><div class="kicker">Prof. Silvia Salini · STATISTICS – International Politics, Law and Economics · University of Milan</div><h1>Correlation and Regression</h1><p>The shape of the relationship matters</p></header>
+<div class="meta"><span class="pill">Scatter plots</span><span class="pill">R² and the regression line</span><span class="pill">Inference, prediction, and diagnostics</span><span class="pill">Dummy variables and interactions</span></div>
+<nav aria-label="Learning sections" class="iple-groupbar"><button class="iple-group-tab active" data-iple-group="0" type="button">Relationships and correlation</button><button class="iple-group-tab" data-iple-group="1" type="button">The regression model</button><button class="iple-group-tab" data-iple-group="2" type="button">Inference and prediction</button><button class="iple-group-tab" data-iple-group="3" type="button">Diagnostics and interpretation</button><button class="iple-group-tab" data-iple-group="4" type="button">Final quiz</button><button class="iple-group-tab" data-iple-group="5" type="button">Preparing for the exam</button></nav><nav class="tabbar iple-original-tabs"><button class="tab active" data-target="s1">1. The scatter plot</button><button class="tab" data-target="s2">2. Covariance and r</button><button class="tab" data-target="s3">3. The model</button><button class="tab" data-target="s4">4. R² and shape</button><button class="tab" data-target="s5">5. Assumptions and inference</button><button class="tab" data-target="s5p">6. Prediction and SER</button><button class="tab" data-target="s6">7. Diagnostics</button><button class="tab" data-target="s7">8. Dummies &amp; interpretation</button><button class="tab" data-target="s8">9. Check</button><button class="tab" data-target="exam-prep">Preparing for the exam</button></nav>
+<main class="content">
+<section class="section active" data-iple-group="0" id="s1">
+<div class="intro"><h2>Before calculating, examine the shape</h2><p>A single number cannot replace a scatter plot. Direction, strength, shape, groups, and unusual values must be examined before interpreting R².</p></div>
+<div class="grid2"><div class="controls"><div class="toggle" id="patternButtons"><button class="active" data-pattern="positive">Increasing</button><button data-pattern="negative">Decreasing</button><button data-pattern="none">No clear pattern</button><button data-pattern="curve">Curved</button><button data-pattern="groups">Two groups</button><button data-pattern="outlier">With an outlier</button></div><div class="question" style="margin-top:16px"><h3>Describe the scatter</h3><p>Does the relationship appear linear? Is it increasing or decreasing?</p><button class="choice patternChoice" data-answer="linear-positive">Linear and increasing</button><button class="choice patternChoice" data-answer="linear-negative">Linear and decreasing</button><button class="choice patternChoice" data-answer="nonlinear">Nonlinear</button><button class="choice patternChoice" data-answer="none">No clear relationship emerges</button><div class="feedback" id="patternFb"></div></div></div><div><div class="canvas-wrap"><canvas height="500" id="patternCanvas" width="900"></canvas></div><div class="kpis"><div class="kpi"><span>Slope</span><b id="patternSlope">—</b></div><div class="kpi"><span>Linear R²</span><b id="patternR2">—</b></div><div class="kpi"><span>Shape</span><b id="patternShape">—</b></div><div class="kpi"><span>Observations</span><b id="patternN">—</b></div></div></div></div>
+<div class="warn"><strong>Caution:</strong> a low R² may indicate no linear relationship, but not necessarily no relationship at all.</div><div class="section-nav iple-old-section-nav"><span></span><button class="btn primary next" data-next="s2">Continue: covariance and correlation →</button></div>
+</section>
+<section class="section" data-iple-group="0" id="s2">
+<div class="intro"><h2>From covariance to correlation</h2><p>Covariance shows the sign of joint variation; Pearson correlation standardises it by the variability of X and Y, allowing relationships measured on different scales to be compared.</p></div>
+<div class="hero-grid"><div><div class="canvas-wrap"><canvas height="520" id="covCanvas" width="900"></canvas></div><div class="legend"><span><i class="dot" style="background:#147d8d"></i>Positive contribution: quadrants I and III</span><span><i class="dot" style="background:#c4681a"></i>Negative contribution: quadrants II and IV</span></div><p class="small">Click any point to see its contribution to covariance.</p></div><div class="card"><div class="card-head light">The selected point</div><div class="card-body"><div class="formula">(xᵢ − x̄)(yᵢ − ȳ)</div><div class="kpis" style="grid-template-columns:1fr 1fr"><div class="kpi"><span>xᵢ − x̄</span><b id="covDx">—</b></div><div class="kpi"><span>yᵢ − ȳ</span><b id="covDy">—</b></div><div class="kpi"><span>Product</span><b id="covProd">—</b></div><div class="kpi"><span>Contribution</span><b id="covSign">—</b></div></div><div class="tip"><strong>Same signs:</strong> quadrant I (+,+) and quadrant III (−,−) give a positive product.<br/><strong>Opposite signs:</strong> quadrant II (−,+) and quadrant IV (+,−) give a negative product.</div></div></div></div>
+<details><summary style="cursor:pointer;font-weight:800;color:var(--blue)">Learn more: the covariance formula</summary><div><div class="formula">Cov(X,Y) = (1/n) Σ (xᵢ − μ<sub>X</sub>)(yᵢ − μ<sub>Y</sub>)</div><div class="formula">s<sub>XY</sub> = [1/(n−1)] Σ (xᵢ − x̄)(yᵢ − ȳ)</div><p>The first formula describes population covariance; the second is sample covariance. Covariance is positive when contributions from quadrants I and III predominate and negative when contributions from quadrants II and IV predominate. Its value, however, depends on the measurement units of X and Y.</p></div></details>
+<div class="card"><div class="card-head orange">Standardising covariance: Pearson correlation</div><div class="card-body">
+<p>Dividing covariance by the product of the standard deviations gives a unit-free index that always lies between −1 and +1.</p>
+<div class="grid2"><div class="mini"><strong>Population</strong><div class="formula" style="font-size:17px">ρ = Cov(X,Y)/(σ<sub>X</sub>σ<sub>Y</sub>)</div><p><strong>ρ</strong> is the parameter describing linear correlation in the population.</p></div><div class="mini"><strong>Sample</strong><div class="formula" style="font-size:17px">r = s<sub>XY</sub>/(s<sub>X</sub>s<sub>Y</sub>)</div><p><strong>r</strong> is the correlation observed in the sample and is used to estimate ρ.</p></div></div>
+<div class="formula" style="font-size:15px">r = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²]</div>
+<div class="kpis"><div class="kpi"><span>Sample covariance</span><b id="covSample">—</b></div><div class="kpi"><span>Correlation r</span><b id="corrR">—</b></div><div class="kpi"><span>Linear strength</span><b id="corrStrength">—</b></div></div>
+<div class="tip"><strong>Why does n−1 not appear in the final formula?</strong> If sample covariance and sample standard deviations are used, the factor 1/(n−1) appears both in the numerator and in the denominator and cancels. The same happens if 1/n is used consistently in all three terms. Therefore, r does not change when n or n−1 is used consistently.</div>
+<div class="warn"><strong>However, ρ and r are not the same object.</strong> The formulas have the same structure, but ρ is a population parameter whereas r is a statistic calculated from a sample. In general, r is not exactly equal to ρ: it estimates ρ and changes from sample to sample.</div>
+<div class="grid3"><div class="mini"><strong>Sign</strong><p>A positive r indicates an increasing linear relationship; a negative r indicates a decreasing linear relationship.</p></div><div class="mini"><strong>Strength</strong><p>An |r| close to 1 indicates a strong linear relationship; an |r| close to 0 indicates a weak linear relationship.</p></div><div class="mini"><strong>Shape</strong><p>r measures only linearity: a curved relationship may have r close to zero even when the relationship is strong.</p></div></div>
+<div class="okbox"><strong>Bridge to regression:</strong> in simple linear regression with an intercept, <strong>R² = r²</strong>. The sign of the relationship can be read from r or the slope; squaring r removes the sign.</div>
+</div></div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s1">← Back</button><button class="btn primary next" data-next="s3">Continue: the line and R² →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="s3">
+<div class="intro"><h2>The linear model and least squares</h2><p>We distinguish the theoretical model from the coefficients estimated from the data. The least-squares line chooses the estimates that make the vertical residuals collectively as small as possible.</p></div>
+<div class="formula">Yᵢ = β₀ + β₁Xᵢ + εᵢ     →     ŷᵢ = β̂₀ + β̂₁xᵢ</div>
+<div class="grid2"><div class="controls"><div class="control"><label>Theoretical slope β₁ <span id="regSlopeVal">2,0</span></label><input id="regSlope" max="4" min="-4" step="0.25" type="range" value="2"/></div><div class="control"><label>Random variability <span id="regNoiseVal">2,0</span></label><input id="regNoise" max="8" min="0" step="0.5" type="range" value="2"/></div><div class="control"><label>Units of Y</label><select id="regUnit"><option value="1">years / percentage points</option><option value="1000">euros</option></select></div><div class="tip"><strong>Example:</strong> X is years of education; Y is voter turnout in percentage points.</div></div><div><div class="canvas-wrap"><canvas height="500" id="regCanvas" width="900"></canvas></div><div class="kpis"><div class="kpi"><span>Intercept β̂₀</span><b id="regB0">—</b></div><div class="kpi"><span>Estimated slope β̂₁</span><b id="regB1">—</b></div><div class="kpi"><span>R²</span><b id="regR2">—</b></div><div class="kpi"><span>Units of Y</span><b id="regUnitKpi">—</b></div></div></div></div>
+<div class="card"><div class="card-head dark">The least-squares method</div><div class="card-body"><div class="grid2"><div><p>The <strong>residual</strong> measures the vertical distance between the observed and predicted values:</p><div class="formula">eᵢ = yᵢ − ŷᵢ</div><p>The fitted line chooses β̂₀ and β̂₁ by minimising the <strong>sum of squared errors (or residuals)</strong>, denoted by <strong>SSE</strong>:</p><div class="formula">SSE = Σ[yᵢ − (β₀ + β₁xᵢ)]² = Σeᵢ²</div><div class="control"><label>Candidate intercept <span id="trialB0Val">0,00</span></label><input id="trialB0" max="12" min="-2" step="0.1" type="range" value="0"/></div><div class="control"><label>Candidate slope <span id="trialB1Val">1,00</span></label><input id="trialB1" max="4" min="0" step="0.05" type="range" value="1"/></div><button class="btn primary" id="useOLS">Show the minimum</button></div><div><div class="canvas-wrap"><canvas height="500" id="olsCanvas" width="900"></canvas></div><div class="legend"><span><i class="dot" style="background:#6d5bd0"></i>Candidate line and residuals</span><span><i class="dot" style="background:#c4681a"></i>Least-squares line</span></div><div class="kpis"><div class="kpi"><span>Candidate SSE</span><b id="trialSSE">—</b></div><div class="kpi"><span>Minimum SSE</span><b id="minSSE">—</b></div><div class="kpi"><span>β̂₀</span><b id="olsB0">—</b></div><div class="kpi"><span>β̂₁</span><b id="olsB1">—</b></div></div></div></div>
+<div class="grid2" style="margin-top:16px"><div class="mini"><strong>Coefficient estimates</strong><div class="formula" style="font-size:15px">β̂₁ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²<br/>β̂₀ = ȳ − β̂₁x̄</div></div><div class="mini"><strong>Interpretation</strong><p><b>β̂₁</b> is the expected mean change in Y when X increases by one unit. <b>β̂₀</b> is the predicted value when X=0 and should be interpreted only when X=0 is plausible in the observed context.</p></div></div>
+<details><summary style="cursor:pointer;font-weight:800;color:var(--blue)">Optional mathematical extension: deriving the OLS estimates</summary><div>
+<p>The least-squares line chooses the intercept and slope to minimise the function:</p>
+<div class="formula" style="font-size:16px">SSE(b₀,b₁) = Σ[yᵢ − (b₀ + b₁xᵢ)]²</div>
+<p>Here <b>b₀</b> e <b>b₁</b> are candidate values. To find the minimum, calculate the partial derivatives and set them equal to zero:</p>
+<div class="formula" style="font-size:15px">∂SSE/∂b₀ = −2Σ(yᵢ−b₀−b₁xᵢ) = 0<br/>∂SSE/∂b₁ = −2Σxᵢ(yᵢ−b₀−b₁xᵢ) = 0</div>
+<p>This gives the <strong>normal equations</strong>:</p>
+<div class="formula" style="font-size:15px">nb₀ + b₁Σxᵢ = Σyᵢ<br/>b₀Σxᵢ + b₁Σxᵢ² = Σxᵢyᵢ</div>
+<p>From the first equation we obtain <b>b₀ = ȳ − b₁x̄</b>. Substituting into the second and simplifying:</p>
+<div class="formula" style="font-size:15px">β̂₁ = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²<br/>β̂₀ = ȳ − β̂₁x̄</div>
+<div class="tip"><strong>Why is it really a minimum?</strong> The matrix of second derivatives is:<div class="formula" style="font-size:14px">H = 2 [[n, Σxᵢ], [Σxᵢ, Σxᵢ²]]<br/>det(H) = 4nΣ(xᵢ−x̄)²</div>If X has variability, Σ(xᵢ−x̄)² &gt; 0: H is positive definite, the SSE function is strictly convex and the solution is the unique global minimum.</div>
+<p class="small"><strong>Connection with mathematics:</strong> the procedure uses a function of two variables, partial derivatives and a system of two equations. The same idea extends to multiple regression through matrix algebra.</p>
+</div></details>
+<div class="definition-list">
+<div><strong>SST – Total Sum of Squares:</strong> Σ(yᵢ − ȳ)², the total observed variability in Y.</div>
+<div><strong>SSR – Regression Sum of Squares:</strong> Σ(ŷᵢ − ȳ)², the part of the variability explained by the line.</div>
+<div><strong>SSE – Error Sum of Squares:</strong> Σ(yᵢ − ŷᵢ)² = Σeᵢ², the part left in the residuals.</div>
+</div>
+<div class="tip"><strong>Why English abbreviations?</strong> SST, SSR and SSE are derived from <em>Sum of Squares</em> are common in textbooks and statistical output. Many programs simply show a column labelled <em>Sum Sq</em>, distinguishing the model and residual rows. <strong>Caution:</strong> notation is not completely uniform; in some sources SSR denotes <em>sum of squared residuals</em>, which is what we call SSE here. Always check the definition attached to the abbreviation.</div>
+<div class="formula">SST = SSR + SSE     R² = SSR/SST = 1 − SSE/SST</div><p class="small">In OLS regression with an intercept, total variability is decomposed into the part explained by the model and the residual part. R² compares the variability explained by the regression with the total variability in Y.</p></div></div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s2">← Back</button><button class="btn primary next" data-next="s4">Continue: R² and shape →</button></div>
+</section>
+<section class="section" data-iple-group="1" id="s4">
+<div class="intro"><h2>R² describes the line, not every possible relationship</h2><p>The slope measures the effect in the variables' units; R² measures the descriptive ability of the selected model. The shape of the relationship remains crucial.</p></div>
+<div class="card"><div class="card-head light">Same R², different substantive effects</div><div class="card-body"><div class="grid2"><div class="table-wrap"><table><thead><tr><th>Education<br/>(years / percentage points)</th><th>Policy A<br/>(years / percentage points)</th><th>Policy B<br/>(years / percentage points)</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>2</td><td>4</td><td>6</td></tr><tr><td>3</td><td>6</td><td>9</td></tr><tr><td>4</td><td>8</td><td>12</td></tr><tr><td>5</td><td>10</td><td>15</td></tr></tbody></table></div><div class="canvas-wrap"><canvas height="500" id="twoLinesCanvas" width="900"></canvas></div></div><div class="kpis"><div class="kpi"><span>R² for policy A</span><b>1,00</b></div><div class="kpi"><span>R² for policy B</span><b>1,00</b></div><div class="kpi"><span>β̂₁ for A</span><b>2</b></div><div class="kpi"><span>β̂₁ for B</span><b>3</b></div></div><div class="question"><h3>Which statement is correct?</h3><button class="choice qSame" data-ok="0">Strategy B has a larger R² because its line is steeper.</button><button class="choice qSame" data-ok="1">The strategies have the same R², but strategy B has a steeper slope.</button><button class="choice qSame" data-ok="0">Slope and R² measure the same feature.</button><div class="feedback" id="sameFb"></div></div></div></div>
+<div class="grid2"><div class="card"><div class="card-head orange">A nonlinear relationship</div><div class="card-body"><p>A moderate policy intensity may improve an outcome; excessive intensity may produce diminishing or adverse effects. The relationship is a <strong>inverted parabola</strong>, described by a quadratic model.</p><div class="table-wrap"><table><thead><tr><th>Policy intensity</th><th>Outcome<br/>(years / percentage points)</th></tr></thead><tbody id="discountRows"></tbody></table></div><div class="control"><label>Optimal policy intensity <span id="optDiscountVal">20%</span></label><input id="optDiscount" max="30" min="10" step="5" type="range" value="20"/></div><div class="formula">ŷ = β̂₀ + β̂₁x + β̂₂x²</div></div></div><div><div class="canvas-wrap"><canvas height="500" id="curveCanvas" width="900"></canvas></div><div class="kpis"><div class="kpi"><span>Linear R²</span><b id="curveLinR2">—</b></div><div class="kpi"><span>Quadratic R²</span><b id="curveQuadR2">—</b></div><div class="kpi"><span>Linear β̂₁</span><b id="curveSlope">—</b></div><div class="kpi"><span>Shape</span><b>Parabola</b></div></div></div></div>
+<div class="warn"><strong>Conclusion:</strong> a low linear R² does not imply no relationship. It may indicate that a line is the wrong model.</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s3">← Back</button><button class="btn primary next" data-next="s5">Continue: inference on coefficients →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s5">
+<div class="intro"><h2>Assumptions first, then inference and prediction</h2><p>Standard errors, t-tests, p-values, confidence intervals, and predictions can be interpreted only after the model and the conditions that make its use valid have been stated explicitly.</p></div>
+<div class="card"><div class="card-head light">The simple linear regression model</div><div class="card-body">
+<div class="formula">Yᵢ = β₀ + β₁Xᵢ + εᵢ</div>
+<p>The term <strong>εᵢ</strong> collects all factors not included in the line that cause an observation to deviate from the conditional mean of Y.</p>
+<div class="assumption-grid">
+<div class="assumption"><strong>Correct linear form</strong><p>The conditional mean is E(Y|X)=β₀+β₁X. If the relationship is curved, the model must be modified.</p></div>
+<div class="assumption"><strong>Independent observations</strong><p>The sample is random and errors for different units are not systematically dependent on one another.</p></div>
+<div class="assumption"><strong>Variability in X</strong><p>The X values are not all equal: without variability in the regressor, β₁ cannot be estimated.</p></div>
+<div class="assumption"><strong>Zero conditional mean</strong><p>E(ε|X)=0: omitted factors must not vary systematically with X. This is the key condition for interpreting β̂₁ as an unbiased estimate.</p></div>
+<div class="assumption"><strong>Homoscedasticity</strong><p>Var(ε|X)=σ²: error dispersion is constant. This assumption supports classical standard errors.</p></div>
+<div class="assumption"><strong>Conditional normality of the errors</strong><p>ε|X ~ N(0,σ²). In small samples, this makes the usual t-tests, F-tests, and confidence intervals exact.</p></div>
+</div>
+<div class="warn"><strong>Diagnostics:</strong> linearity, constant variance, and the absence of excessively influential observations must be checked using the data and residuals. The next section shows why a single point can change the line.</div>
+</div></div>
+<div class="card"><div class="card-head dark">Example: education and voter turnout</div><div class="card-body">
+<p>Across <strong>30 countries</strong> we study the relationship between years of education X and voter turnout Y, expressed in percentage points.</p>
+<div class="formula">Estimated line: ŷ = 11.84 + 2.36x</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Term</th><th>Estimate</th><th>Standard error</th><th>t</th><th>p-value</th><th>95% CI</th></tr></thead>
+<tbody>
+<tr><td>Intercept β₀</td><td>11,84</td><td>2,75</td><td>4,31</td><td>0,0002</td><td>[6,21; 17,47]</td></tr>
+<tr><td>Education β₁</td><td>2,36</td><td>0,31</td><td>7,61</td><td>&lt; 0,0001</td><td>[1,73; 2,99]</td></tr>
+</tbody></table></div>
+<div class="grid3" style="margin-top:16px">
+<div class="mini"><strong>Estimate of β₁</strong><p>An additional year of education is associated, on average, with a predicted increase of 2.36 percentage points in voter turnout.</p></div>
+<div class="mini"><strong>Standard error</strong><p>0.31 measures the sampling uncertainty of the estimate 2.36: different samples would produce slightly different slopes.</p></div>
+<div class="mini"><strong>Test of the slope</strong><p>For H₀:β₁=0, t=2.36/0.31=7.61. The very small p-value indicates strong incompatibility between the data and a zero slope.</p></div>
+</div>
+<div class="ci-scale"><div class="ci-axis"></div><div class="ci-zero"></div><div class="ci-segment"></div><div class="ci-point"></div><span class="ci-label" style="left:12%">0</span><span class="ci-label" style="left:38%">1,73</span><span class="ci-label" style="left:60%">2,36</span><span class="ci-label" style="left:83%">2,99</span></div>
+<div class="okbox"><strong>Confidence interval:</strong> plausible values for β₁ range from 1.73 to 2.99. Because 0 is not in the interval, the two-tailed test at the 5% level rejects H₀:β₁=0.</div>
+</div></div>
+<div class="card"><div class="card-head orange">Decomposition of variability and the overall test</div><div class="card-body">
+<div class="table-wrap"><table>
+<thead><tr><th>Source</th><th>Sum of squares</th><th>df</th><th>Mean square</th><th>F</th><th>p-value</th></tr></thead>
+<tbody>
+<tr><td>Regression (SSR)</td><td>2.154,1</td><td>1</td><td>2.154,1</td><td>57,89</td><td>&lt; 0,0001</td></tr>
+<tr><td>Errors/residuals (SSE)</td><td>1.041,9</td><td>28</td><td>37,21</td><td>—</td><td>—</td></tr>
+<tr><td>Total (SST)</td><td>3.196,0</td><td>29</td><td>—</td><td>—</td><td>—</td></tr>
+</tbody></table></div>
+<div class="formula">SST = SSR + SSE     R² = 2.154,1 / 3.196,0 = 0,674</div>
+<p>The linear model describes <strong>67,4%</strong> of the observed variability in voter turnout. The error mean square is 37.21 and its square root gives the residual standard error:</p>
+<div class="formula">σ̂ = √37.21 = 6.10   years / percentage points</div>
+<p class="small">In simple linear regression, the overall F-test equals the square of the t-test for the slope: 7.61² ≈ 57.89.</p>
+</div></div>
+<div class="question"><h3>How should the p-value for β̂₁ be interpreted?</h3>
+<button class="choice qInf" data-ok="0">It is the probability that β₁ equals zero.</button>
+<button class="choice qInf" data-ok="1">Assuming H₀:β₁=0 and the model assumptions, it is the probability of obtaining a t-statistic at least as extreme.</button>
+<button class="choice qInf" data-ok="0">It is the proportion of variability in Y described by the line.</button>
+<div class="feedback" id="infFb"></div></div>
+<details><summary style="cursor:pointer;font-weight:800;color:var(--blue)">Learn more: small samples, normality, and large samples</summary><div>
+<p><strong>Small samples.</strong> If the errors are conditionally normal, ε|X ~ N(0,σ²), the least-squares estimators have a normal distribution conditional on the X values. Replacing σ with its estimate, the coefficient statistics follow an exact t-distribution with n−2 degrees of freedom. Under this framework, the usual tests and intervals are exact.</p>
+<p><strong>Maximum likelihood.</strong> Under normality and homoscedasticity, the least-squares estimates of β₀ and β₁ coincide with the maximum-likelihood estimates.</p>
+<p><strong>Large samples.</strong> Even without exact normality of the errors, under suitable regularity conditions and with finite moments, OLS estimators are asymptotically normal. t-based inference then becomes an approximation. In the presence of heteroscedasticity, robust standard errors must be used rather than the classical standard errors shown in the table.</p>
+<p><strong>Clarification.</strong> Marginal normality of X is not assumed. For exact small-sample inference, the requirement concerns the distribution of Y conditional on X, that is, normality of the errors.</p>
+</div></details>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s4">← Back</button><button class="btn primary next" data-next="s5p">Continue: prediction and SER →</button></div>
+</section>
+<section class="section" data-iple-group="2" id="s5p">
+<div class="intro">
+<h2>From an explanatory model to a predictive model</h2>
+<p>Regression is not used only to interpret a relationship. It can also be used to predict a new value of Y and to quantify prediction uncertainty through the SER.</p>
+</div>
+<div class="okbox"><strong>New section:</strong> use the slider to select a future investment and compare the point prediction, the interval for the mean response, and the prediction interval for a single new country.</div>
+<div class="card"><div class="card-head light">From an explanatory model to a predictive model</div><div class="card-body">
+<div class="grid2">
+<div class="mini">
+<strong>Interpretive use</strong>
+<p>The model helps us understand the relationship: the sign and magnitude of β̂₁ describe how Y changes on average as X changes. Tests and confidence intervals quantify uncertainty about the coefficients.</p>
+</div>
+<div class="mini">
+<strong>Predictive use</strong>
+<p>The model can also be used to estimate a future outcome. For a new value x₀, we substitute x₀ into the fitted line:</p>
+<div class="formula" style="font-size:16px">ŷ₀ = β̂₀ + β̂₁x₀</div>
+</div>
+</div>
+<div class="formula">SER = √[SSE/(n−2)] = √(1,041.9/28) = 6.10 percentage points</div>
+<div class="grid3">
+<div class="mini"><strong>SER</strong><p>The <strong>Standard Error of the Regression</strong>, or residual standard error, measures the typical vertical distance between observed values and values fitted by the line. It is expressed in the same units as Y.</p></div>
+<div class="mini"><strong>It is not SE(β̂₁)</strong><p>SE(β̂₁)=0.31 measures uncertainty about the slope. SER=6.10 instead measures the dispersion of outcomes around the line and is therefore directly related to prediction precision.</p></div>
+<div class="mini"><strong>R² and SER</strong><p>R² is a relative, unit-free measure; SER is an absolute measure. Two models may have similar R² values but very different prediction errors in the operational units of the problem.</p></div>
+</div>
+<div class="grid2" style="margin-top:16px">
+<div class="controls">
+<div class="control">
+<label>New value x₀ <span id="predXVal">10,0</span> years / percentage points</label>
+<input id="predX" max="20" min="0" step="0.5" type="range" value="10"/>
+</div>
+<div class="kpis" style="grid-template-columns:1fr 1fr">
+<div class="kpi"><span>Point prediction</span><b id="predY">35,44</b></div>
+<div class="kpi"><span>SER</span><b>6,10</b></div>
+<div class="kpi"><span>95% CI for the mean</span><b id="predMeanCI">—</b></div>
+<div class="kpi"><span>95% PI for a new case</span><b id="predIndividualPI">—</b></div>
+<div class="kpi"><span>CI half-width</span><b id="predMeanMargin">—</b></div>
+<div class="kpi"><span>PI half-width</span><b id="predPredictionMargin">—</b></div>
+</div>
+<div class="tip" id="predRangeNote"><strong>Interpolation:</strong> x₀ lies within the range of education values observed in the exercise.</div>
+</div>
+<div>
+<div class="chartbox"><canvas height="500" id="predictionCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i style="background:#2e8b57"></i>CI for the mean response</span>
+<span><i style="background:#c4681a"></i>Individual prediction interval</span>
+<span><i style="background:#2e7d32"></i>Point prediction</span>
+</div>
+<div class="small" style="margin-top:8px;text-align:center"><strong>Fixed scale:</strong> as the slider moves, the green point and the two intervals move along the same axis.</div>
+<div class="card" style="margin-top:16px">
+<div class="card-head light">How does the width change?</div>
+<div class="card-body">
+<div class="chartbox"><canvas height="430" id="predictionWidthCanvas" width="900"></canvas></div>
+<div class="legend">
+<span><i style="background:#2e8b57"></i>Half-width of the mean CI</span>
+<span><i style="background:#c4681a"></i>Half-width of the new-case PI</span>
+</div>
+<div class="small" style="margin-top:8px"><strong>Here, the vertical axis directly represents the half-width.</strong> The interval is narrowest near x̄=8.1 and becomes wider as we move away from the centre of the data.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tip"><strong>The width is not constant.</strong> It is smallest near x̄=8.1 and increases as x₀ moves away from the centre of the data. In the main graph, this variation may appear small because the individual prediction interval is dominated by the SER; the second graph directly shows how the half-widths change.</div>
+<div class="tip"><strong>Why is the prediction interval wider?</strong> The interval for the mean response accounts for uncertainty in locating the line. Predicting a single new country must also include individual variability around the line, represented by the SER.</div>
+<details><summary style="cursor:pointer;font-weight:800;color:var(--blue)">Learn more: interval for the mean and prediction interval</summary><div>
+<p>For a value x₀, the confidence interval for the mean response uses:</p>
+<div class="formula" style="font-size:15px">ŷ₀ ± t × SER × √[1/n + (x₀−x̄)²/Σ(xᵢ−x̄)²]</div>
+<p>For a single future observation, the variability of the new error is added:</p>
+<div class="formula" style="font-size:15px">ŷ₀ ± t × SER × √[1 + 1/n + (x₀−x̄)²/Σ(xᵢ−x̄)²]</div>
+<p>The additional term 1 makes the individual prediction interval always wider.</p>
+</div></details>
+<div class="warn"><strong>Bridge to subsequent predictive models:</strong> SER describes error within the sample used to estimate the line. When the main objective becomes predicting new cases, models must also be compared on data not used for estimation, using a test sample or cross-validation. It is not enough to select the model with more significant coefficients or the highest R².</div>
+</div></div>
+<div class="section-nav iple-old-section-nav">
+<button class="btn secondary prev" data-prev="s5">← Back</button>
+<button class="btn primary next" data-next="s6">Continue: diagnostics and influential points →</button>
+</div>
+</section>
+<section class="section" data-iple-group="3" id="s6">
+<div class="intro"><h2>After the output: diagnostics and influential points</h2><p>The assumptions were stated before inference. Now we check whether the data and residuals show departures that may make the line or its standard errors unreliable.</p></div>
+<div class="grid3"><div class="mini"><strong>Residual pattern</strong><p>A curved pattern in the residuals indicates that the linear relationship is inadequate.</p></div><div class="mini"><strong>Residual dispersion</strong><p>A funnel shape suggests non-constant variance and calls for revising the model or using robust standard errors.</p></div><div class="mini"><strong>Unusual observations</strong><p>Extreme values in X or Y must be examined: they are especially influential when they combine high leverage with a large residual.</p></div></div>
+<div class="card" style="margin-top:20px"><div class="card-head orange">Compare two extreme points</div><div class="card-body"><div class="grid2"><div class="controls"><div class="control"><label>Linear pattern <span id="exSlopeVal">1,5</span></label><input id="exSlope" max="3" min="-3" step="0.25" type="range" value="1.5"/></div><div class="control"><label>Curvature <span id="exCurveVal">0,0</span></label><input id="exCurve" max="1.5" min="-1.5" step="0.1" type="range" value="0"/></div><div class="control"><label>Noise <span id="exNoiseVal">2,0</span></label><input id="exNoise" max="8" min="0" step="0.5" type="range" value="2"/></div><div class="control"><label>Y scale <span id="exScaleVal">1×</span></label><input id="exScale" max="1000" min="1" step="999" type="range" value="1"/></div><p><strong>Choose the type of point:</strong></p><div class="toggle" id="outlierButtons"><button class="active" data-mode="none">No point</button><button data-mode="influential">Influential outlier</button><button data-mode="leverage">Extreme X value on the line</button></div><div class="btn-row"><button class="btn secondary" id="newNoise">New sample</button></div></div><div><div class="canvas-wrap"><canvas height="500" id="exploreCanvas" width="900"></canvas></div><div class="legend"><span style="border-top:3px dashed #7a8699;width:28px"></span>Line before adding the point<span style="border-top:3px solid #c4681a;width:28px"></span>Line after adding the point<span><i class="dot" style="background:#b42318"></i>Influential</span><span><i class="dot" style="background:#6d5bd0"></i>Extreme X value on the line</span></div><div class="kpis"><div class="kpi"><span>Current β̂₀</span><b id="exB0">—</b></div><div class="kpi"><span>Current β̂₁</span><b id="exB1">—</b></div><div class="kpi"><span>R²</span><b id="exR2">—</b></div><div class="kpi"><span>Δβ̂₁</span><b id="exDeltaB1">—</b></div><div class="kpi"><span>Type</span><b id="exOutlier">None</b></div></div></div></div>
+<div class="grid3" style="margin-top:16px"><div class="mini"><strong>Influential outlier</strong><p>It is far away in X and from the line: the new line rotates noticeably.</p></div><div class="mini"><strong>Univariate extreme in X</strong><p>It has high leverage but lies on the original line. By construction, it does not alter β̂₀ and β̂₁.</p></div><div class="mini"><strong>Unusual ≠ influential</strong><p>Influence depends jointly on leverage and residual size.</p></div></div></div></div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s5p">← Back</button><button class="btn primary next" data-next="s7">Continue: complete interpretation →</button></div>
+</section>
+<section class="section" data-iple-group="3" id="s7">
+<div class="intro"><h2>Dummy variables, interactions, and a complete written-exam interpretation</h2><p>A dummy variable allows the regression model to compare groups. An interaction allows the relationship between X and Y to differ across groups. Always state the reference category before interpreting any coefficient.</p></div>
+<div class="dummy-hero">
+<h3>Comparing two groups with an indicator variable</h3>
+<p>Let <strong>D=0</strong> identify the reference group and <strong>D=1</strong> identify the group we want to compare with it. The indicator variable allows the regression to compare the two groups while keeping the other explanatory variables fixed.</p>
+<p>For example, if <strong>D=1</strong> for union members and <strong>D=0</strong> for non-union workers, the coefficient of D measures the expected wage difference between union and non-union workers with the same level of education.</p>
+<div class="tip"><strong>Why is one group called the reference group?</strong> Its regression equation is the starting point. The coefficients attached to the indicator variable describe how the comparison group differs from that starting point.</div>
+</div>
+<div class="dummy-grid">
+<article class="dummy-card">
+<div class="head">1. A dummy changes the intercept</div>
+<div class="body">
+<div class="dummy-eq">Y = β₀ + β₁X + β₂D + ε</div>
+<div class="group-lines">
+<div class="group-line"><strong>Reference group: D=0</strong><br/>Ŷ = β₀ + β₁X</div>
+<div class="group-line"><strong>Comparison group: D=1</strong><br/>Ŷ = (β₀+β₂) + β₁X</div>
+</div>
+<p>The two groups have the <strong>same slope</strong>. The coefficient β₂ is the vertical difference between the two parallel regression lines at every value of X.</p>
+<svg aria-label="Two parallel regression lines showing an intercept shift" class="line-demo" role="img" viewbox="0 0 560 260">
+<line stroke="#718096" stroke-width="2" x1="55" x2="525" y1="220" y2="220"></line><line stroke="#718096" stroke-width="2" x1="55" x2="55" y1="220" y2="30"></line>
+<line stroke="#2f7d4a" stroke-width="5" x1="75" x2="500" y1="188" y2="82"></line><line stroke="#dd7a1f" stroke-width="5" x1="75" x2="500" y1="145" y2="39"></line>
+<text fill="#2f7d4a" font-size="15" font-weight="700" x="365" y="112">D=0: reference</text><text fill="#a94e0b" font-size="15" font-weight="700" x="365" y="52">D=1: intercept + β₂</text>
+<text fill="#475467" font-size="14" x="505" y="244">X</text><text fill="#475467" font-size="14" x="24" y="35">Y</text>
+</svg>
+<p><strong>Example: union membership and wages.</strong></p>
+<div class="dummy-eq">wage = 4.20 + 0.75·education + 1.10·union</div>
+<p>With <strong>union=0</strong> as the reference category, union members are predicted to earn <strong>$1.10 more per hour</strong> than non-union workers with the same years of education. The education slope remains $0.75 in both groups.</p>
+</div></article>
+<article class="dummy-card orange">
+<div class="head">2. An interaction changes the slope</div>
+<div class="body">
+<div class="dummy-eq">Y = β₀ + β₁X + β₂D + β₃(X·D) + ε</div>
+<div class="group-lines">
+<div class="group-line"><strong>Reference group: D=0</strong><br/>Ŷ = β₀ + β₁X</div>
+<div class="group-line"><strong>Comparison group: D=1</strong><br/>Ŷ = (β₀+β₂) + (β₁+β₃)X</div>
+</div>
+<p>Now β₂ changes the intercept and β₃ changes the slope. The slope for D=1 is <strong>β₁+β₃</strong>, not β₃ alone.</p>
+<svg aria-label="Two non-parallel regression lines showing an interaction" class="line-demo" role="img" viewbox="0 0 560 260">
+<line stroke="#718096" stroke-width="2" x1="55" x2="525" y1="220" y2="220"></line><line stroke="#718096" stroke-width="2" x1="55" x2="55" y1="220" y2="30"></line>
+<line stroke="#2f7d4a" stroke-width="5" x1="75" x2="500" y1="195" y2="58"></line><line stroke="#dd7a1f" stroke-width="5" x1="75" x2="500" y1="112" y2="46"></line>
+<text fill="#2f7d4a" font-size="15" font-weight="700" x="350" y="92">D=0: slope β₁</text><text fill="#a94e0b" font-size="15" font-weight="700" x="350" y="43">D=1: slope β₁+β₃</text>
+<text fill="#475467" font-size="14" x="505" y="244">X</text><text fill="#475467" font-size="14" x="24" y="35">Y</text>
+</svg>
+<p><strong>Example: political interest and turnout under compulsory voting.</strong></p>
+<div class="dummy-eq">turnout = 38 + 3.2·interest + 18·compulsory − 1.4·(interest·compulsory)</div>
+<p>In voluntary-voting countries, a one-point increase in political interest is associated with <strong>3.2 percentage points</strong> higher turnout. In compulsory-voting countries the slope is <strong>3.2−1.4=1.8</strong> points. Compulsory voting raises the predicted intercept by 18 points, but the association between interest and turnout is weaker.</p>
+</div></article>
+</div>
+<div class="card"><div class="card-head light">How to interpret the coefficients for two groups</div><div class="card-body">
+<table class="coeff-table"><thead><tr><th>Coefficient</th><th>Correct interpretation</th><th>Frequent mistake</th></tr></thead><tbody>
+<tr><td>β₀</td><td>Predicted Y for the reference group when X=0, if X=0 is substantively meaningful.</td><td>Calling it the overall mean of Y.</td></tr>
+<tr><td>β₁</td><td>Slope of X for the reference group D=0.</td><td>Calling it the slope for both groups when an interaction is present.</td></tr>
+<tr><td>β₂</td><td>Difference between D=1 and D=0 when X=0; with no interaction, the difference is constant for every X.</td><td>Interpreting it as the unconditional difference between the raw group means.</td></tr>
+<tr><td>β₃</td><td>Difference between the two slopes. The slope for D=1 is β₁+β₃.</td><td>Calling β₃ the complete slope for D=1.</td></tr>
+</tbody></table>
+<div class="tip"><strong>Centre X when X=0 is not meaningful.</strong> If education is centred at 12 years, for example, β₂ becomes the predicted group difference at 12 years of education rather than at zero years.</div>
+</div></div>
+<div class="card"><div class="card-head dark">More than two groups: do not turn categories into the numbers 1, 2, and 3</div><div class="card-body">
+<p>Suppose occupational position has three categories: <strong>administrative staff</strong>, <strong>senior officials</strong>, and <strong>executives</strong>. These labels describe groups; they are not measurements with known numerical distances.</p>
+<div class="warn"><strong>A tempting but restrictive choice:</strong> entering the categories as Position=1, 2, and 3 treats occupational position as a quantitative variable. The model then forces the expected salaries to lie on a straight line and to be equally spaced.</div>
+<div class="dummy-eq">Salary = β₀ + β₁·Position + ε</div>
+<table class="coeff-table"><thead><tr><th>Position value</th><th>Predicted salary</th><th>Restriction imposed by the model</th></tr></thead><tbody>
+<tr><td>1 · Administrative staff</td><td>β₀ + β₁</td><td rowspan="3">The increase from 1 to 2 and the increase from 2 to 3 must both equal β₁.</td></tr>
+<tr><td>2 · Senior officials</td><td>β₀ + 2β₁</td></tr>
+<tr><td>3 · Executives</td><td>β₀ + 3β₁</td></tr>
+</tbody></table>
+<p>This assumption is often unrealistic. The salary difference between administrative staff and senior officials may be moderate, while executive salaries may be much higher.</p>
+<div class="grid2">
+<div class="mini"><strong>Observed group means</strong><table class="coeff-table"><thead><tr><th>Group</th><th>Mean salary</th></tr></thead><tbody><tr><td>Administrative staff</td><td>€32,000</td></tr><tr><td>Senior officials</td><td>€40,000</td></tr><tr><td>Executives</td><td>€75,000</td></tr></tbody></table><p>The gaps are €8,000 and €35,000: they are clearly not equal.</p></div>
+<div class="mini"><strong>What the values 1, 2, 3 would impose</strong><p>A fitted line can only produce equally spaced predictions. With these three means, the fitted values would be approximately:</p><div class="dummy-eq">€27,500 · €49,000 · €70,500</div><p>The middle category is poorly represented because the model is trying to force all three means onto one straight line.</p></div>
+</div>
+<div class="card" style="margin:16px 0 18px;border-color:#cfe3d6"><div class="card-head light">Why the values 1, 2, and 3 can distort the group means</div><div class="card-body">
+<p>The green horizontal segments represent the three observed group means. The orange line is the best fit obtained when occupational position is entered as the numerical values 1, 2, and 3. A single slope forces equally spaced predictions: it <strong>overestimates the mean for senior officials</strong> and <strong>underestimates the mean for executives</strong> (and also the first group).</p>
+<svg aria-label="Observed occupational salary means compared with a forced straight line and group-specific step function" class="line-demo" height="390" role="img" viewbox="0 0 760 390" width="760">
+<rect fill="#ffffff" height="390" width="760" x="0" y="0"></rect>
+<line stroke="#718096" stroke-width="2" x1="82" x2="710" y1="300" y2="300"></line>
+<line stroke="#718096" stroke-width="2" x1="82" x2="82" y1="300" y2="38"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="259" y2="259"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="218" y2="218"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="177" y2="177"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="136" y2="136"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="95" y2="95"></line>
+<line stroke="#e6ebf0" stroke-width="1" x1="82" x2="710" y1="54" y2="54"></line>
+<text fill="#667085" font-size="13" x="44" y="305">20</text>
+<text fill="#667085" font-size="13" x="44" y="264">30</text>
+<text fill="#667085" font-size="13" x="44" y="223">40</text>
+<text fill="#667085" font-size="13" x="44" y="182">50</text>
+<text fill="#667085" font-size="13" x="44" y="141">60</text>
+<text fill="#667085" font-size="13" x="44" y="100">70</text>
+<text fill="#667085" font-size="13" x="44" y="59">80</text>
+<text fill="#475467" font-size="14" font-weight="700" x="14" y="32">Mean salary (€000)</text>
+<line stroke="#d8dee7" stroke-dasharray="5 5" stroke-width="1.5" x1="260" x2="260" y1="54" y2="300"></line>
+<line stroke="#d8dee7" stroke-dasharray="5 5" stroke-width="1.5" x1="500" x2="500" y1="54" y2="300"></line>
+<!-- Group-specific means: a step function -->
+<line stroke="#2f7d4a" stroke-linecap="round" stroke-width="8" x1="100" x2="245" y1="251" y2="251"></line>
+<line stroke="#2f7d4a" stroke-linecap="round" stroke-width="8" x1="275" x2="485" y1="218" y2="218"></line>
+<line stroke="#2f7d4a" stroke-linecap="round" stroke-width="8" x1="515" x2="690" y1="75" y2="75"></line>
+<circle cx="172" cy="251" fill="#2f7d4a" r="7" stroke="#fff" stroke-width="3"></circle>
+<circle cx="380" cy="218" fill="#2f7d4a" r="7" stroke="#fff" stroke-width="3"></circle>
+<circle cx="602" cy="75" fill="#2f7d4a" r="7" stroke="#fff" stroke-width="3"></circle>
+<!-- Forced numerical-score regression line -->
+<polyline fill="none" points="172,269 380,181 602,93" stroke="#dd7a1f" stroke-width="5"></polyline>
+<circle cx="172" cy="269" fill="#dd7a1f" r="5"></circle>
+<circle cx="380" cy="181" fill="#dd7a1f" r="5"></circle>
+<circle cx="602" cy="93" fill="#dd7a1f" r="5"></circle>
+<!-- Residual gaps at the middle and final groups -->
+<line stroke="#b42318" stroke-dasharray="5 4" stroke-width="3" x1="380" x2="380" y1="181" y2="218"></line>
+<path d="M373 190 L380 181 L387 190" fill="none" stroke="#b42318" stroke-width="2"></path>
+<text fill="#b42318" font-size="13" font-weight="700" x="392" y="197">overestimates</text>
+<line stroke="#b42318" stroke-dasharray="5 4" stroke-width="3" x1="602" x2="602" y1="93" y2="75"></line>
+<path d="M595 84 L602 75 L609 84" fill="none" stroke="#b42318" stroke-width="2"></path>
+<text fill="#b42318" font-size="13" font-weight="700" x="615" y="87">underestimates</text>
+<text fill="#475467" font-size="13" font-weight="700" text-anchor="middle" x="172" y="327">Administrative</text>
+<text fill="#475467" font-size="13" font-weight="700" text-anchor="middle" x="172" y="344">staff</text>
+<text fill="#475467" font-size="13" font-weight="700" text-anchor="middle" x="380" y="327">Senior</text>
+<text fill="#475467" font-size="13" font-weight="700" text-anchor="middle" x="380" y="344">officials</text>
+<text fill="#475467" font-size="13" font-weight="700" text-anchor="middle" x="602" y="327">Executives</text>
+<line stroke="#2f7d4a" stroke-linecap="round" stroke-width="7" x1="100" x2="132" y1="367" y2="367"></line>
+<text fill="#475467" font-size="13" x="142" y="372">Separate group means (indicator variables)</text>
+<line stroke="#dd7a1f" stroke-width="5" x1="420" x2="452" y1="367" y2="367"></line>
+<text fill="#475467" font-size="13" x="462" y="372">One forced slope for 1, 2, 3</text>
+</svg>
+<div class="tip"><strong>Visual interpretation.</strong> With two indicator variables, the fitted function is a set of group-specific levels: each category receives its own intercept. Treating the categories as 1, 2, and 3 replaces these levels with one straight line and therefore imposes a pattern that the observed means do not follow.</div>
+</div></div>
+<h3>Use two indicator variables instead</h3>
+<p>Take administrative staff as the reference group and create one indicator for senior officials and one for executives:</p>
+<div class="dummy-eq">Salary = β₀ + β₁D<sub>Senior</sub> + β₂D<sub>Executive</sub> + ε</div>
+<table class="coeff-table"><thead><tr><th>Group</th><th>D<sub>Senior</sub></th><th>D<sub>Executive</sub></th><th>Predicted mean</th></tr></thead><tbody>
+<tr><td>Administrative staff</td><td>0</td><td>0</td><td>β₀</td></tr>
+<tr><td>Senior officials</td><td>1</td><td>0</td><td>β₀ + β₁</td></tr>
+<tr><td>Executives</td><td>0</td><td>1</td><td>β₀ + β₂</td></tr>
+</tbody></table>
+<div class="dummy-eq">Salary = 32,000 + 8,000D<sub>Senior</sub> + 43,000D<sub>Executive</sub></div>
+<p>Now each group has its own expected salary: €32,000, €40,000, and €75,000. The model no longer assumes equal distances between categories.</p>
+<div class="tip"><strong>What happens to R²?</strong> On the same data, the model with separate indicator variables fits at least as well as the model based on the values 1, 2, and 3. Therefore, <strong>R² cannot be lower</strong> and may be substantially higher when the group means are not approximately aligned. The main reason for using indicators, however, is not merely to increase R²: it is to represent the categorical variable correctly.</div>
+<div class="exam-command"><strong>Exam wording:</strong> “The occupational variable is categorical. Assigning the values 1, 2, and 3 would impose equal increments between adjacent categories. Using two indicator variables allows the three group means to differ freely, with administrative staff as the reference category.”</div>
+</div></div>
+<div class="card"><div class="card-head orange">Exam-style output: a dummy that changes the intercept</div><div class="card-body">
+<p>Suppose the estimated wage model includes education and union membership:</p>
+<div class="dummy-eq">wage = −1.84 + 0.694·education + 1.093·union</div>
+<p>The standard error of the union coefficient is 0.201.</p>
+<div class="grid2"><div class="mini"><strong>Interpretation</strong><p>At the same education level, union members are predicted to earn about <strong>$1.09 more per hour</strong> than non-union workers, the reference group.</p></div><div class="mini"><strong>Significance</strong><p>t = 1.093/0.201 ≈ <strong>5.44</strong>. The coefficient is statistically significant at conventional levels.</p></div></div>
+<div class="warn"><strong>Do not write:</strong> “union membership causes wages to rise by $1.09”. The regression supports a conditional association unless the study design justifies a causal claim.</div>
+</div></div>
+<div class="grid2">
+<div class="card"><div class="card-head light">Checklist</div><div class="card-body checklist">
+<label><input type="checkbox"/> Have I examined the scatter plot and the suitability of the linear form?</label>
+<label><input type="checkbox"/> Have I stated the reference category for every dummy variable?</label>
+<label><input type="checkbox"/> Have I written the group-specific equations when an interaction is present?</label>
+<label><input type="checkbox"/> Have I interpreted β̂₁, β̂₂ and β̂₃ in the correct units?</label>
+<label><input type="checkbox"/> Have I distinguished effect size from statistical significance?</label>
+<label><input type="checkbox"/> Have I interpreted R², SER, uncertainty and diagnostics?</label>
+<label><input type="checkbox"/> Am I avoiding an unsupported causal interpretation?</label>
+</div></div>
+<div class="card"><div class="card-head orange">Recommended order for the commentary</div><div class="card-body">
+<div class="mini"><strong>1. Model and groups</strong><p>State Y, X, each indicator variable, and the reference group.</p></div>
+<div class="mini" style="margin-top:10px"><strong>2. Group equations</strong><p>Substitute D=0 and D=1; include the interaction term when present.</p></div>
+<div class="mini" style="margin-top:10px"><strong>3. Coefficients and inference</strong><p>Interpret magnitudes and units, then discuss t, p-values and confidence intervals.</p></div>
+<div class="mini" style="margin-top:10px"><strong>4. Fit, diagnostics, and prediction</strong><p>Assess R², SER, residuals, influential points and the prediction objective.</p></div>
+<div class="mini" style="margin-top:10px"><strong>5. Substantive conclusion</strong><p>Return to the political, legal or economic question and avoid overclaiming causality.</p></div>
+</div></div>
+</div>
+<div class="warn"><strong>It is not enough to write:</strong> “the dummy is significant”. State the reference category, the conditional difference, its units and uncertainty, and whether an interaction changes the slope.</div>
+<div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s6">← Back</button><button class="btn primary next" data-next="s8">Go to the final check →</button></div>
+</section>
+<section class="section" data-iple-group="4" id="s8"><div class="intro"><h2>Final quiz</h2><p>Fourteen questions on shape, covariance, correlation, least squares, R², inference, indicator variables, interactions, prediction, SER and regression diagnostics.</p></div><div class="progress"><div id="quizProgress"></div></div><div id="quizBox"></div><div class="section-nav iple-old-section-nav"><button class="btn secondary prev" data-prev="s7">← Back</button><button class="btn primary" id="restartHerez">Start again</button></div></section>
+<section class="section" data-iple-group="5" id="exam-prep">
+<div class="intro"><span class="exam-prep-badge">Exam practice · 4 points</span><h2>Preparing for the exam</h2><p>Review the complete path from the scatter plot and correlation to the fitted regression line, goodness of fit, inference, prediction and the interpretation of indicator variables.</p></div>
+<div class="exam-worked-wrap"><h3>Five short worked examples</h3><p>Each example focuses on a different skill that may be required in the written examination.</p><div class="exam-worked-grid">
+<article class="exam-worked-card"><span class="exam-mini-label">Worked example 1</span><h3>Look at the shape before using r</h3><p><strong>Question.</strong> A scatter plot is clearly U-shaped, but the correlation is r=0.04. Is there no relationship?</p><div class="exam-answer"><strong>Solution.</strong> No. The correlation measures linear association. A value close to zero may coexist with a strong nonlinear relationship. The scatter plot must therefore be examined before interpreting r.</div></article>
+<article class="exam-worked-card"><span class="exam-mini-label">Worked example 2</span><h3>Interpret and use the fitted line</h3><p><strong>Question.</strong> turnout = 38 + 2.1·education. Interpret the slope and predict turnout when education=10.</p><div class="exam-answer"><strong>Solution.</strong> A one-unit increase in education is associated with an expected increase of 2.1 percentage points in turnout. For education=10, the predicted turnout is 38+2.1·10=59%. The intercept is the prediction when education=0 and should be interpreted only if that value is meaningful and within the observed range.</div></article>
+<article class="exam-worked-card"><span class="exam-mini-label">Worked example 3</span><h3>From r to R², F, t and SE(β̂₁)</h3><p><strong>Question.</strong> With n=80, r=0.45 and β̂₁=1.20, recover the main regression statistics.</p><div class="exam-answer"><strong>Solution.</strong> R²=r²=0.2025. Then F=[R²/(1−R²)](n−2)=19.81. In simple regression, t=+√F=4.45 because the slope is positive. Therefore SE(β̂₁)=1.20/4.45=0.27. The slope is statistically significant at conventional levels.</div></article>
+<article class="exam-worked-card"><span class="exam-mini-label">Worked example 4</span><h3>R² and SER answer different questions</h3><p><strong>Question.</strong> A model has R²=0.18 and SER=7.4. What do the two numbers say?</p><div class="exam-answer"><strong>Solution.</strong> R² says that 18% of the sample variation in Y is explained by the fitted linear model. SER measures the typical residual size in the units of Y: observed values are roughly 7.4 units away from the fitted line. A low R² does not by itself imply that the slope is not statistically significant.</div></article>
+<article class="exam-worked-card"><span class="exam-mini-label">Worked example 5</span><h3>Indicator variable in a regression</h3><p><strong>Question.</strong> wage = −1.84 + 0.694·education + 1.093·union, where union=1 for union members and 0 otherwise. Interpret 1.093.</p><div class="exam-answer"><strong>Solution.</strong> Non-union workers are the reference group. At the same education level, union members have a predicted hourly wage about $1.09 higher. Since there is no interaction, the two groups have parallel fitted lines and the education slope is the same in both groups.</div></article>
+</div></div>
+<div class="exam-try-title">Now try one yourself · 4 points</div>
+<div class="card"><div class="card-head orange">An integrated correlation and regression question</div><div class="card-body">
+<div class="exam-prep-question">For n=100 countries, the correlation between education and voter turnout is r=0.50. The estimated model is turnout = 41 + 1.8·education and SER=8.0. A second model adds compulsory, an indicator equal to 1 for compulsory-voting systems and 0 otherwise. Its estimated coefficient is 6.0 with SE=2.0, and no interaction is included. Calculate and interpret R²; interpret the slope and predict turnout for education=10; test the slope using the relation between R², F and t and recover SE(β̂₁); finally, interpret and test the compulsory coefficient.</div>
+<label for="examPrepAnswer"><strong>Your draft answer</strong></label><textarea id="examPrepAnswer" placeholder="Show the calculations and write each conclusion in the context of voter turnout." style="width:100%;min-height:200px;margin-top:8px"></textarea>
+<details><summary>Show the guided solution</summary><div>
+<p><strong>1. Correlation and goodness of fit.</strong> The association is moderately positive. R²=r²=0.50²=0.25, so the linear model explains 25% of the sample variation in turnout.</p>
+<p><strong>2. Slope and prediction.</strong> A one-unit increase in education is associated with an expected increase of 1.8 percentage points in turnout. At education=10, the predicted turnout is 41+1.8·10=59%.</p>
+<p><strong>3. Significance of the slope.</strong> F=[0.25/(1−0.25)](100−2)=32.67. In simple regression, t=+√32.67=5.72. Hence SE(β̂₁)=1.8/5.72≈0.315. The slope is statistically significant at conventional levels.</p>
+<p><strong>4. Indicator variable.</strong> Voluntary-voting systems are the reference group. Holding education constant, compulsory-voting systems are predicted to have turnout 6 percentage points higher. The test statistic is t=6/2=3.00, so the coefficient is statistically significant at the 5% level. Because no interaction is present, the education slope remains 1.8 in both groups.</p>
+<p><strong>Caution.</strong> These coefficients describe conditional associations unless the research design supports a causal interpretation.</p>
+</div></details>
+<h3>Self-assessment rubric</h3><p>Tick only the elements clearly present in your answer.</p>
+<div class="exam-rubric">
+<label><input class="exam-rubric-item" type="checkbox"/> Calculates R²=0.25 and interprets correlation and explained variation correctly <strong>(1 point)</strong></label>
+<label><input class="exam-rubric-item" type="checkbox"/> Interprets β̂₁ and obtains the prediction 59% <strong>(1 point)</strong></label>
+<label><input class="exam-rubric-item" type="checkbox"/> Obtains F=32.67, t=5.72 and SE(β̂₁)≈0.315 with a correct conclusion <strong>(1 point)</strong></label>
+<label><input class="exam-rubric-item" type="checkbox"/> Interprets the reference group and the 6-point difference, computes t=3.00 and notes that slopes are equal <strong>(1 point)</strong></label>
+</div>
+<button class="btn primary" id="examPrepScoreBtn" type="button">Calculate my score</button><span class="exam-score" id="examPrepScore">— / 4</span>
+</div></div>
+</section></main></div>
+<script>
+const fmt=(x,d=2)=>Number(x).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sections=[...document.querySelectorAll('.section')],tabs=[...document.querySelectorAll('.tab')];function showSection(id){sections.forEach(s=>s.classList.toggle('active',s.id===id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.target===id));window.scrollTo({top:0,behavior:'smooth'})}tabs.forEach(t=>t.addEventListener('click',()=>showSection(t.dataset.target)));document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.next)));document.querySelectorAll('.prev').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.prev)));
+function mean(a){return a.reduce((s,v)=>s+v,0)/a.length}function regression(points){const xs=points.map(p=>p.x),ys=points.map(p=>p.y),mx=mean(xs),my=mean(ys);let sxx=0,sxy=0;for(const p of points){sxx+=(p.x-mx)**2;sxy+=(p.x-mx)*(p.y-my)}const b1=sxx===0?0:sxy/sxx,b0=my-b1*mx;let sst=0,sse=0;for(const p of points){const yh=b0+b1*p.x;sst+=(p.y-my)**2;sse+=(p.y-yh)**2}return{b0,b1,r2:sst===0?1:Math.max(0,1-sse/sst),mx,my}}
+function solve3(A,b){const M=A.map((r,i)=>[...r,b[i]]);for(let i=0;i<3;i++){let m=i;for(let j=i+1;j<3;j++)if(Math.abs(M[j][i])>Math.abs(M[m][i]))m=j;[M[i],M[m]]=[M[m],M[i]];const piv=M[i][i]||1e-12;for(let k=i;k<4;k++)M[i][k]/=piv;for(let j=0;j<3;j++)if(j!==i){const f=M[j][i];for(let k=i;k<4;k++)M[j][k]-=f*M[i][k]}}return[M[0][3],M[1][3],M[2][3]]}
+function quadraticFit(points){let n=points.length,sx=0,sx2=0,sx3=0,sx4=0,sy=0,sxy=0,sx2y=0;for(const p of points){const x=p.x,y=p.y,x2=x*x;sx+=x;sx2+=x2;sx3+=x2*x;sx4+=x2*x2;sy+=y;sxy+=x*y;sx2y+=x2*y}const[a,b,c]=solve3([[n,sx,sx2],[sx,sx2,sx3],[sx2,sx3,sx4]],[sy,sxy,sx2y]);const my=sy/n;let sst=0,sse=0;for(const p of points){const yh=a+b*p.x+c*p.x*p.x;sst+=(p.y-my)**2;sse+=(p.y-yh)**2}return{a,b,c,r2:sst===0?1:Math.max(0,1-sse/sst)}}
+function bounds(points,pad=.12){let xs=points.map(p=>p.x),ys=points.map(p=>p.y),xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys),dx=(xmax-xmin)||1,dy=(ymax-ymin)||1;return{xmin:xmin-dx*pad,xmax:xmax+dx*pad,ymin:ymin-dy*pad,ymax:ymax+dy*pad}}
+function drawScatter(canvas,points,opts={}){const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);const L=70,R=25,T=25,B=55,b=opts.bounds||bounds(points),X=x=>L+(x-b.xmin)/(b.xmax-b.xmin)*(w-L-R),Y=y=>T+(b.ymax-y)/(b.ymax-b.ymin)*(h-T-B);ctx.strokeStyle='#d9e2ec';ctx.lineWidth=1;for(let i=0;i<=5;i++){const px=L+i*(w-L-R)/5,py=T+i*(h-T-B)/5;ctx.beginPath();ctx.moveTo(px,T);ctx.lineTo(px,h-B);ctx.stroke();ctx.beginPath();ctx.moveTo(L,py);ctx.lineTo(w-R,py);ctx.stroke()}ctx.strokeStyle='#344054';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.stroke();ctx.fillStyle='#667085';ctx.font='13px Arial';for(let i=0;i<=5;i++){const xv=b.xmin+i*(b.xmax-b.xmin)/5,yv=b.ymax-i*(b.ymax-b.ymin)/5;ctx.fillText(fmt(xv,opts.xDigits??1),L+i*(w-L-R)/5-12,h-B+22);ctx.fillText(fmt(yv,opts.yDigits??1),8,T+i*(h-T-B)/5+4)}if(opts.meanLines){ctx.strokeStyle='#b42318';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(opts.meanLines.mx),T);ctx.lineTo(X(opts.meanLines.mx),h-B);ctx.stroke();ctx.beginPath();ctx.moveTo(L,Y(opts.meanLines.my));ctx.lineTo(w-R,Y(opts.meanLines.my));ctx.stroke()}if(opts.line){const y1=opts.line.b0+opts.line.b1*b.xmin,y2=opts.line.b0+opts.line.b1*b.xmax;ctx.strokeStyle=opts.line.color||'#c4681a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(b.xmin),Y(y1));ctx.lineTo(X(b.xmax),Y(y2));ctx.stroke()}if(opts.curve){ctx.strokeStyle=opts.curve.color||'#2e7d32';ctx.lineWidth=3;ctx.beginPath();for(let i=0;i<=160;i++){const x=b.xmin+i*(b.xmax-b.xmin)/160,y=opts.curve.a+opts.curve.b*x+opts.curve.c*x*x;if(i===0)ctx.moveTo(X(x),Y(y));else ctx.lineTo(X(x),Y(y))}ctx.stroke()}for(const[i,p]of points.entries()){ctx.fillStyle=p.color||opts.pointColor||'#2e8b57';ctx.beginPath();ctx.arc(X(p.x),Y(p.y),opts.pointRadius||6,0,Math.PI*2);ctx.fill();if(opts.labels){ctx.fillStyle='#344054';ctx.font='12px Arial';ctx.fillText(String(i+1),X(p.x)+7,Y(p.y)-7)}}return{X,Y,b,L,R,T,B}}
+function seededNoise(i,seed=1){return Math.sin((i+1)*12.9898+seed*78.233)*43758.5453%1}function noiseVal(i,seed=1){const u=seededNoise(i,seed);return(u-Math.trunc(u))*2-1}
+let currentPattern='positive';const patternAnswers={positive:'linear-positive',negative:'linear-negative',none:'none',curve:'nonlinear',groups:'none',outlier:'linear-positive'};function patternData(type){const pts=[];for(let i=0;i<24;i++){const x=i/2;let y;if(type==='positive')y=3+1.7*x+noiseVal(i,2)*2.4;if(type==='negative')y=25-1.6*x+noiseVal(i,3)*2.4;if(type==='none')y=12+noiseVal(i,4)*10;if(type==='curve')y=3+0.55*(x-6)**2+noiseVal(i,5)*1.3;if(type==='groups')y=(i<12?5:18)+noiseVal(i,6)*2.5;if(type==='outlier')y=4+1.4*x+noiseVal(i,7)*1.8;pts.push({x,y})}if(type==='outlier')pts.push({x:13.5,y:38,color:'#b42318'});return pts}function renderPattern(){const pts=patternData(currentPattern),reg=regression(pts);drawScatter(document.getElementById('patternCanvas'),pts,{line:reg,pointRadius:5});document.getElementById('patternSlope').textContent=fmt(reg.b1,2);document.getElementById('patternR2').textContent=fmt(reg.r2,2);const names={positive:'linear',negative:'linear',none:'irregolare',curve:'curved',groups:'groups',outlier:'quasi linear'};document.getElementById('patternShape').textContent=names[currentPattern];document.getElementById('patternN').textContent=pts.length}document.querySelectorAll('#patternButtons button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#patternButtons button').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentPattern=b.dataset.pattern;renderPattern();document.querySelectorAll('.patternChoice').forEach(x=>x.classList.remove('correct','wrong'));document.getElementById('patternFb').className='feedback'}));document.querySelectorAll('.patternChoice').forEach(b=>b.addEventListener('click',()=>{const ok=b.dataset.answer===patternAnswers[currentPattern];document.querySelectorAll('.patternChoice').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(ok?'correct':'wrong');const fb=document.getElementById('patternFb');fb.className='feedback show '+(ok?'ok':'err');fb.textContent=ok?'Correct interpretation of the shape.':'Look at the scatter again: a number such as R² cannot replace examining the shape.'}));renderPattern();
+const covPts=[
+{x:7,y:8,color:'#147d8d'},{x:6,y:6,color:'#147d8d'},
+{x:3,y:7,color:'#c4681a'},{x:4,y:6,color:'#c4681a'},
+{x:2,y:2,color:'#147d8d'},{x:4,y:4,color:'#147d8d'},
+{x:8,y:3,color:'#c4681a'},{x:6,y:4,color:'#c4681a'}
+],covReg=regression(covPts),covCanvas=document.getElementById('covCanvas');let covSelected=0,covMap;
+function drawCovariance(){covMap=drawScatter(covCanvas,covPts,{meanLines:{mx:covReg.mx,my:covReg.my},labels:true,bounds:{xmin:1,xmax:9,ymin:1,ymax:9}});const ctx=covCanvas.getContext('2d');ctx.fillStyle='rgba(23,107,77,.7)';ctx.font='bold 25px Georgia';ctx.fillText('II',covMap.X(2.0),covMap.Y(8.4));ctx.fillText('I',covMap.X(8.2),covMap.Y(8.4));ctx.fillText('III',covMap.X(2.0),covMap.Y(1.5));ctx.fillText('IV',covMap.X(8.0),covMap.Y(1.5));const p=covPts[covSelected];ctx.strokeStyle='#20242c';ctx.lineWidth=3;ctx.beginPath();ctx.arc(covMap.X(p.x),covMap.Y(p.y),11,0,Math.PI*2);ctx.stroke()}
+function selectCov(i){covSelected=i;drawCovariance();const p=covPts[i],dx=p.x-covReg.mx,dy=p.y-covReg.my,prod=dx*dy;document.getElementById('covDx').textContent=fmt(dx,2);document.getElementById('covDy').textContent=fmt(dy,2);document.getElementById('covProd').textContent=fmt(prod,2);document.getElementById('covSign').textContent=prod>=0?'Positive':'Negative'}
+function updateCorrelationSummary(){const n=covPts.length,mx=covReg.mx,my=covReg.my;let sxy=0,sxx=0,syy=0;for(const p of covPts){const dx=p.x-mx,dy=p.y-my;sxy+=dx*dy;sxx+=dx*dx;syy+=dy*dy}const sampleCov=sxy/(n-1),r=sxy/Math.sqrt(sxx*syy),ar=Math.abs(r);document.getElementById('covSample').textContent=fmt(sampleCov,3);document.getElementById('corrR').textContent=fmt(r,3);document.getElementById('corrStrength').textContent=ar<.3?'Weak':ar<.7?'Moderate':'Strong'}
+drawCovariance();covCanvas.addEventListener('click',e=>{const r=covCanvas.getBoundingClientRect(),mx=(e.clientX-r.left)*covCanvas.width/r.width,my=(e.clientY-r.top)*covCanvas.height/r.height;let best=0,bd=Infinity;covPts.forEach((p,i)=>{const d=(covMap.X(p.x)-mx)**2+(covMap.Y(p.y)-my)**2;if(d<bd){bd=d;best=i}});selectCov(best)});selectCov(0);updateCorrelationSummary();
+let regSeed=9;function regData(){const slope=+document.getElementById('regSlope').value,noise=+document.getElementById('regNoise').value,scale=+document.getElementById('regUnit').value,pts=[];for(let i=1;i<=25;i++){const x=i/2,y=(5+slope*x+noise*noiseVal(i,regSeed))*scale;pts.push({x,y})}return pts}function updateReg(){const pts=regData(),reg=regression(pts),scale=+document.getElementById('regUnit').value;drawScatter(document.getElementById('regCanvas'),pts,{line:reg,yDigits:scale===1?1:0});document.getElementById('regSlopeVal').textContent=fmt(+document.getElementById('regSlope').value,2);document.getElementById('regNoiseVal').textContent=fmt(+document.getElementById('regNoise').value,1);document.getElementById('regB0').textContent=fmt(reg.b0,scale===1?2:0);document.getElementById('regB1').textContent=fmt(reg.b1,scale===1?2:0);document.getElementById('regR2').textContent=fmt(reg.r2,3);document.getElementById('regUnitKpi').textContent=scale===1?'years / percentage points':'euros'}['regSlope','regNoise','regUnit'].forEach(id=>document.getElementById(id).addEventListener('input',updateReg));updateReg();
+const olsPts=Array.from({length:12},(_,i)=>{const x=i+1;return{x,y:4+1.8*x+2.2*noiseVal(i,31)}}),olsReg=regression(olsPts),olsCanvas=document.getElementById('olsCanvas');
+function sseFor(points,b0,b1){return points.reduce((s,p)=>s+(p.y-(b0+b1*p.x))**2,0)}
+function drawLineOnMap(ctx,map,reg,color,width=3,dash=[]){const y1=reg.b0+reg.b1*map.b.xmin,y2=reg.b0+reg.b1*map.b.xmax;ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(map.X(map.b.xmin),map.Y(y1));ctx.lineTo(map.X(map.b.xmax),map.Y(y2));ctx.stroke();ctx.restore()}
+function updateOLS(){const b0=+document.getElementById('trialB0').value,b1=+document.getElementById('trialB1').value,map=drawScatter(olsCanvas,olsPts,{bounds:{xmin:0,xmax:13,ymin:0,ymax:34}}),ctx=olsCanvas.getContext('2d');drawLineOnMap(ctx,map,olsReg,'#c4681a',3,[9,6]);ctx.save();ctx.strokeStyle='rgba(109,91,208,.68)';ctx.lineWidth=2;for(const p of olsPts){const yh=b0+b1*p.x;ctx.beginPath();ctx.moveTo(map.X(p.x),map.Y(p.y));ctx.lineTo(map.X(p.x),map.Y(yh));ctx.stroke()}ctx.restore();drawLineOnMap(ctx,map,{b0,b1},'#6d5bd0',3);document.getElementById('trialB0Val').textContent=fmt(b0,2);document.getElementById('trialB1Val').textContent=fmt(b1,2);document.getElementById('trialSSE').textContent=fmt(sseFor(olsPts,b0,b1),2);document.getElementById('minSSE').textContent=fmt(sseFor(olsPts,olsReg.b0,olsReg.b1),2);document.getElementById('olsB0').textContent=fmt(olsReg.b0,2);document.getElementById('olsB1').textContent=fmt(olsReg.b1,2)}
+['trialB0','trialB1'].forEach(id=>document.getElementById(id).addEventListener('input',updateOLS));document.getElementById('useOLS').addEventListener('click',()=>{document.getElementById('trialB0').value=olsReg.b0;document.getElementById('trialB1').value=olsReg.b1;updateOLS()});updateOLS();
+const A=[1,2,3,4,5].map(x=>({x,y:2*x,color:'#147d8d'})),B=[1,2,3,4,5].map(x=>({x,y:3*x,color:'#6d5bd0'})),both=[...A,...B],c4=document.getElementById('twoLinesCanvas'),ctx4=c4.getContext('2d'),map4=drawScatter(c4,both,{bounds:{xmin:0,xmax:6,ymin:0,ymax:16}});ctx4.strokeStyle='#147d8d';ctx4.lineWidth=3;ctx4.beginPath();ctx4.moveTo(map4.X(1),map4.Y(2));ctx4.lineTo(map4.X(5),map4.Y(10));ctx4.stroke();ctx4.strokeStyle='#6d5bd0';ctx4.beginPath();ctx4.moveTo(map4.X(1),map4.Y(3));ctx4.lineTo(map4.X(5),map4.Y(15));ctx4.stroke();document.querySelectorAll('.qSame').forEach(b=>b.addEventListener('click',()=>{const ok=b.dataset.ok==='1';document.querySelectorAll('.qSame').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(ok?'correct':'wrong');const fb=document.getElementById('sameFb');fb.className='feedback show '+(ok?'ok':'err');fb.textContent=ok?'Exactly: R² measures fit to the line; the slope measures the expected change in Y for a one-unit change in X.':'Slope and R² are not the same measure.'}));
+function discountData(){const opt=+document.getElementById('optDiscount').value;return[0,10,20,30,40].map(x=>({x,y:100-0.1*(x-opt)**2}))}function updateCurve(){const pts=discountData(),lin=regression(pts),quad=quadraticFit(pts);drawScatter(document.getElementById('curveCanvas'),pts,{line:{...lin,color:'#c4681a'},curve:{...quad,color:'#2e7d32'},bounds:{xmin:-5,xmax:45,ymin:45,ymax:110}});document.getElementById('optDiscountVal').textContent=document.getElementById('optDiscount').value+'%';document.getElementById('curveLinR2').textContent=fmt(lin.r2,3);document.getElementById('curveQuadR2').textContent=fmt(quad.r2,3);document.getElementById('curveSlope').textContent=fmt(lin.b1,3);document.getElementById('discountRows').innerHTML=pts.map(p=>`<tr><td>${p.x}%</td><td>${fmt(p.y,1)}</td></tr>`).join('')}document.getElementById('optDiscount').addEventListener('input',updateCurve);updateCurve();
+let exSeed=20,outlierMode='none';
+function exploreBaseData(){const slope=+document.getElementById('exSlope').value,curve=+document.getElementById('exCurve').value,noise=+document.getElementById('exNoise').value,scale=+document.getElementById('exScale').value,pts=[];for(let i=0;i<30;i++){const x=i/2,y=(10+slope*x+curve*(x-7.25)**2+noise*noiseVal(i,exSeed))*scale;pts.push({x,y})}return pts}
+function exploreData(){const basePts=exploreBaseData(),baseReg=regression(basePts),scale=+document.getElementById('exScale').value,pts=basePts.map(p=>({...p}));if(outlierMode==='influential'){const shift=(baseReg.b1>=0?-110:110)*scale;pts.push({x:30,y:baseReg.b0+baseReg.b1*30+shift,color:'#b42318'})}if(outlierMode==='leverage')pts.push({x:30,y:baseReg.b0+baseReg.b1*30,color:'#6d5bd0'});return{basePts,baseReg,pts}}
+function updateExplore(){const obj=exploreData(),reg=regression(obj.pts),scale=+document.getElementById('exScale').value,map=drawScatter(document.getElementById('exploreCanvas'),obj.pts,{yDigits:scale===1?1:0}),ctx=document.getElementById('exploreCanvas').getContext('2d');if(outlierMode!=='none')drawLineOnMap(ctx,map,obj.baseReg,'#7a8699',3,[9,6]);drawLineOnMap(ctx,map,reg,'#c4681a',3);document.getElementById('exSlopeVal').textContent=fmt(+document.getElementById('exSlope').value,2);document.getElementById('exCurveVal').textContent=fmt(+document.getElementById('exCurve').value,1);document.getElementById('exNoiseVal').textContent=fmt(+document.getElementById('exNoise').value,1);document.getElementById('exScaleVal').textContent=scale===1?'1×':'1.000×';document.getElementById('exB0').textContent=fmt(reg.b0,scale===1?2:0);document.getElementById('exB1').textContent=fmt(reg.b1,scale===1?2:0);document.getElementById('exR2').textContent=fmt(reg.r2,3);document.getElementById('exDeltaB1').textContent=fmt(reg.b1-obj.baseReg.b1,scale===1?3:1);document.getElementById('exOutlier').textContent=outlierMode==='none'?'None':outlierMode==='influential'?'Influential':'Estremo in X'}
+['exSlope','exCurve','exNoise','exScale'].forEach(id=>document.getElementById(id).addEventListener('input',updateExplore));document.querySelectorAll('#outlierButtons button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#outlierButtons button').forEach(x=>x.classList.remove('active'));b.classList.add('active');outlierMode=b.dataset.mode;updateExplore()}));document.getElementById('newNoise').addEventListener('click',()=>{exSeed++;updateExplore()});updateExplore();
+
+
+const predictionCfg={b0:11.84,b1:2.36,ser:6.10,n:30,xbar:8.10,sxx:387.1,t:2.048,observedMin:2,observedMax:15};
+function drawPredictionIntervals(x0,yhat,meanLow,meanHigh,predLow,predHigh){
+  const canvas=document.getElementById('predictionCanvas'),ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height,L=150,R=42,T=50,B=76;
+
+  /* The scale remains fixed across the full slider range.
+     In the previous version it was recalculated after every movement,
+     which made the intervals appear stationary. */
+  const minVal=-5,maxVal=80;
+  const X=v=>L+(v-minVal)/(maxVal-minVal)*(w-L-R);
+
+  ctx.clearRect(0,0,w,h);
+
+  ctx.fillStyle='#344054';
+  ctx.font='bold 14px Arial';
+  ctx.fillText('Education x₀ = '+fmt(x0,1)+' percentage points',L,T-19);
+
+  for(let v=0;v<=80;v+=10){
+    const x=X(v);
+    ctx.strokeStyle='#e1e7ee';
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(x,T);
+    ctx.lineTo(x,h-B);
+    ctx.stroke();
+
+    ctx.fillStyle='#667085';
+    ctx.font='12px Arial';
+    ctx.fillText(String(v),x-7,h-B+23);
+  }
+
+  ctx.strokeStyle='#344054';
+  ctx.lineWidth=1.5;
+  ctx.beginPath();
+  ctx.moveTo(X(minVal),h-B);
+  ctx.lineTo(X(maxVal),h-B);
+  ctx.stroke();
+
+  ctx.fillStyle='#344054';
+  ctx.font='bold 13px Arial';
+  ctx.fillText('Predicted voter turnout (percentage points)',w/2-105,h-20);
+
+  const yPred=160,yMean=300;
+
+  ctx.fillStyle='#344054';
+  ctx.font='bold 14px Arial';
+  ctx.fillText('Single new observation',12,yPred-5);
+  ctx.fillText('new case (PI)',12,yPred+15);
+  ctx.fillText('Mean response',12,yMean-5);
+  ctx.fillText('(IC)',12,yMean+15);
+
+  /* A shared vertical reference line makes the shift in the prediction visible. */
+  ctx.strokeStyle='rgba(46,125,50,.42)';
+  ctx.lineWidth=2;
+  ctx.setLineDash([7,6]);
+  ctx.beginPath();
+  ctx.moveTo(X(yhat),T+24);
+  ctx.lineTo(X(yhat),h-B);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.strokeStyle='#c4681a';
+  ctx.lineWidth=13;
+  ctx.lineCap='round';
+  ctx.beginPath();
+  ctx.moveTo(X(predLow),yPred);
+  ctx.lineTo(X(predHigh),yPred);
+  ctx.stroke();
+
+  ctx.strokeStyle='#2e8b57';
+  ctx.lineWidth=13;
+  ctx.beginPath();
+  ctx.moveTo(X(meanLow),yMean);
+  ctx.lineTo(X(meanHigh),yMean);
+  ctx.stroke();
+
+  [predLow,predHigh].forEach(v=>{
+    ctx.strokeStyle='#7a4300';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(X(v),yPred-18);
+    ctx.lineTo(X(v),yPred+18);
+    ctx.stroke();
+  });
+
+  [meanLow,meanHigh].forEach(v=>{
+    ctx.strokeStyle='#176b4d';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(X(v),yMean-18);
+    ctx.lineTo(X(v),yMean+18);
+    ctx.stroke();
+  });
+
+  ctx.fillStyle='#2e7d32';
+  ctx.beginPath();
+  ctx.arc(X(yhat),yPred,9,0,Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(X(yhat),yMean,9,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle='#344054';
+  ctx.font='13px Arial';
+  ctx.fillText('['+fmt(predLow,1)+'; '+fmt(predHigh,1)+']',X((predLow+predHigh)/2)-43,yPred-27);
+  ctx.fillText('['+fmt(meanLow,1)+'; '+fmt(meanHigh,1)+']',X((meanLow+meanHigh)/2)-43,yMean-27);
+
+  ctx.fillStyle='#2e7d32';
+  ctx.font='bold 13px Arial';
+  ctx.fillText('ŷ₀ = '+fmt(yhat,1),Math.min(X(yhat)+11,w-90),yPred+40);
+}
+
+function drawPredictionWidths(x0){
+  const c=predictionCfg,canvas=document.getElementById('predictionWidthCanvas'),ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height,L=72,R=35,T=35,B=62;
+  const xmin=0,xmax=20,ymin=0,ymax=16;
+  const X=x=>L+(x-xmin)/(xmax-xmin)*(w-L-R);
+  const Y=y=>T+(ymax-y)/(ymax-ymin)*(h-T-B);
+
+  ctx.clearRect(0,0,w,h);
+
+  for(let y=0;y<=16;y+=4){
+    const yy=Y(y);
+    ctx.strokeStyle='#e1e7ee';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(w-R,yy);ctx.stroke();
+    ctx.fillStyle='#667085';ctx.font='12px Arial';ctx.fillText(String(y),35,yy+4);
+  }
+  for(let x=0;x<=20;x+=2){
+    const xx=X(x);
+    ctx.strokeStyle='#eef2f6';ctx.beginPath();ctx.moveTo(xx,T);ctx.lineTo(xx,h-B);ctx.stroke();
+    ctx.fillStyle='#667085';ctx.fillText(String(x),xx-5,h-B+22);
+  }
+
+  ctx.strokeStyle='#344054';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(L,T);ctx.lineTo(L,h-B);ctx.lineTo(w-R,h-B);ctx.stroke();
+
+  ctx.fillStyle='#344054';ctx.font='bold 13px Arial';
+  ctx.fillText('Half-width (percentage points)',12,T-12);
+  ctx.fillText('Education x₀ (years)',w/2-80,h-18);
+
+  function marginsAt(x){
+    const leverage=1/c.n+(x-c.xbar)**2/c.sxx;
+    return {
+      mean:c.t*c.ser*Math.sqrt(leverage),
+      pred:c.t*c.ser*Math.sqrt(1+leverage)
+    };
+  }
+
+  ctx.strokeStyle='#2e8b57';ctx.lineWidth=3;ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const x=xmin+(xmax-xmin)*i/200,m=marginsAt(x).mean;
+    if(i===0)ctx.moveTo(X(x),Y(m));else ctx.lineTo(X(x),Y(m));
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle='#c4681a';ctx.lineWidth=3;ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const x=xmin+(xmax-xmin)*i/200,m=marginsAt(x).pred;
+    if(i===0)ctx.moveTo(X(x),Y(m));else ctx.lineTo(X(x),Y(m));
+  }
+  ctx.stroke();
+
+  const current=marginsAt(x0),xx=X(x0);
+  ctx.strokeStyle='rgba(52,64,84,.45)';ctx.lineWidth=2;ctx.setLineDash([6,5]);
+  ctx.beginPath();ctx.moveTo(xx,T);ctx.lineTo(xx,h-B);ctx.stroke();ctx.setLineDash([]);
+
+  ctx.fillStyle='#2e8b57';ctx.beginPath();ctx.arc(xx,Y(current.mean),7,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#c4681a';ctx.beginPath();ctx.arc(xx,Y(current.pred),7,0,Math.PI*2);ctx.fill();
+
+  ctx.fillStyle='#2e8b57';ctx.font='bold 12px Arial';
+  ctx.fillText('IC: ±'+fmt(current.mean,2),Math.min(xx+10,w-115),Y(current.mean)-9);
+  ctx.fillStyle='#c4681a';
+  ctx.fillText('IP: ±'+fmt(current.pred,2),Math.min(xx+10,w-115),Y(current.pred)-9);
+
+  ctx.strokeStyle='rgba(23,107,77,.35)';ctx.lineWidth=2;
+  ctx.beginPath();ctx.moveTo(X(c.xbar),T);ctx.lineTo(X(c.xbar),h-B);ctx.stroke();
+  ctx.fillStyle='#176b4d';ctx.font='12px Arial';
+  ctx.fillText('x̄=8,1',X(c.xbar)-20,T+15);
+}
+
+function updatePrediction(){
+  const c=predictionCfg,x0=+document.getElementById('predX').value;
+  const yhat=c.b0+c.b1*x0;
+  const leverage=1/c.n+(x0-c.xbar)**2/c.sxx;
+  const meanMargin=c.t*c.ser*Math.sqrt(leverage);
+  const predMargin=c.t*c.ser*Math.sqrt(1+leverage);
+  const meanLow=yhat-meanMargin,meanHigh=yhat+meanMargin;
+  const predLow=yhat-predMargin,predHigh=yhat+predMargin;
+
+  document.getElementById('predXVal').textContent=fmt(x0,1);
+  document.getElementById('predY').textContent=fmt(yhat,2);
+  document.getElementById('predMeanCI').textContent='['+fmt(meanLow,2)+'; '+fmt(meanHigh,2)+']';
+  document.getElementById('predIndividualPI').textContent='['+fmt(predLow,2)+'; '+fmt(predHigh,2)+']';
+  document.getElementById('predMeanMargin').textContent='±'+fmt(meanMargin,2);
+  document.getElementById('predPredictionMargin').textContent='±'+fmt(predMargin,2);
+
+  const note=document.getElementById('predRangeNote');
+  if(x0<c.observedMin||x0>c.observedMax){
+    note.className='warn';
+    note.innerHTML='<strong>Extrapolation:</strong> x₀ lies outside the approximate 2–15 range observed in the exercise. The line is extended beyond the data and the prediction requires greater caution.';
+  }else{
+    note.className='tip';
+    note.innerHTML='<strong>Interpolation:</strong> x₀ lies within the approximate 2–15 range observed in the exercise.';
+  }
+  drawPredictionIntervals(x0,yhat,meanLow,meanHigh,predLow,predHigh);
+  drawPredictionWidths(x0);
+}
+document.getElementById('predX').addEventListener('input',updatePrediction);
+updatePrediction();
+
+document.querySelectorAll('.qInf').forEach(b=>b.addEventListener('click',()=>{const ok=b.dataset.ok==='1';document.querySelectorAll('.qInf').forEach(x=>x.classList.remove('correct','wrong'));b.classList.add(ok?'correct':'wrong');const fb=document.getElementById('infFb');fb.className='feedback show '+(ok?'ok':'err');fb.textContent=ok?'Exactly: the p-value is calculated under H₀ and the model assumptions.':'The p-value is not the probability that H₀ is true and is not the same as R².'}));
+
+const quiz=[
+{q:'What must be examined before interpreting R²?',a:['Only the mean of Y','The scatter plot','Only the sample size'],ok:1},
+{q:'Why does the factor n−1 not appear in the final formula for r?',a:['Because the common factor cancels when covariance and standard deviations are calculated consistently','Because correlation does not use means','Because ρ and r are always identical'],ok:0},
+{q:'What does the least-squares method minimise?',a:['The sum of the residuals','The sum of squared residuals, SSE','The sum of the X values'],ok:1},
+{q:'In the decomposition SST = SSR + SSE, what does SSR represent?',a:['The variability in Y described by the regression','The variability remaining in the residuals','The variance of X'],ok:0},
+{q:'What does β̂₁ measure?',a:['The proportion of variability described','The expected mean change in Y for a one-unit increase in X','The model p-value'],ok:1},
+{q:'Two perfect lines with slopes 2 and 3 have...',a:['Different R² values','R² equal to 1 in both cases','R² equal to the slope'],ok:1},
+{q:'A symmetric parabola can have...',a:['Linear R² close to zero','a linear R² always equal to one','no relationship between X and Y'],ok:0},
+{q:'For exact t-tests and intervals in a small sample, we assume...',a:['conditional normality of the errors','mandatory marginal normality of X','that R² is greater than 0.50'],ok:0},
+{q:'In the test H₀:β₁=0, the t-statistic is...',a:['β̂₁/SE(β̂₁)','R²/β̂₁','SSR/SST'],ok:0},
+{q:'An extreme point in X that lies on the original line...',a:['must greatly alter the coefficients','may leave β̂₀ and β̂₁ almost unchanged','always makes R² equal to zero'],ok:1},
+{q:'What does SER measure?',a:['The typical vertical distance between observed and fitted values','Uncertainty about the slope alone','The percentage of variability explained'],ok:0},
+{q:'In Y=β₀+β₁X+β₂D, with D=0 as the reference group, what does β₂ represent?',a:['The slope for D=1','The conditional intercept difference between D=1 and D=0','The overall R²'],ok:1},
+{q:'In a model with X, D and X·D, what is the slope for the group D=1?',a:['β₁','β₃','β₁+β₃'],ok:2},
+{q:'Why is it usually inappropriate to enter three occupational categories directly as 1, 2 and 3?',a:['It forces equal increments between adjacent categories','It prevents calculation of an intercept','It always makes R² equal to zero'],ok:0},
+];let qi=0,score=0;const quizBox=document.getElementById('quizBox');function renderHerez(){document.getElementById('quizProgress').style.width=(qi/quiz.length*100)+'%';if(qi>=quiz.length){quizBox.innerHTML=`<div class="card"><div class="card-head light">Result</div><div class="card-body"><p style="font-size:34px;font-weight:900;color:var(--blue)">${score}/${quiz.length}</p><p>${score>=10?'Excellent: you can distinguish shape, slopes, group differences and explanatory power.':score>=8?'Good result: review interactions, nonlinearity and changes of scale.':'Review the sections on scatterplot shape and the meaning of R².'}</p></div></div>`;document.getElementById('quizProgress').style.width='100%';return}const item=quiz[qi];quizBox.innerHTML=`<div class="card"><div class="card-head light">Question ${qi+1} of ${quiz.length}</div><div class="card-body"><h3>${item.q}</h3>${item.a.map((x,i)=>`<button class="choice quizchoice" data-i="${i}">${x}</button>`).join('')}<div id="quizFb" class="feedback"></div></div></div>`;document.querySelectorAll('.quizchoice').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.i,ok=i===item.ok;document.querySelectorAll('.quizchoice').forEach(x=>x.disabled=true);b.classList.add(ok?'correct':'wrong');if(!ok)document.querySelectorAll('.quizchoice')[item.ok].classList.add('correct');if(ok)score++;const fb=document.getElementById('quizFb');fb.className='feedback show '+(ok?'ok':'err');fb.innerHTML=(ok?'Correct answer.':'Review the highlighted concept.')+` <button class="btn primary" id="nextHerez">Continue</button>`;document.getElementById('nextHerez').addEventListener('click',()=>{qi++;renderHerez()})}))}document.getElementById('restartHerez').addEventListener('click',()=>{qi=0;score=0;renderHerez()});renderHerez();
+</script>
+<script>
+(()=>{const b=document.getElementById('examPrepScoreBtn');if(!b)return;b.addEventListener('click',()=>{const n=[...document.querySelectorAll('.exam-rubric-item')].filter(x=>x.checked).length;document.getElementById('examPrepScore').textContent=n+' / 4';});})();
+</script><script id="iple-group-navigation">
+(()=>{
+  const groupTabs=[...document.querySelectorAll('.iple-group-tab')];
+  const sections=[...document.querySelectorAll('.section[data-iple-group]')];
+  if(!groupTabs.length||!sections.length)return;
+  const originalTabs=[...document.querySelectorAll('.iple-original-tabs .tab')];
+  const content=document.querySelector('.content,.main');
+  const groupIds=[...new Set(groupTabs.map(t=>String(t.dataset.ipleGroup)))];
+  let currentGroup=groupIds[0]||'0';
+
+  function originalTabFor(section){
+    return originalTabs.find(t=>t.dataset.target===section.id || ('tab'+(t.dataset.tab||''))===section.id);
+  }
+
+  function prepareVisibleSections(visible){
+    const savedScrollTo=window.scrollTo;
+    const savedScrollIntoView=Element.prototype.scrollIntoView;
+    try{
+      window.scrollTo=()=>{};
+      Element.prototype.scrollIntoView=function(){};
+      visible.forEach(sec=>{
+        const t=originalTabFor(sec);
+        if(t) t.click();
+        else {
+          sections.forEach(s=>s.classList.toggle('active',s===sec));
+          if(typeof window.redrawVisible==='function') window.redrawVisible();
+        }
+      });
+    }catch(e){console.warn('Section preparation:',e)}
+    finally{
+      window.scrollTo=savedScrollTo;
+      Element.prototype.scrollIntoView=savedScrollIntoView;
+    }
+  }
+
+  /* Many original pages redraw only the first active section. During grouping,
+     render each visible section once while it is the sole active section. */
+  function redrawAllVisible(visible){
+    const redraw=window.redrawVisible;
+    if(typeof redraw!=='function'){
+      window.dispatchEvent(new Event('resize'));
+      return;
+    }
+    visible.forEach(sec=>{
+      sections.forEach(s=>s.classList.toggle('active',s===sec));
+      try{redraw();}catch(e){console.warn('Redraw:',sec.id,e)}
+    });
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  const bottomNav=document.createElement('div');
+  bottomNav.className='iple-group-nav';
+  bottomNav.setAttribute('aria-label','Section navigation');
+  bottomNav.innerHTML='<button class="btn secondary" id="iplePrevGroup" type="button"></button><span class="iple-nav-spacer"></span><button class="btn primary" id="ipleNextGroup" type="button"></button>';
+  if(content) content.appendChild(bottomNav);
+  const prevBtn=bottomNav.querySelector('#iplePrevGroup');
+  const nextBtn=bottomNav.querySelector('#ipleNextGroup');
+
+  function labelFor(group){
+    return (groupTabs.find(t=>String(t.dataset.ipleGroup)===String(group))?.textContent||'').trim();
+  }
+  function updateBottomNav(group){
+    const i=groupIds.indexOf(String(group));
+    const prev=groupIds[i-1], next=groupIds[i+1];
+    prevBtn.hidden=prev===undefined;
+    nextBtn.hidden=next===undefined;
+    if(prev!==undefined){prevBtn.dataset.group=prev;prevBtn.textContent='← Previous: '+labelFor(prev)}
+    if(next!==undefined){nextBtn.dataset.group=next;nextBtn.textContent='Next: '+labelFor(next)+' →'}
+    bottomNav.querySelector('.iple-nav-spacer').hidden=(prev===undefined||next===undefined);
+  }
+
+  function activate(group,scroll=true){
+    group=String(group);
+    currentGroup=group;
+    groupTabs.forEach(t=>t.classList.toggle('active',String(t.dataset.ipleGroup)===group));
+    const visible=sections.filter(s=>String(s.dataset.ipleGroup)===group);
+    prepareVisibleSections(visible);
+    sections.forEach(s=>s.classList.toggle('active',visible.includes(s)));
+    redrawAllVisible(visible);
+    requestAnimationFrame(()=>redrawAllVisible(visible));
+    setTimeout(()=>redrawAllVisible(visible),140);
+    updateBottomNav(group);
+    if(scroll&&content) content.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  groupTabs.forEach(t=>t.addEventListener('click',()=>activate(t.dataset.ipleGroup)));
+  prevBtn.addEventListener('click',()=>activate(prevBtn.dataset.group));
+  nextBtn.addEventListener('click',()=>activate(nextBtn.dataset.group));
+
+  /* Old within-section controls lead to the harmonised group containing the target. */
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('[data-next],[data-prev],[data-to]');
+    if(!b||b.closest('.iple-original-tabs')||b.closest('.iple-group-nav'))return;
+    const raw=b.dataset.next||b.dataset.prev||b.dataset.to;
+    const target=document.getElementById(raw)||document.getElementById('tab'+raw);
+    if(target&&target.dataset.ipleGroup!==undefined){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      activate(target.dataset.ipleGroup);
+    }
+  },true);
+
+  setTimeout(()=>activate(currentGroup,false),0);
+})();
+</script>
+
+<script id="iple-final-quiz-data" type="application/json">[{"question": "What must be examined before interpreting R²?", "options": ["Only the mean of Y", "The scatter plot", "Only the sample size"], "correct": 1, "explanation": ""}, {"question": "Why does the factor n−1 not appear in the final formula for r?", "options": ["Because the common factor cancels when covariance and standard deviations are calculated consistently", "Because correlation does not use means", "Because ρ and r are always identical"], "correct": 0, "explanation": ""}, {"question": "What does the least-squares method minimise?", "options": ["The sum of the residuals", "The sum of squared residuals, SSE", "The sum of the X values"], "correct": 1, "explanation": ""}, {"question": "In the decomposition SST = SSR + SSE, what does SSR represent?", "options": ["The variability in Y described by the regression", "The variability remaining in the residuals", "The variance of X"], "correct": 0, "explanation": ""}, {"question": "What does β̂₁ measure?", "options": ["The proportion of variability described", "The expected mean change in Y for a one-unit increase in X", "The model p-value"], "correct": 1, "explanation": ""}, {"question": "Two perfect lines with slopes 2 and 3 have...", "options": ["Different R² values", "R² equal to 1 in both cases", "R² equal to the slope"], "correct": 1, "explanation": ""}, {"question": "A symmetric parabola can have...", "options": ["Linear R² close to zero", "a linear R² always equal to one", "no relationship between X and Y"], "correct": 0, "explanation": ""}, {"question": "For exact t-tests and intervals in a small sample, we assume...", "options": ["conditional normality of the errors", "mandatory marginal normality of X", "that R² is greater than 0.50"], "correct": 0, "explanation": ""}, {"question": "In the test H₀:β₁=0, the t-statistic is...", "options": ["β̂₁/SE(β̂₁)", "R²/β̂₁", "SSR/SST"], "correct": 0, "explanation": ""}, {"question": "An extreme point in X that lies on the original line...", "options": ["must greatly alter the coefficients", "may leave β̂₀ and β̂₁ almost unchanged", "always makes R² equal to zero"], "correct": 1, "explanation": ""}, {"question": "What does SER measure?", "options": ["The typical vertical distance between observed and fitted values", "Uncertainty about the slope alone", "The percentage of variability explained"], "correct": 0, "explanation": ""}, {"question": "In Y=β₀+β₁X+β₂D, with D=0 as the reference group, what does β₂ represent?", "options": ["The slope for D=1", "The conditional intercept difference between D=1 and D=0", "The overall R²"], "correct": 1, "explanation": ""}, {"question": "In a model with X, D and X·D, what is the slope for the group D=1?", "options": ["β₁", "β₃", "β₁+β₃"], "correct": 2, "explanation": ""}, {"question": "Why is it usually inappropriate to enter three occupational categories directly as 1, 2 and 3?", "options": ["It forces equal increments between adjacent categories", "It prevents calculation of an intercept", "It always makes R² equal to zero"], "correct": 0, "explanation": ""}]</script><script id="iple-standard-final-quiz-engine">
+(()=>{
+  const section=document.getElementById("s8");
+  const dataNode=document.getElementById('iple-final-quiz-data');
+  if(!section||!dataNode)return;
+  const questions=JSON.parse(dataNode.textContent);
+  const total=questions.length;
+  let index=0;
+  let answers=Array(total).fill(null);
+
+  section.innerHTML=`
+    <div class="iple-standard-final-quiz">
+      <div class="intro"><h2>Final quiz</h2><p>Answer one question at a time. After each response, the correct option is identified and highlighted immediately, together with the available explanatory feedback.</p></div>
+      <div class="card iple-standard-quiz-card" id="ipleStandardQuizCard">
+        <div class="card-head light iple-standard-quiz-head">
+          <span class="iple-standard-quiz-count" id="ipleQuizCount"></span>
+          <span class="iple-standard-quiz-score" id="ipleQuizLiveScore"></span>
+        </div>
+        <div class="card-body">
+          <div class="iple-standard-quiz-track" aria-hidden="true"><div class="iple-standard-quiz-fill" id="ipleQuizFill"></div></div>
+          <h3 class="iple-standard-quiz-question" id="ipleQuizQuestion"></h3>
+          <div class="iple-standard-quiz-options" id="ipleQuizOptions"></div>
+          <div class="iple-standard-quiz-feedback" id="ipleQuizFeedback" aria-live="polite"></div>
+          <div class="iple-standard-quiz-nav">
+            <button class="btn secondary" id="ipleQuizPrevious" type="button">← Previous question</button>
+            <span class="small" id="ipleQuizInstruction">Select one answer.</span>
+            <button class="btn primary" id="ipleQuizNext" type="button">Next question →</button>
+          </div>
+        </div>
+      </div>
+      <div class="scorebox iple-standard-quiz-result" id="ipleQuizResult">
+        <h3>Quiz completed</h3>
+        <div class="big" id="ipleQuizFinalScore"></div>
+        <p id="ipleQuizFinalMessage"></p>
+        <button class="btn primary" id="ipleQuizRestart" type="button">Start again</button>
+      </div>
+    </div>`;
+
+  const el=id=>document.getElementById(id);
+  const card=el('ipleStandardQuizCard'), count=el('ipleQuizCount'), live=el('ipleQuizLiveScore');
+  const fill=el('ipleQuizFill'), question=el('ipleQuizQuestion'), options=el('ipleQuizOptions');
+  const feedback=el('ipleQuizFeedback'), previous=el('ipleQuizPrevious'), next=el('ipleQuizNext');
+  const instruction=el('ipleQuizInstruction'), result=el('ipleQuizResult');
+
+  function score(){return answers.reduce((s,a,i)=>s+(a===questions[i].correct?1:0),0)}
+  function answeredCount(){return answers.filter(a=>a!==null).length}
+  function addFeedback(ok,q){
+    feedback.innerHTML='';
+    const strong=document.createElement('strong');
+    strong.textContent=ok?'Correct. ':'Not quite. ';
+    feedback.appendChild(strong);
+    feedback.appendChild(document.createTextNode('The correct answer is “'+q.options[q.correct]+'”.'));
+    if(q.explanation){feedback.appendChild(document.createTextNode(' '+q.explanation));}
+    feedback.className='iple-standard-quiz-feedback show '+(ok?'ok':'err');
+  }
+  function render(){
+    const q=questions[index], selected=answers[index];
+    count.textContent=`Question ${index+1} of ${total}`;
+    live.textContent=`Score: ${score()} / ${answeredCount()}`;
+    fill.style.width=((index+1)/total*100)+'%';
+    question.textContent=q.question;
+    options.innerHTML='';
+    q.options.forEach((text,i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='choice iple-standard-quiz-option';
+      b.textContent=text;
+      if(selected!==null){
+        b.disabled=true;
+        if(i===q.correct)b.classList.add('iple-answer-correct');
+        if(i===selected&&selected!==q.correct)b.classList.add('iple-answer-wrong');
+      }
+      b.addEventListener('click',()=>answer(i));
+      options.appendChild(b);
+    });
+    previous.disabled=index===0;
+    next.disabled=selected===null;
+    next.textContent=index===total-1?'Finish quiz':'Next question →';
+    if(selected===null){
+      feedback.className='iple-standard-quiz-feedback';
+      feedback.textContent='';
+      instruction.textContent='Select one answer.';
+    }else{
+      addFeedback(selected===q.correct,q);
+      instruction.textContent=index===total-1?'Review the feedback, then finish the quiz.':'Review the feedback, then continue.';
+    }
+  }
+  function answer(i){
+    if(answers[index]!==null)return;
+    answers[index]=i;
+    render();
+  }
+  function finish(){
+    const s=score(),pct=s/total;
+    card.style.display='none';
+    result.classList.add('show');
+    el('ipleQuizFinalScore').textContent=`${s} / ${total}`;
+    el('ipleQuizFinalMessage').textContent=pct>=.8?'Excellent. You have a strong command of the main ideas.':pct>=.6?'Good result. Review the explanations for the questions you missed.':'Review the relevant sections and use the feedback before trying again.';
+    result.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  previous.addEventListener('click',()=>{if(index>0){index--;render();}});
+  next.addEventListener('click',()=>{
+    if(answers[index]===null)return;
+    if(index<total-1){index++;render();}else finish();
+  });
+  el('ipleQuizRestart').addEventListener('click',()=>{
+    index=0;answers=Array(total).fill(null);result.classList.remove('show');card.style.display='block';render();
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script><footer class="copyright-footer" style="font-size:12px;color:#667085;text-align:center;margin:24px auto 10px;padding:0 16px;line-height:1.6">Author: Silvia Salini &middot; Copyright &copy; Silvia Salini</footer></body></html>
